@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SupportRegister.ViewModels.Requests.System.Users
 {
-    internal class UserUpdateRequest
+    public class UserUpdateRequest
     {
     }
 }

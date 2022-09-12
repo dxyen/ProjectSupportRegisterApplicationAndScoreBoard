@@ -13,7 +13,6 @@ namespace SupportRegister.Data.Models
             Students = new HashSet<Student>();
             Staff = new HashSet<Staff>();
         }
-
         public string Address { get; set; }
         public string FullName { get; set; }
         public DateTime? Birthday { get; set; }

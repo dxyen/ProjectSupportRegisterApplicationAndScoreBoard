@@ -15,15 +15,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{D97291DD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{3DC2AEC8-2B61-478B-B08B-BE4208092E45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupportRegister.Data", "SupportRegister.Data\SupportRegister.Data.csproj", "{F63AC218-10FA-407E-BA86-A7167CDC5F73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SupportRegister.Data", "SupportRegister.Data\SupportRegister.Data.csproj", "{F63AC218-10FA-407E-BA86-A7167CDC5F73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupportRegister.Application", "SupportRegister.Application\SupportRegister.Application.csproj", "{1220A846-E2EF-4AC7-9B19-105B8C84D1FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SupportRegister.Application", "SupportRegister.Application\SupportRegister.Application.csproj", "{1220A846-E2EF-4AC7-9B19-105B8C84D1FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupportRegister.API", "SupportRegister.API\SupportRegister.API.csproj", "{A1923D61-336D-4936-940A-0698F22BDEFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SupportRegister.API", "SupportRegister.API\SupportRegister.API.csproj", "{A1923D61-336D-4936-940A-0698F22BDEFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupportRegister.WebSite", "SupportRegister.WebSite\SupportRegister.WebSite.csproj", "{0B770BA4-2048-407B-AC42-8DC2E6D0EC52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SupportRegister.WebSite", "SupportRegister.WebSite\SupportRegister.WebSite.csproj", "{0B770BA4-2048-407B-AC42-8DC2E6D0EC52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupportRegister.ViewModels", "SupportRegister.ViewModels\SupportRegister.ViewModels.csproj", "{5F68AA9E-376D-4680-81AA-CBC3C0C9F82B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SupportRegister.ViewModels", "SupportRegister.ViewModels\SupportRegister.ViewModels.csproj", "{5F68AA9E-376D-4680-81AA-CBC3C0C9F82B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupportRegister.Utilities", "SupportRegister.Utilities\SupportRegister.Utilities.csproj", "{8A413CBE-97CF-452B-8FBC-E047FBFD905F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{5F68AA9E-376D-4680-81AA-CBC3C0C9F82B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F68AA9E-376D-4680-81AA-CBC3C0C9F82B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F68AA9E-376D-4680-81AA-CBC3C0C9F82B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A413CBE-97CF-452B-8FBC-E047FBFD905F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A413CBE-97CF-452B-8FBC-E047FBFD905F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A413CBE-97CF-452B-8FBC-E047FBFD905F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A413CBE-97CF-452B-8FBC-E047FBFD905F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{A1923D61-336D-4936-940A-0698F22BDEFF} = {D97291DD-156E-4253-889A-885121663D4E}
 		{0B770BA4-2048-407B-AC42-8DC2E6D0EC52} = {D97291DD-156E-4253-889A-885121663D4E}
 		{5F68AA9E-376D-4680-81AA-CBC3C0C9F82B} = {3DC2AEC8-2B61-478B-B08B-BE4208092E45}
+		{8A413CBE-97CF-452B-8FBC-E047FBFD905F} = {3DC2AEC8-2B61-478B-B08B-BE4208092E45}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C97BCA2E-E1E2-424E-833E-DB3F8CB519DE}
