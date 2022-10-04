@@ -10,6 +10,7 @@ namespace SupportRegister.Utilities.SystemConstants
     {
         public const string MAIN_CONNECTION_STRING = "DefaultConnection";
         public const string DEFAULT_AVATAR_URL = "/user-content/default-avatar.png";
+        public const string DEFAULT_LOGO = "/user-content/logo.png";
         public const string DEFAULT_AVATAR_CAPTION = "Avatar image";
 
         public class AppSettings

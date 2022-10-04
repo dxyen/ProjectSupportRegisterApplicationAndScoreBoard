@@ -9,13 +9,13 @@ namespace SupportRegister.ViewModels.Requests.System.Users
 {
     public class LoginRequest
     {
-        [Required(ErrorMessage = "Please enter username or email")]
-        [Display(Name = "Username or Email:", Prompt = "Username or email...")]
+        [Required(ErrorMessage = "Vui lòng nhập MSSV")]
+        [Display(Name = "Username :", Prompt = "Tên người dùng")]
         public string Username { get; set; }
 
-        [Required(ErrorMessage = "Please enter password")]
+        [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password:", Prompt = "********")]
+        [Display(Name = "Password:", Prompt = "Mật khẩu")]
         public string Password { get; set; }
 
         public bool RememberMe { get; set; }

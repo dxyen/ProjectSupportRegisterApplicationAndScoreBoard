@@ -1,20 +1,22 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using SupportRegister.Application.Interfaces;
+using SupportRegister.Application.Services;
+using SupportRegister.Application.System.Roles;
+using SupportRegister.Application.System.Users;
 using SupportRegister.Data.EF;
+using SupportRegister.Data.Interfaces;
+using SupportRegister.Data.Models;
+using SupportRegister.Data.Repository;
 using SupportRegister.Utilities.SystemConstants;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SupportRegister.API
 {
@@ -35,7 +37,26 @@ namespace SupportRegister.API
             services.AddControllers();
 
             // automapper
-            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+            services.AddAutoMapper(typeof(Startup).Assembly);
+
+            // Add services Identity
+            services.AddIdentity<AppUser, AppRole>()
+                .AddEntityFrameworkStores<ProjectSupportRegisterContext>()
+                .AddDefaultTokenProviders();
+
+
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IStorageService, StorageService>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            // DI for identity
+
+            services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
+            services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
+            services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
+            services.AddTransient<IUserService, UserService>();
+
+            //// Add services SqlServer
+            //services.AddDbContext<ProjectSupportRegisterContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -56,6 +77,7 @@ namespace SupportRegister.API
 
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseAuthorization();

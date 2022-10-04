@@ -11,6 +11,7 @@ using SupportRegister.ViewModels.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,35 +36,26 @@ namespace SupportRegister.Data.Repository.System
         {
             var username = request.Username;
 
-            // check email is match if user type email
-            var emailCheck = await _context.AppUsers.FirstOrDefaultAsync(x => x.Email == request.Username);
-            if (emailCheck != null)
-            {
-                username = emailCheck.UserName;
-            }
-
-            var user = await _userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByNameAsync(request.Username);
             if (user == null)
             {
                 return null;
             }
 
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, request.Password, request.RememberMe, true);
+            var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
             {
                 return null;
             }
 
             var roles = await _userManager.GetRolesAsync(user);
-            var claims = new[]
+            var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, user.FullName),
-                new Claim(ClaimTypes.Role, string.Join(";", roles)),
+                new Claim(ClaimTypes.Name, user.UserName.ToString()),
                 new Claim("AvatarUrl", $"{SupportRegister.Utilities.SystemConstants.SystemConstants.AppSettings.ImageUrl}/{user.Avatar}"),
                 new Claim("Id", user.Id.ToString()),
                 new Claim("Role", string.Join(";", roles)),
-                new Claim("UserName", user.UserName.ToString()),
                 new Claim("FullName", user.FullName != null ? user.FullName.ToString() : ""),
                 new Claim("Address", user.Address != null ? user.Address.ToString(): ""),
                 new Claim("DoB", user.Birthday.ToString()),
@@ -71,24 +63,30 @@ namespace SupportRegister.Data.Repository.System
                 new Claim("Email", user.Email != null ? user.Email.ToString() : "")
             };
 
-            string issuer = _configuration["Tokens:Issuer"];
-            string signingKey = _configuration["Tokens:Key"];
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            };
+            //Create SecurityKey
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtToken:Key"]));
+            //Create SigningCredentials
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(issuer,
-                issuer,
+            //Create JWT with SigningCredentials
+            var token = new JwtSecurityToken(
+                _configuration["JwtToken:Issuer"],
+                _configuration["JwtToken:Audience"],
                 claims,
-                expires: DateTime.Now.AddDays(1),
+                expires: DateTime.Now.AddHours(3),
                 signingCredentials: creds);
 
+            //Return JWT string 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         public async Task<IdentityResult> CreateAsync(AppUser entity)
         {
-           return await _userManager.CreateAsync(entity);
+           return await _userManager.CreateAsync(entity, entity.PasswordHash);
         }
 
         public async Task<ApiResult<bool>> DeleteAsync(Guid id)
@@ -102,16 +100,22 @@ namespace SupportRegister.Data.Repository.System
             return new ApiSuccessResult<bool>();
         }
 
-        public async Task<ApiResult<AppUser>> GetDetailAsync(Guid id)
+        public async Task<AppUser> GetDetailAsync(Guid id)
         {
             var result = await _userManager.FindByIdAsync(id.ToString());
-            return new ApiSuccessResult<AppUser>(result);
+            return result;
         }
 
-        public async Task<ApiResult<List<AppUser>>> GetListAsync()
+        public async Task<List<AppUser>> GetListAsync()
         {
-            var result = await _userManager.Users.ToListAsync();
-            return new ApiSuccessResult<List<AppUser>>(result);
+            var result = await _userManager.Users.Select(x => new AppUser()
+            {
+                Id = x.Id,
+                Address = x.Address,
+                FullName = x.FullName,
+                Birthday = x.Birthday,
+            }).ToListAsync();
+            return new List<AppUser>(result);
         }
 
         public async Task<ApiResult<bool>> UpdateAsync(AppUser entity)

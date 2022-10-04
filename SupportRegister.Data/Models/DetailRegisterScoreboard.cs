@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace SupportRegister.Data.Models
 {
-    public partial class DetailRegisterScoreboard
+    public class DetailRegisterScoreboard
     {
         public int IdRegisterScoreboard { get; set; }
         public int IdScore { get; set; }
         public int? Amount { get; set; }
         public decimal? Price { get; set; }
 
-        public virtual RegisterScoreboard IdRegisterScoreboardNavigation { get; set; }
-        public virtual Scoreboard IdScoreNavigation { get; set; }
+        public RegisterScoreboard IdRegisterScoreboardNavigation { get; set; }
+        public Scoreboard IdScoreNavigation { get; set; }
     }
 }

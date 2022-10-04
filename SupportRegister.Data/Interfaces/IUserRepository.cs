@@ -15,7 +15,7 @@ namespace SupportRegister.Data.Interfaces
         Task<string> AuthenticateAsync(LoginRequest entity);
         Task<ApiResult<bool>> UpdateAsync(AppUser entity);
         Task<ApiResult<bool>> DeleteAsync(Guid id);
-        Task<ApiResult<AppUser>> GetDetailAsync(Guid id);
-        Task<ApiResult<List<AppUser>>> GetListAsync();
+        Task<AppUser> GetDetailAsync(Guid id);
+        Task<List<AppUser>> GetListAsync();
     }
 }

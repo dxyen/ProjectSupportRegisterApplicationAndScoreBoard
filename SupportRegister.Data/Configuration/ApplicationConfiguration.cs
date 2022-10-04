@@ -36,11 +36,6 @@ namespace SupportRegister.Data.Configuration
 
             entity.Property(e => e.Price).HasColumnType("numeric(8, 2)");
 
-            entity.HasOne(d => d.IdTypeApplicationNavigation)
-                .WithMany(p => p.Applications)
-                .HasForeignKey(d => d.IdTypeApplication)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_APPLICATION_TYPEAPPLICATION");
         }
     }
 }

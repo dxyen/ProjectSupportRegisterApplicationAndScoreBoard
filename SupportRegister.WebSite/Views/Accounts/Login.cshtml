@@ -1,0 +1,111 @@
+﻿@model SupportRegister.ViewModels.Requests.System.Users.LoginRequest
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Đăng Nhập">
+    <meta name="author" content="CT22_FR_NET_02">
+
+    <title>Sign In</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- End fonts -->
+    <!-- core:css -->
+    <link rel="stylesheet" href="~/template/assets/vendors/core/core.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="~/template/assets/fonts/feather-font/css/iconfont.css">
+    <link rel="stylesheet" href="~/template/assets/vendors/flag-icon-css/css/flag-icon.min.css">
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="~/template/assets/css/demo1/style.css">
+    <!-- End layout styles -->
+
+    <link rel="shortcut icon" href="~/template/assets/images/favicon.png" />
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="page-wrapper full-page">
+            <div class="page-content d-flex align-items-center justify-content-center">
+                <div class="row w-100 mx-0 auth-page">
+                    <div class="col-md-8 col-xl-6 mx-auto">
+                        <div class="card">
+                            @{
+                                if (TempData["Message"] != null)
+                                {
+                                    <div class="alert alert-danger">
+                                        <strong>@TempData["Message"]</strong>
+                                    </div>
+                                }
+                            }
+                            <div class="row">
+                                <div class="col-md-4 pe-md-0 page-content d-flex align-items-center justify-content-center">
+
+                                    @*auth-side-wrapper*@
+                                    <img src="~/img/logo.png" class="rounded-top wd-200">
+
+                                </div>
+                                <div class="col-md-8 ps-md-0">
+                                    <div class="auth-form-wrapper px-4 py-5">
+                                        <a href="#" class="noble-ui-logo d-block mb-2"><span>Đại học Cần Thơ</span></a>
+                                        <h5 class="text-muted fw-normal mb-4">HỆ THỐNG ĐĂNG KÝ ĐƠN VÀ IN BẢNG ĐIỂM</h5>
+                                        <form asp-controller="Accounts" asp-action="Login" method="post" >
+                                            <div class="mb-3">
+                                                <label for="Username" class="form-label">Tên người dùng</label>
+                                                <input type="text" class="form-control" id="Username" asp-for="Username">
+                                                <span asp-validation-for="Username" class="text-danger"></span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="userPassword" class="form-label">Mật khẩu</label>
+                                                <input type="password" class="form-control" id="userPassword" asp-for="Password" autocomplete="current-password">
+                                                <span asp-validation-for="Password" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-check mb-3">
+                                                <input type="checkbox" class="form-check-input" asp-for="RememberMe" id="authCheck">
+                                                <label class="form-check-label" for="authCheck">
+                                                    Ghi nhớ đăng nhập
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 text-white">Đăng nhập</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- core:js -->
+    <script src="~/template/assets/vendors/core/core.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="~/template/assets/vendors/feather-icons/feather.min.js"></script>
+    <script src="~/template/assets/js/template.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <!-- End custom js for this page -->
+
+</body>
+</html>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

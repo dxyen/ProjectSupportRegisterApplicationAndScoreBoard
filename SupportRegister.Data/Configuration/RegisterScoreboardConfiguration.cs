@@ -33,6 +33,7 @@ namespace SupportRegister.Data.Configuration
             entity.HasOne(d => d.Staff)
                 .WithMany(p => p.RegisterScoreboards)
                 .HasForeignKey(d => d.StaffId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_REGISTERSCOREBOARD_STAFF");
 

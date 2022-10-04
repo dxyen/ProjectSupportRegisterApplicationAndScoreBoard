@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SupportRegister.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SupportRegister.Data.Configuration
 {
@@ -13,6 +8,7 @@ namespace SupportRegister.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<AppUser> entity)
         {
+            entity.ToTable("AppUsers");
             entity.Property(e => e.Address)
                     .HasMaxLength(1000)
                     .IsUnicode(true);

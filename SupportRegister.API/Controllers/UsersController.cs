@@ -17,24 +17,17 @@ namespace SupportRegister.API.Controllers
         {
             _userService = userService;
         }
-        [HttpPost("authenticate")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Authenticate(LoginRequest request)
+        [HttpPost("Authenticate")]
+        public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             var resultToken = await _userService.AuthenticateAsync(request);
-
-            if (string.IsNullOrEmpty(resultToken))
-            {
-                return BadRequest("Username or password is incorrect");
-            }
             return Ok(resultToken);
         }
         [HttpPost("register")]
-        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
             if (!ModelState.IsValid)
@@ -50,7 +43,6 @@ namespace SupportRegister.API.Controllers
             }
             return Ok(result);
         }
-        [Authorize]
         [HttpPut]
         public async Task<IActionResult> Update([FromForm] UserUpdateRequest request)
         {
@@ -66,24 +58,7 @@ namespace SupportRegister.API.Controllers
             }
             return Ok(result);
         }
-        //[Authorize(Roles = "admin")]
-        //[HttpPut("{id}/roles")]
-        //public async Task<IActionResult> RoleAssign(Guid id, RoleAssignRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    var result = await _userService.RoleAssignAsync(id, request);
-        //    if (!result.IsSuccessed)
-        //    {
-        //        return BadRequest(result);
-        //    }
-        //    return Ok(result);
-        //}
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _userService.GetByIdAsync(id);
@@ -97,7 +72,6 @@ namespace SupportRegister.API.Controllers
             }
         }
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetAllUsers()
         {
             var result = await _userService.GetAllUsersAsync();
@@ -112,11 +86,29 @@ namespace SupportRegister.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _userService.DeleteAsync(id);
             return Ok(result);
+        }
+
+        [HttpPost("CheckPassword")]
+        public async Task<IActionResult> CheckPassword(AccountChangePassword loginUser)
+        {
+            if (!ModelState.IsValid)
+                return NotFound();
+            var isLogin = await _userService.CheckPassword(loginUser);
+            return Ok(isLogin);
+        }
+
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(AccountChangePassword changePasswordUser)
+        {
+            if (!ModelState.IsValid)
+                return NotFound();
+
+            var isChange = await _userService.ChangePassword(changePasswordUser);
+            return Ok(isChange);
         }
     }
 }

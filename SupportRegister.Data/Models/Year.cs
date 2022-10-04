@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace SupportRegister.Data.Models
 {
-    public partial class Year
+    public class Year
     {
         public int IdYear { get; set; }
         public int IdRegisterScoreboard { get; set; }
         public int Yearr { get; set; }
         public string Description { get; set; }
 
-        public virtual RegisterScoreboard IdRegisterScoreboardNavigation { get; set; }
+        public RegisterScoreboard IdRegisterScoreboardNavigation { get; set; }
     }
 }

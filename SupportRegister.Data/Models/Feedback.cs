@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace SupportRegister.Data.Models
 {
-    public partial class Feedback
+    public class Feedback
     {
         public int IdFeedback { get; set; }
         public int StudentId { get; set; }
         public string NameFeedback { get; set; }
 
-        public virtual Student Student { get; set; }
+        public Student Student { get; set; }
     }
 }

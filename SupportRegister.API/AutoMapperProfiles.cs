@@ -13,6 +13,10 @@ namespace SupportRegister.API
             CreateMap<AppUser, UserViewModel>().ReverseMap();
             CreateMap<AppUser, UserUpdateRequest>().ReverseMap();
             #endregion
+            #region Role
+            CreateMap<AppRole, RoleViewModel>().ReverseMap();
+            //CreateMap<AppRole, >().ReverseMap();
+            #endregion
         }
     }
 }

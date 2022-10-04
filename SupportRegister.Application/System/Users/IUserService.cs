@@ -15,7 +15,9 @@ namespace SupportRegister.Application.System.Users
         Task<ApiResult<List<UserViewModel>>> GetAllUsersAsync();
         Task<ApiResult<UserViewModel>> GetByIdAsync(Guid id);
         Task<ApiResult<bool>> UpdateAsync(UserUpdateRequest request);
-
         Task<ApiResult<bool>> DeleteAsync(Guid id);
+        Task<bool> CheckPassword(AccountChangePassword loginUser);
+        Task<bool> ChangePassword(AccountChangePassword accountChange);
+
     }
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SupportRegister.Data.Models
 {
-    public partial class Scoreboard
+    public class Scoreboard
     {
         public Scoreboard()
         {
@@ -17,6 +17,6 @@ namespace SupportRegister.Data.Models
         public string Status { get; set; }
         public decimal? Price { get; set; }
 
-        public virtual ICollection<DetailRegisterScoreboard> DetailRegisterScoreboards { get; set; }
+        public ICollection<DetailRegisterScoreboard> DetailRegisterScoreboards { get; set; }
     }
 }

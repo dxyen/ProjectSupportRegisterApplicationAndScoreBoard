@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SupportRegister.Data.Models
 {
-    public partial class Status
+    public class Status
     {
         public Status()
         {
@@ -17,7 +17,7 @@ namespace SupportRegister.Data.Models
         public string NameStatus { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<RegisterApplication> RegisterApplications { get; set; }
-        public virtual ICollection<RegisterScoreboard> RegisterScoreboards { get; set; }
+        public ICollection<RegisterApplication> RegisterApplications { get; set; }
+        public ICollection<RegisterScoreboard> RegisterScoreboards { get; set; }
     }
 }

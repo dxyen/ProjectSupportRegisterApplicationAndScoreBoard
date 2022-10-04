@@ -1,48 +1,186 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+@using SupportRegister.Utilities.SystemConstants
+
+@{      
+
+    var fullname = User.Claims.Where(c => c.Type == "FullName")
+    .Select(c => c.Value).SingleOrDefault();
+
+    var email = User.Claims.Where(c => c.Type == ClaimTypes.Email)
+    .Select(c => c.Value).SingleOrDefault();
+
+    var imageUrl = User.Claims.Where(c => c.Type == ClaimTypes.Uri)
+    .Select(c => c.Value).SingleOrDefault();
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SupportRegister.WebSite</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Responsive HTML Admin Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="NobleUI">
+    <meta name="keywords" content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <title>Hệ thống quản lý đăng ký đơn và in bảng điểm</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- End fonts -->
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/template/assets/vendors/core/core.css">
+    <link rel="stylesheet" href="~/template/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="~/template/assets/fonts/feather-font/css/iconfont.css">
+    <link rel="stylesheet" href="~/template/assets/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="~/template/assets/css/demo1/style.css">
+    <link rel="stylesheet" href="~/template/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
+    <!-- End CSS styles -->
+
+    <link rel="shortcut icon" href="~/img/logo.png" />
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SupportRegister.WebSite</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+    <div class="main-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <a href="#" style="font-size:20px;" class="sidebar-brand">HỆ THỐNG QUẢN LÝ</a>
+            </div>
+            <div class="sidebar-body">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a asp-controller="AttendanceTrainer" asp-action="TrainerListView" class="nav-link">
+                            <i class="link-icon" data-feather="layers"></i>
+                            <span class="link-title">Lập đơn</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Course" asp-action="Index" class="nav-link">
+                            <i class="link-icon" data-feather="table"></i>
+                            <span class="link-title">In bảng điểm</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Module" asp-action="Index" class="nav-link">
+                            <i class="link-icon" data-feather="user"></i>
+                            <span class="link-title">Góp ý</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        <!-- partial -->
+
+        <div class="page-wrapper">
+             <!-- partial:partials/_navbar.html -->
+            <nav class="navbar">
+                <a href="#" class="sidebar-toggler">
+                    <i data-feather="menu"></i>
+                </a>
+                <div class="navbar-content">
+                    <form class="search-form">
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <i data-feather="search"></i>
+                            </div>
+                            <input type="text" class="form-control" id="navbarForm" placeholder="Tìm kiếm ...">
+                        </div>
+                    </form>
+                    <ul class="navbar-nav">
+                        @{
+                        if (User.Identity.IsAuthenticated)
+                        {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="wd-30 ht-30 rounded-circle" src="@(Url.Content(imageUrl) != null ? Url.Content(imageUrl) : SystemConstants.DEFAULT_AVATAR_URL)" alt="profile">
+                            </a>
+                            <div class="dropdown-menu p-0" aria-labelledby="profileDropdown">
+                                <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
+                                    <div class="mb-3">
+                                        <img class="wd-80 ht-80 rounded-circle" src="@(Url.Content(imageUrl) != null ? Url.Content(imageUrl) : SystemConstants.DEFAULT_AVATAR_URL)" alt="">
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="tx-16 fw-bolder">
+                                            @fullname
+                                        </p>
+                                        <p class="tx-12 text-muted">@email</p>
+                                    </div>
+                                </div>
+                                <ul class="list-unstyled p-1">
+                                    <li class="dropdown-item py-2">
+                                        <a href="/Accounts/ChangePassword" class="text-body ms-0">
+                                            <i class="me-2 icon-md" data-feather="edit"></i>
+                                            <span>Thay đổi mật khẩu</span>
+                                        </a>
+                                    <li class="dropdown-item py-2">
+                                        <a asp-controller="Accounts" asp-action="LogOut" class="text-body ms-0">
+                                            <i class="me-2 icon-md" data-feather="log-out"></i>
+                                            <span>Đăng xuất</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        }else{
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-action="Login"  asp-controller="Accounts" >
+                                Login
+                            </a>
+                        </li>
+                        }
+                        }
+
+                    </ul>
+                </div>
+            </nav>
+            <!-- partial -->
+
+            <div class="page-content">
+                @RenderBody()
+            </div>
+
+            <!-- partial:partials/_footer.html -->
+            <footer class="footer d-flex flex-column flex-md-row align-items-center justify-content-between px-4 py-3 border-top small">
+                <strong class="text-muted mb-1 mb-md-0">Hệ thống đăng ký đơn và in bảng điểm</strong>
+                <strong class="text-muted">Đại học Cần Thơ<i class="mb-1 text-primary ms-1 icon-sm"></i></strong>
+            </footer>
+            <!-- partial -->
+
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - SupportRegister.WebSite - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("scripts", required: false)
+
+    <!-- core:js -->
+    <script src="~/template/assets/vendors/core/core.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="~/template/assets/vendors/chartjs/Chart.min.js"></script>
+    <script src="~/template/assets/vendors/jquery.flot/jquery.flot.js"></script>
+    <script src="~/template/assets/vendors/jquery.flot/jquery.flot.resize.js"></script>
+    <script src="~/template/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/template/assets/vendors/apexcharts/apexcharts.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="~/template/assets/vendors/feather-icons/feather.min.js"></script>
+    <script src="~/template/assets/js/template.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="~/template/assets/js/dashboard-light.js"></script>
+    <script src="~/template/assets/js/datepicker.js"></script>
+    <!-- End custom js for this page -->
+    <!-- Plugin js for this page -->
+    <script src="~/template/assets/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/template/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="~/template/assets/vendors/feather-icons/feather.min.js"></script>
+    <script src="~/template/assets/js/template.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="~/template/assets/js/data-table.js"></script>
+    <!-- End custom js for this page -->
 </body>
-</html>
+</html>    
