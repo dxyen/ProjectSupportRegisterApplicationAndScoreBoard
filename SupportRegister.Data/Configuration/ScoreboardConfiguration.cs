@@ -18,19 +18,11 @@ namespace SupportRegister.Data.Configuration
 
             entity.ToTable("Scoreboard");
 
-            entity.Property(e => e.IdScore).ValueGeneratedNever();
+            entity.Property(e => e.IdScore).ValueGeneratedOnAdd();
 
             entity.Property(e => e.NameScore)
-                .HasMaxLength(1000)
-                .IsUnicode(true)
-                .IsRequired(true);
-
-            entity.Property(e => e.Price).HasColumnType("numeric(8, 2)");
-
-            entity.Property(e => e.Status)
-                .HasMaxLength(1000)
-                .IsUnicode(true)
-                .IsRequired(true);
+                .IsRequired()
+                .HasMaxLength(1000);
         }
     }
 }

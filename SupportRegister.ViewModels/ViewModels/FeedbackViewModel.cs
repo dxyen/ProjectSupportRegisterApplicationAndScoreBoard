@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace SupportRegister.ViewModels.ViewModels
 {
-    internal class ScoreboardViewModel
+    public class FeedbackViewModel
     {
+        public int StudentId { get; set; }
+        public string ContentFeedback { get; set; }
     }
 }

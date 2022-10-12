@@ -7,11 +7,14 @@ namespace SupportRegister.Data.Models
 {
     public class Semester
     {
-        public int IdSemester { get; set; }
-        public int IdRegisterScoreboard { get; set; }
-        public string NameSemester { get; set; }
-        public string Description { get; set; }
+        public Semester()
+        {
+            RegisterScoreboards = new HashSet<RegisterScoreboard>();
+        }
 
-        public RegisterScoreboard IdRegisterScoreboardNavigation { get; set; }
+        public int IdSemester { get; set; }
+        public string NameSemester { get; set; }
+
+        public virtual ICollection<RegisterScoreboard> RegisterScoreboards { get; set; }
     }
 }

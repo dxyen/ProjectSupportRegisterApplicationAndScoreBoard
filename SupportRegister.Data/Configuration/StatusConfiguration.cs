@@ -14,20 +14,15 @@ namespace SupportRegister.Data.Configuration
         public void Configure(EntityTypeBuilder<Status> entity)
         {
             entity.HasKey(e => e.IdStatus)
-                    .HasName("PK_STATUS");
+                     .HasName("PK_STATUS");
 
             entity.ToTable("Status");
 
-            entity.Property(e => e.IdStatus).ValueGeneratedNever();
-
-            entity.Property(e => e.Description)
-                .HasMaxLength(1000)
-                .IsUnicode(true);
+            entity.Property(e => e.IdStatus).ValueGeneratedOnAdd();
 
             entity.Property(e => e.NameStatus)
-                .HasMaxLength(1000)
-                .IsUnicode(true)
-                .IsRequired(true);
+                .IsRequired()
+                .HasMaxLength(1000);
         }
     }
 }

@@ -7,11 +7,14 @@ namespace SupportRegister.Data.Models
 {
     public class Year
     {
-        public int IdYear { get; set; }
-        public int IdRegisterScoreboard { get; set; }
-        public int Yearr { get; set; }
-        public string Description { get; set; }
+        public Year()
+        {
+            RegisterScoreboards = new HashSet<RegisterScoreboard>();
+        }
 
-        public RegisterScoreboard IdRegisterScoreboardNavigation { get; set; }
+        public int IdYear { get; set; }
+        public string Year1 { get; set; }
+
+        public ICollection<RegisterScoreboard> RegisterScoreboards { get; set; }
     }
 }

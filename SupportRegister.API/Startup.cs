@@ -47,6 +47,7 @@ namespace SupportRegister.API
 
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IStorageService, StorageService>();
+            services.AddTransient<IScoreboardService, ScoreboardService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             // DI for identity
 

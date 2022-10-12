@@ -17,8 +17,7 @@ namespace SupportRegister.Data.Configuration
                     .HasName("PK_DETAILREGISTERSCOREBOARD");
 
             entity.ToTable("DetailRegisterScoreboard");
-
-            entity.Property(e => e.Price).HasColumnType("numeric(8, 2)");
+            entity.Property(e => e.IdRegisterScoreboard).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.IdRegisterScoreboardNavigation)
                 .WithMany(p => p.DetailRegisterScoreboards)

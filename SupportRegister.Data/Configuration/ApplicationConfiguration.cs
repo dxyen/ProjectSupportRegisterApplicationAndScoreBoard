@@ -14,27 +14,21 @@ namespace SupportRegister.Data.Configuration
         public void Configure(EntityTypeBuilder<Application> entity)
         {
             entity.HasKey(e => e.IdApplication)
-                    .HasName("PK_APPLICATION");
+                   .HasName("PK_APPLICATION");
 
             entity.ToTable("Application");
 
-            entity.Property(e => e.IdApplication).ValueGeneratedNever();
+            entity.Property(e => e.IdApplication).ValueGeneratedOnAdd();
 
             entity.Property(e => e.Content)
-                .HasMaxLength(1000)
-                .IsUnicode(true)
-                .IsRequired(true);
+                .IsRequired()
+                .HasMaxLength(1000);
 
-            entity.Property(e => e.Description)
-                .HasMaxLength(1000)
-                .IsUnicode(true);
+            entity.Property(e => e.Description).HasMaxLength(1000);
 
             entity.Property(e => e.NameApplication)
-                .HasMaxLength(1000)
-                .IsUnicode(true)
-                .IsRequired(true);
-
-            entity.Property(e => e.Price).HasColumnType("numeric(8, 2)");
+                .IsRequired()
+                .HasMaxLength(1000);
 
         }
     }

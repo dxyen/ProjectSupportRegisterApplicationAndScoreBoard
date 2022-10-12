@@ -16,6 +16,7 @@ namespace SupportRegister.Data.Models
 
         public int StudentId { get; set; }
         public Guid UserId { get; set; }
+        public string YearStart { get; set; }
 
         public AppUser User { get; set; }
         public ICollection<Feedback> Feedbacks { get; set; }

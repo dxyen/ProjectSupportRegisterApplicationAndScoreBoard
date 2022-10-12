@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace SupportRegister.ViewModels.ViewModels
 {
-    internal class SemesterViewModel
+    public class SemesterViewModel
     {
+        public int IdSemester { get; set; }
+        public string NameSemester { get; set; }
     }
 }

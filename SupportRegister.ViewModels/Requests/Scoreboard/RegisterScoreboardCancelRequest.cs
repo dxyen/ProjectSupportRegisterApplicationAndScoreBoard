@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace SupportRegister.ViewModels.Requests.Scoreboard
 {
-    internal class ScoreboardDeleteRequest
+    public class RegisterScoreboardCancelRequest
     {
+        public int IdRegisterScoreboard { get; set; }
+        public int StudentId { get; set; }
+        public int IdStatus { get; set; }
     }
 }

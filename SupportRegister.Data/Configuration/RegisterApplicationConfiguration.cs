@@ -18,7 +18,7 @@ namespace SupportRegister.Data.Configuration
 
             entity.ToTable("RegisterApplication");
 
-            entity.Property(e => e.IdRegisterApplication).ValueGeneratedNever();
+            entity.Property(e => e.IdRegisterApplication).ValueGeneratedOnAdd();
 
             entity.Property(e => e.DateReceived).HasColumnType("date");
 
@@ -29,13 +29,6 @@ namespace SupportRegister.Data.Configuration
                 .HasForeignKey(d => d.IdStatus)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_REGISTER_STATUS");
-
-            entity.HasOne(d => d.Staff)
-                .WithMany(p => p.RegisterApplications)
-                .HasForeignKey(d => d.StaffId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_REGISTER_STAFF");
 
             entity.HasOne(d => d.Student)
                 .WithMany(p => p.RegisterApplications)

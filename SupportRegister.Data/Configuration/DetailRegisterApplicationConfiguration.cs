@@ -14,12 +14,9 @@ namespace SupportRegister.Data.Configuration
         public void Configure(EntityTypeBuilder<DetailRegisterApplication> entity)
         {
             entity.HasKey(e => new { e.IdApplication, e.IdRegisterApplication })
-                    .HasName("PK_DETAILREGISTERAPPLICATION");
+                     .HasName("PK_DETAILREGISTERAPPLICATION");
 
             entity.ToTable("DetailRegisterApplication");
-
-            entity.Property(e => e.Price).HasColumnType("numeric(8, 2)");
-
             entity.HasOne(d => d.IdApplicationNavigation)
                 .WithMany(p => p.DetailRegisterApplications)
                 .HasForeignKey(d => d.IdApplication)

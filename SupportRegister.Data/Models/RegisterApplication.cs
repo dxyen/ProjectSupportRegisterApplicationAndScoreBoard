@@ -15,12 +15,10 @@ namespace SupportRegister.Data.Models
         public int IdRegisterApplication { get; set; }
         public int StudentId { get; set; }
         public int IdStatus { get; set; }
-        public int StaffId { get; set; }
         public DateTime? DateRegister { get; set; }
         public DateTime? DateReceived { get; set; }
 
         public Status IdStatusNavigation { get; set; }
-        public Staff Staff { get; set; }
         public Student Student { get; set; }
         public ICollection<DetailRegisterApplication> DetailRegisterApplications { get; set; }
     }

@@ -13,7 +13,12 @@ namespace SupportRegister.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Student> entity)
         {
-            entity.Property(e => e.StudentId).ValueGeneratedNever();
+
+            entity.Property(e => e.StudentId).ValueGeneratedOnAdd();
+
+            entity.Property(e => e.YearStart)
+                .HasMaxLength(20)
+                .IsUnicode(false);
 
             entity.HasOne(d => d.User)
                 .WithMany(p => p.Students)

@@ -15,9 +15,8 @@ namespace SupportRegister.Data.Models
 
         public int IdStatus { get; set; }
         public string NameStatus { get; set; }
-        public string Description { get; set; }
 
-        public ICollection<RegisterApplication> RegisterApplications { get; set; }
-        public ICollection<RegisterScoreboard> RegisterScoreboards { get; set; }
+        public virtual ICollection<RegisterApplication> RegisterApplications { get; set; }
+        public virtual ICollection<RegisterScoreboard> RegisterScoreboards { get; set; }
     }
 }

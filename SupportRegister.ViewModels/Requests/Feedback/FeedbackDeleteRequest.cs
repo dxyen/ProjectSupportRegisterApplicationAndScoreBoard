@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SupportRegister.ViewModels.Requests.Feedback
 {
-    internal class FeedbackDeleteRequest
+    public class FeedbackDeleteRequest
     {
+        public int IdFeedback { get; set; }
     }
 }

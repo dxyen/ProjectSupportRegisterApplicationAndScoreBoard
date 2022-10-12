@@ -14,25 +14,17 @@ namespace SupportRegister.Data.Configuration
         public void Configure(EntityTypeBuilder<Year> entity)
         {
             entity.HasKey(e => e.IdYear)
-                    .HasName("PK_YEAR");
+                      .HasName("PK_YEAR");
 
             entity.ToTable("Year");
 
-            entity.Property(e => e.IdYear).ValueGeneratedNever();
+            entity.Property(e => e.IdYear).ValueGeneratedOnAdd();
 
-            entity.Property(e => e.Description)
-                .HasMaxLength(1000)
-                .IsUnicode(true);
-
-            entity.Property(e => e.Yearr)
-                .HasColumnName("Year")
-                .IsRequired(true);
-
-            entity.HasOne(d => d.IdRegisterScoreboardNavigation)
-                .WithMany(p => p.Years)
-                .HasForeignKey(d => d.IdRegisterScoreboard)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_YEAR_FK_REGIST_REGISTER");
+            entity.Property(e => e.Year1)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("Year");
         }
     }
 }

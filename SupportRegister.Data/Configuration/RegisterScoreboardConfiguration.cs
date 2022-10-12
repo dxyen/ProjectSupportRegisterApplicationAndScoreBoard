@@ -14,11 +14,12 @@ namespace SupportRegister.Data.Configuration
         public void Configure(EntityTypeBuilder<RegisterScoreboard> entity)
         {
             entity.HasKey(e => e.IdRegisterScoreboard)
-                    .HasName("PK_REGISTERSCOREBOARD");
+                   .HasName("PK_REGISTERSCOREBOARD");
 
             entity.ToTable("RegisterScoreboard");
 
-            entity.Property(e => e.IdRegisterScoreboard).ValueGeneratedNever();
+
+            entity.Property(e => e.IdRegisterScoreboard).ValueGeneratedOnAdd();
 
             entity.Property(e => e.DateReceived).HasColumnType("date");
 
@@ -30,18 +31,21 @@ namespace SupportRegister.Data.Configuration
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_REGISTERSCOREBOARD_STATUS");
 
-            entity.HasOne(d => d.Staff)
+            entity.HasOne(d => d.Semester)
                 .WithMany(p => p.RegisterScoreboards)
-                .HasForeignKey(d => d.StaffId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_REGISTERSCOREBOARD_STAFF");
+                .HasForeignKey(d => d.SemesterId)
+                .HasConstraintName("Fk_Semeter_RegidterScoreboard");
 
             entity.HasOne(d => d.Student)
                 .WithMany(p => p.RegisterScoreboards)
                 .HasForeignKey(d => d.StudentId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_REGISTERSCOREBOARD_STUDENTS");
+
+            entity.HasOne(d => d.Year)
+                .WithMany(p => p.RegisterScoreboards)
+                .HasForeignKey(d => d.YearId)
+                .HasConstraintName("Fk_Year_RegisterScoreboard");
         }
     }
 }
