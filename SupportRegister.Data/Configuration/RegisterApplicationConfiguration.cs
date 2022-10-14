@@ -17,24 +17,21 @@ namespace SupportRegister.Data.Configuration
                     .HasName("PK_REGISTERAPPLICATION");
 
             entity.ToTable("RegisterApplication");
-
             entity.Property(e => e.IdRegisterApplication).ValueGeneratedOnAdd();
 
             entity.Property(e => e.DateReceived).HasColumnType("date");
 
             entity.Property(e => e.DateRegister).HasColumnType("date");
 
+            entity.HasOne(d => d.Application)
+                .WithMany(p => p.RegisterApplications)
+                .HasForeignKey(d => d.ApplicationId)
+                .HasConstraintName("Fk_regis_app");
+
             entity.HasOne(d => d.IdStatusNavigation)
                 .WithMany(p => p.RegisterApplications)
                 .HasForeignKey(d => d.IdStatus)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_REGISTER_STATUS");
-
-            entity.HasOne(d => d.Student)
-                .WithMany(p => p.RegisterApplications)
-                .HasForeignKey(d => d.StudentId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_REGISTERAPPLICATION_STUDENT");
+                .HasConstraintName("Fk_regisapp_status");
         }
     }
 }

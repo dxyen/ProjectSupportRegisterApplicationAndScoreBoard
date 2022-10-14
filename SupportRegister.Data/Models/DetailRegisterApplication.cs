@@ -7,12 +7,12 @@ namespace SupportRegister.Data.Models
 {
     public class DetailRegisterApplication
     {
-        public int IdApplication { get; set; }
-        public int IdRegisterApplication { get; set; }
-        public int? Amount { get; set; }
-        public int? Price { get; set; }
+        public int StudentId { get; set; }
+        public int RegisId { get; set; }
+        public int Price { get; set; }
+        public int Amount { get; set; }
 
-        public Application IdApplicationNavigation { get; set; }
-        public RegisterApplication IdRegisterApplicationNavigation { get; set; }
+        public RegisterApplication Regis { get; set; }
+        public Student Student { get; set; }
     }
 }

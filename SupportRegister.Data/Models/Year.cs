@@ -9,12 +9,12 @@ namespace SupportRegister.Data.Models
     {
         public Year()
         {
-            RegisterScoreboards = new HashSet<RegisterScoreboard>();
+            DetailRegisterScoreboards = new HashSet<DetailRegisterScoreboard>();
         }
 
         public int IdYear { get; set; }
-        public string Year1 { get; set; }
+        public int Year1 { get; set; }
 
-        public ICollection<RegisterScoreboard> RegisterScoreboards { get; set; }
+        public ICollection<DetailRegisterScoreboard> DetailRegisterScoreboards { get; set; }
     }
 }

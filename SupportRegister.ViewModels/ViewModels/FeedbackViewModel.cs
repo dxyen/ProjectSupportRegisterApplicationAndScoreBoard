@@ -10,5 +10,6 @@ namespace SupportRegister.ViewModels.ViewModels
     {
         public int StudentId { get; set; }
         public string ContentFeedback { get; set; }
+        public string Student { get; set; }
     }
 }

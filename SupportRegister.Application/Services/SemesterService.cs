@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SupportRegister.Application.Services
 {
-    internal class SemesterService : ISemesterService
+    public class SemesterService : ISemesterService
     {
         protected ProjectSupportRegisterContext _context;
         private readonly IMapper _mapper;

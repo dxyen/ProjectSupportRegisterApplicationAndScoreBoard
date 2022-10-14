@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace SupportRegister.ViewModels.ViewModels
 {
-    public class RegisterScoreboardViewModel
+    public class RegisterApplicationViewModel
     {
         public string Student { get; set; }
         public string Status { get; set; }
         public DateTime DateRegister { get; set; }
         public DateTime DateReceived { get; set; }
-        public int Year { get; set; }
-        public string Semester { get; set; }
         public int PriceTotal { get; set; }
     }
 }

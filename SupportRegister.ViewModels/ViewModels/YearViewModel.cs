@@ -9,6 +9,6 @@ namespace SupportRegister.ViewModels.ViewModels
     public class YearViewModel
     {
         public int IdYear { get; set; }
-        public string Year1 { get; set; }
+        public int Year1 { get; set; }
     }
 }

@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace SupportRegister.Data.Configuration
 {
-    public class StatusConfiguration : IEntityTypeConfiguration<Status>
+    public class ClassConfiguration : IEntityTypeConfiguration<Class>
     {
-        public void Configure(EntityTypeBuilder<Status> entity)
+        public void Configure(EntityTypeBuilder<Class> entity)
         {
-            entity.ToTable("Status");
+            entity.ToTable("Class");
 
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.Property(e => e.ClassId).ValueGeneratedOnAdd();
 
-            entity.Property(e => e.Name)
+            entity.Property(e => e.NameClass)
                 .HasMaxLength(255)
                 .IsUnicode(false);
         }

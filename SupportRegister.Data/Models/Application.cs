@@ -9,15 +9,15 @@ namespace SupportRegister.Data.Models
     {
         public Application()
         {
-            DetailRegisterApplications = new HashSet<DetailRegisterApplication>();
+            RegisterApplications = new HashSet<RegisterApplication>();
         }
 
         public int IdApplication { get; set; }
-        public string NameApplication { get; set; }    
+        public string NameApplication { get; set; }
         public string Description { get; set; }
         public string Content { get; set; }
-        public int? Price { get; set; }
+        public int Price { get; set; }
 
-        public ICollection<DetailRegisterApplication> DetailRegisterApplications { get; set; }
+        public ICollection<RegisterApplication> RegisterApplications { get; set; }
     }
 }

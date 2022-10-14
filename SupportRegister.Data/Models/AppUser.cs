@@ -18,7 +18,7 @@ namespace SupportRegister.Data.Models
         public DateTime? Birthday { get; set; }
         public string Avatar { get; set; }
 
-        public virtual ICollection<Student> Students { get; set; }
-        public virtual ICollection<Staff> Staff { get; set; }
+        public ICollection<Student> Students { get; set; }
+        public ICollection<Staff> Staff { get; set; }
     }
 }

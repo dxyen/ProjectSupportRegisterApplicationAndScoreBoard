@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SupportRegister.Application.Interfaces;
-using SupportRegister.ViewModels.Requests.Scoreboard;
+using SupportRegister.ViewModels.Requests.Application;
 using System;
 using System.Threading.Tasks;
 
@@ -10,19 +10,19 @@ namespace SupportRegister.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegisterScoreboardController : ControllerBase
+    public class RegisterApplicationController : ControllerBase
     {
-        private readonly IScoreboardService _scoreboardService;
-        public RegisterScoreboardController(IScoreboardService scoreboardService)
+        private readonly IApplicationService _applicationService;
+        public RegisterApplicationController(IApplicationService applicationService)
         {
-            _scoreboardService = scoreboardService;
+            _applicationService = applicationService;
         }
         [HttpGet("GetDetail")]
         public async Task<IActionResult> GetDetail(Guid id, int regisId)
         {
             try
             {
-                var data = await _scoreboardService.GetDetailScoreboardByIdAsync(id, regisId);
+                var data = await _applicationService.GetDetailApplicationAsync(id, regisId);
                 return Ok(JsonConvert.SerializeObject(data));
             }
             catch (Exception e)
@@ -35,7 +35,7 @@ namespace SupportRegister.API.Controllers
         {
             try
             {
-                var data = await _scoreboardService.GetAllScoreboardByIdAsync(id);
+                var data = await _applicationService.GetAllApplicationByIdAsync(id);
                 return Ok(JsonConvert.SerializeObject(data));
             }
             catch (Exception e)
@@ -43,12 +43,12 @@ namespace SupportRegister.API.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpGet("GetAllScore")]
-        public async Task<IActionResult> GetAllScore()
+        [HttpGet("GetAllApp")]
+        public async Task<IActionResult> GetAllApp()
         {
             try
             {
-                var data = await _scoreboardService.GetAllScoreboardAsync();
+                var data = await _applicationService.GetAllApplicationAsync();
                 return Ok(JsonConvert.SerializeObject(data));
             }
             catch (Exception e)
@@ -57,7 +57,7 @@ namespace SupportRegister.API.Controllers
             }
         }
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromBody] RegisterScoreboardCreateRequest request)
+        public async Task<IActionResult> Create([FromBody] RegisterApplicationCreateRequest request)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace SupportRegister.API.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                var register = await _scoreboardService.RegisterScoreboardAsync(request);
+                var register = await _applicationService.RegisterApplicationAsync(request);
                 if (register == 0)
                 {
                     return BadRequest();
@@ -78,7 +78,7 @@ namespace SupportRegister.API.Controllers
             }
         }
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromBody] RegisterScoreboardUpdateRequest request)
+        public async Task<IActionResult> Update([FromBody] RegisterApplicationUpdateRequest request)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace SupportRegister.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var result = await _scoreboardService.UpdateScoreboardAsync(request);
+                var result = await _applicationService.UpdateApplicationAsync(request);
 
                 if (result == 0)
                 {
@@ -101,7 +101,7 @@ namespace SupportRegister.API.Controllers
             }
         }
         [HttpPut("Cancel")]
-        public async Task<IActionResult> Cancel([FromBody] RegisterScoreboardCancelRequest request)
+        public async Task<IActionResult> Cancel([FromBody] RegisterApplicationCancelRequest request)
         {
             try
             {
@@ -110,7 +110,7 @@ namespace SupportRegister.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var result = await _scoreboardService.CancelScoreboardAsync(request);
+                var result = await _applicationService.CancelApplicationAsync(request);
 
                 if (result == 0)
                 {

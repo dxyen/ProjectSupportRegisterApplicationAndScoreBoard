@@ -14,10 +14,9 @@ namespace SupportRegister.Data.Configuration
         public void Configure(EntityTypeBuilder<Semester> entity)
         {
             entity.HasKey(e => e.IdSemester)
-                     .HasName("PK_SEMESTER");
+                   .HasName("PK_SEMESTER");
 
             entity.ToTable("Semester");
-
             entity.Property(e => e.IdSemester).ValueGeneratedOnAdd();
 
             entity.Property(e => e.NameSemester)

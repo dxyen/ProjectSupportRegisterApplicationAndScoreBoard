@@ -26,19 +26,19 @@ namespace SupportRegister.Application.Services
             var query = await _context.Statuses
                 .Select(status => new StatusViewModel()
                 {
-                    IdStatus = status.IdStatus,
-                    NameStatus = status.NameStatus
+                    IdStatus = status.Id,
+                    NameStatus = status.Name
                 }).ToListAsync();
             return query;
         }
 
         public async Task<StatusViewModel> GetDetailStatusAsync(int id)
         {
-            var query = await _context.Statuses.Where(x => x.IdStatus == id)
+            var query = await _context.Statuses.Where(x => x.Id == id)
             .Select(status => new StatusViewModel()
             {
-                IdStatus = status.IdStatus,
-                NameStatus = status.NameStatus
+                IdStatus = status.Id,
+                NameStatus = status.Name
             }).FirstOrDefaultAsync();
             return query;
         }

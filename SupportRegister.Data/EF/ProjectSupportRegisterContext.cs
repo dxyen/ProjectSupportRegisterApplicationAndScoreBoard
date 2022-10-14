@@ -12,7 +12,6 @@ namespace SupportRegister.Data.EF
 {
     public class ProjectSupportRegisterContext : IdentityDbContext<AppUser, AppRole, Guid>
     {
-
         public ProjectSupportRegisterContext(DbContextOptions<ProjectSupportRegisterContext> options) : base(options)
         {
         }
@@ -29,7 +28,8 @@ namespace SupportRegister.Data.EF
                 .ApplyConfiguration(new RegisterScoreboardConfiguration())
                 .ApplyConfiguration(new DetailRegisterScoreboardConfiguration())
                 .ApplyConfiguration(new FeedbackConfiguration())
-                .ApplyConfiguration(new ScoreboardConfiguration())
+                .ApplyConfiguration(new ClassConfiguration())
+                .ApplyConfiguration(new CourseConfiguration())
                 .ApplyConfiguration(new SemesterConfiguration())
                 .ApplyConfiguration(new StaffConfiguration())
                 .ApplyConfiguration(new StatusConfiguration())
@@ -51,7 +51,6 @@ namespace SupportRegister.Data.EF
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<RegisterApplication> RegisterApplications { get; set; }
         public DbSet<RegisterScoreboard> RegisterScoreboards { get; set; }
-        public DbSet<Scoreboard> Scoreboards { get; set; }
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<Status> Statuses { get; set; }
@@ -59,5 +58,7 @@ namespace SupportRegister.Data.EF
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<AppRole> AppRoles { get; set; }
         public DbSet<Year> Years { get; set; }
+        public DbSet<Class> Classes { get; set; }
+        public DbSet<Course> Courses { get; set; }
     }
 }

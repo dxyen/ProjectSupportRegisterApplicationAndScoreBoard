@@ -16,7 +16,7 @@ namespace SupportRegister.Data.Migrations
                     NameApplication = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: true)
+                    Price = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,17 +68,28 @@ namespace SupportRegister.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Scoreboard",
+                name: "Class",
                 columns: table => new
                 {
-                    IdScore = table.Column<int>(type: "int", nullable: false)
+                    ClassId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NameScore = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: true)
+                    NameClass = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SCOREBOARD", x => x.IdScore);
+                    table.PrimaryKey("PK_Class", x => x.ClassId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Course",
+                columns: table => new
+                {
+                    IdCourse = table.Column<string>(type: "char(5)", unicode: false, fixedLength: true, maxLength: 5, nullable: false),
+                    NameCourse = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__Course__E0B50B816A385DF6", x => x.IdCourse);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,7 +98,8 @@ namespace SupportRegister.Data.Migrations
                 {
                     IdSemester = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NameSemester = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false)
+                    NameSemester = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,13 +110,13 @@ namespace SupportRegister.Data.Migrations
                 name: "Status",
                 columns: table => new
                 {
-                    IdStatus = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NameStatus = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false)
+                    Name = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_STATUS", x => x.IdStatus);
+                    table.PrimaryKey("PK_Status", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,7 +125,7 @@ namespace SupportRegister.Data.Migrations
                 {
                     IdYear = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Year = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: false)
+                    Year = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -252,17 +264,81 @@ namespace SupportRegister.Data.Migrations
                     StudentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    YearStart = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true)
+                    YearStart = table.Column<int>(type: "int", nullable: false),
+                    ClassId = table.Column<int>(type: "int", nullable: false),
+                    IdCourse = table.Column<string>(type: "char(5)", unicode: false, fixedLength: true, maxLength: 5, nullable: false),
+                    YearEnd = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Students", x => x.StudentId);
                     table.ForeignKey(
+                        name: "Fk_stu_course",
+                        column: x => x.IdCourse,
+                        principalTable: "Course",
+                        principalColumn: "IdCourse",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "Fk_student_class",
+                        column: x => x.ClassId,
+                        principalTable: "Class",
+                        principalColumn: "ClassId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_STUDENTS_USERS",
                         column: x => x.UserId,
                         principalTable: "AppUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RegisterApplication",
+                columns: table => new
+                {
+                    IdRegisterApplication = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdStatus = table.Column<int>(type: "int", nullable: false),
+                    DateRegister = table.Column<DateTime>(type: "date", nullable: false),
+                    DateReceived = table.Column<DateTime>(type: "date", nullable: true),
+                    ApplicationId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_REGISTERAPPLICATION", x => x.IdRegisterApplication);
+                    table.ForeignKey(
+                        name: "Fk_regis_app",
+                        column: x => x.ApplicationId,
+                        principalTable: "Application",
+                        principalColumn: "IdApplication",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "Fk_regisapp_status",
+                        column: x => x.IdStatus,
+                        principalTable: "Status",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RegisterScoreboard",
+                columns: table => new
+                {
+                    IdRegisterScoreboard = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdStatus = table.Column<int>(type: "int", nullable: false),
+                    DateRegister = table.Column<DateTime>(type: "date", nullable: false),
+                    DateReceived = table.Column<DateTime>(type: "date", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_REGISTERSCOREBOARD", x => x.IdRegisterScoreboard);
+                    table.ForeignKey(
+                        name: "Fk_status_score",
+                        column: x => x.IdStatus,
+                        principalTable: "Status",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -286,125 +362,69 @@ namespace SupportRegister.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RegisterApplication",
-                columns: table => new
-                {
-                    IdRegisterApplication = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentId = table.Column<int>(type: "int", nullable: false),
-                    IdStatus = table.Column<int>(type: "int", nullable: false),
-                    DateRegister = table.Column<DateTime>(type: "date", nullable: true),
-                    DateReceived = table.Column<DateTime>(type: "date", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_REGISTERAPPLICATION", x => x.IdRegisterApplication);
-                    table.ForeignKey(
-                        name: "FK_REGISTER_STATUS",
-                        column: x => x.IdStatus,
-                        principalTable: "Status",
-                        principalColumn: "IdStatus",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_REGISTERAPPLICATION_STUDENT",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RegisterScoreboard",
-                columns: table => new
-                {
-                    IdRegisterScoreboard = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentId = table.Column<int>(type: "int", nullable: false),
-                    IdStatus = table.Column<int>(type: "int", nullable: false),
-                    DateRegister = table.Column<DateTime>(type: "date", nullable: false),
-                    DateReceived = table.Column<DateTime>(type: "date", nullable: true),
-                    YearId = table.Column<int>(type: "int", nullable: false),
-                    SemesterId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_REGISTERSCOREBOARD", x => x.IdRegisterScoreboard);
-                    table.ForeignKey(
-                        name: "FK_REGISTERSCOREBOARD_STATUS",
-                        column: x => x.IdStatus,
-                        principalTable: "Status",
-                        principalColumn: "IdStatus",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_REGISTERSCOREBOARD_STUDENTS",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "Fk_Semeter_RegidterScoreboard",
-                        column: x => x.SemesterId,
-                        principalTable: "Semester",
-                        principalColumn: "IdSemester",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "Fk_Year_RegisterScoreboard",
-                        column: x => x.YearId,
-                        principalTable: "Year",
-                        principalColumn: "IdYear",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "DetailRegisterApplication",
                 columns: table => new
                 {
-                    IdApplication = table.Column<int>(type: "int", nullable: false),
-                    IdRegisterApplication = table.Column<int>(type: "int", nullable: false),
-                    Amount = table.Column<int>(type: "int", nullable: true),
-                    Price = table.Column<int>(type: "int", nullable: true)
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    RegisId = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DETAILREGISTERAPPLICATION", x => new { x.IdApplication, x.IdRegisterApplication });
+                    table.PrimaryKey("PK__DetailRe__D170D43024840281", x => new { x.StudentId, x.RegisId });
                     table.ForeignKey(
-                        name: "FK_DETAILRE_APPLICATION",
-                        column: x => x.IdApplication,
-                        principalTable: "Application",
-                        principalColumn: "IdApplication",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_DETAILRE_REGISTERAPPLICATION",
-                        column: x => x.IdRegisterApplication,
+                        name: "Fk_detailapp_regisapp",
+                        column: x => x.RegisId,
                         principalTable: "RegisterApplication",
                         principalColumn: "IdRegisterApplication",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "Fk_detailapp_stu",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "StudentId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "DetailRegisterScoreboard",
                 columns: table => new
                 {
-                    IdRegisterScoreboard = table.Column<int>(type: "int", nullable: false),
-                    IdScore = table.Column<int>(type: "int", nullable: false),
-                    Amount = table.Column<int>(type: "int", nullable: true),
-                    Price = table.Column<int>(type: "int", nullable: true)
+                    RegisId = table.Column<int>(type: "int", nullable: false),
+                    SemesterId = table.Column<int>(type: "int", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    YearId = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DETAILREGISTERSCOREBOARD", x => new { x.IdRegisterScoreboard, x.IdScore });
+                    table.PrimaryKey("PK__DetailRe__B873A826F6F01A76", x => new { x.RegisId, x.SemesterId, x.StudentId, x.YearId });
                     table.ForeignKey(
-                        name: "FK_DETAILRE_REGISTERSCOREBOARD",
-                        column: x => x.IdRegisterScoreboard,
+                        name: "Fk_detail_semester",
+                        column: x => x.SemesterId,
+                        principalTable: "Semester",
+                        principalColumn: "IdSemester",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "Fk_detail_stu",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "StudentId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "Fk_detail_year",
+                        column: x => x.YearId,
+                        principalTable: "Year",
+                        principalColumn: "IdYear",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "Fk_regis_score",
+                        column: x => x.RegisId,
                         principalTable: "RegisterScoreboard",
                         principalColumn: "IdRegisterScoreboard",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_DETAILRE_SCORE",
-                        column: x => x.IdScore,
-                        principalTable: "Scoreboard",
-                        principalColumn: "IdScore",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -412,9 +432,9 @@ namespace SupportRegister.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"), "9aaff60d-c90f-46cd-8922-8af1ec84b022", "Administrator role", "admin", "admin" },
-                    { new Guid("bff91064-dc92-421e-a233-d1080f630928"), "57fac229-f3d6-476b-8e9d-378b230b6eea", "Staff role", "staff", "staff" },
-                    { new Guid("bff91054-dc92-421e-a233-d1080f630928"), "a9ed1891-beea-4c43-bb5f-f4dc4e1c43da", "Student role", "student", "student" }
+                    { new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"), "5c1f42e4-a3d0-4630-8e8f-f334675b755c", "Administrator role", "admin", "admin" },
+                    { new Guid("bff91064-dc92-421e-a233-d1080f630928"), "5cc64c3b-9efc-42e7-84c3-94559caf8621", "Staff role", "staff", "staff" },
+                    { new Guid("bff91054-dc92-421e-a233-d1080f630928"), "a0e2fbf5-9e34-49dc-a268-1444773d81c4", "Student role", "student", "student" }
                 });
 
             migrationBuilder.InsertData(
@@ -422,19 +442,19 @@ namespace SupportRegister.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Address", "Avatar", "Birthday", "ConcurrencyStamp", "Email", "EmailConfirmed", "FullName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { new Guid("bff91064-dc92-421e-a233-d1080f630928"), 0, "Hưng Lợi, Cần Thơ", null, new DateTime(2000, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "7c05c63b-62c3-4644-9303-00258536b275", "yenb1809323@student.ctu.edu.vn", false, "Đỗ Xuân Yên", false, null, "yenb1809323@student.ctu.edu.vn", "YenDX", "AQAAAAEAACcQAAAAELnobsFwxdhmeblq+HsPujvhIfmwNmhQTaZwbW7zheRPfMWWUo1E/Bqjj1YvpnJ32w==", null, false, "", false, "YenDX" },
-                    { new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"), 0, "Hưng Lợi, Ninh Kiều, Cần Thơ", null, new DateTime(2000, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "4546f16e-1fc5-4081-8153-a1313806acff", "trucb1809323@student.ctu.edu.vn", false, "Võ Thị Thanh Trúc", false, null, "trucb1809323@student.ctu.edu.vn", "TrucVTT", "AQAAAAEAACcQAAAAEDl50yipYvgXv5QLQE223cCBZLts3bRkm98Yv9dSgaLvgz9wDzcWkVO89NZnrJqkfw==", null, false, "", false, "TrucVTT" },
-                    { new Guid("bff91065-dc92-421e-a233-d1080f630928"), 0, "Hưng Lợi, Ninh Kiều, Cần Thơ", null, new DateTime(2000, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "ac7c8387-12d4-47ec-930d-43532c8f438f", "haob1809323@student.ctu.edu.vn", false, "Vương Như Hảo", false, null, "haob1809323@student.ctu.edu.vn", "HaoVN", "AQAAAAEAACcQAAAAEDmQBRIAMzRkns9nwc9p/7wRln5DSxouD0h/g6pIGnqqZYDklMMG8RO3aN43YlUx0g==", null, false, "", false, "HaoVN" }
+                    { new Guid("bff91064-dc92-421e-a233-d1080f630928"), 0, "Hưng Lợi, Cần Thơ", null, new DateTime(2000, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "73b015ee-67d0-4268-8ae2-5771431c5a91", "yenb1809323@student.ctu.edu.vn", false, "Đỗ Xuân Yên", false, null, "yenb1809323@student.ctu.edu.vn", "YenDX", "AQAAAAEAACcQAAAAEChXIjO+ua6ALnRsS0J7nwZzegmdiCOaeisq/bTGwwCxerPAaZhkPP2+YTMzFhvPGw==", null, false, "", false, "YenDX" },
+                    { new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"), 0, "Hưng Lợi, Ninh Kiều, Cần Thơ", null, new DateTime(2000, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "f5776b92-f26f-42c0-b4fb-6c358c2cd166", "trucb1809323@student.ctu.edu.vn", false, "Võ Thị Thanh Trúc", false, null, "trucb1809323@student.ctu.edu.vn", "TrucVTT", "AQAAAAEAACcQAAAAEGUtEc0WkqhVdeVYpd2yj05ZffgOv89Su/sdv6MdHBdHWRjQ8HDsdnfpVh3wqkbbew==", null, false, "", false, "TrucVTT" },
+                    { new Guid("bff91065-dc92-421e-a233-d1080f630928"), 0, "Hưng Lợi, Ninh Kiều, Cần Thơ", null, new DateTime(2000, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "6870dffd-ba74-4eb7-a7cc-486f11194730", "haob1809323@student.ctu.edu.vn", false, "Vương Như Hảo", false, null, "haob1809323@student.ctu.edu.vn", "HaoVN", "AQAAAAEAACcQAAAAENEmIUfOC7eM0WRVW64vPf58QSpuSwLZjGvlc+dHAFhzQr+Ys+6scG+AoCSdMctkRA==", null, false, "", false, "HaoVN" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Semester",
-                columns: new[] { "IdSemester", "NameSemester" },
+                columns: new[] { "IdSemester", "NameSemester", "Price" },
                 values: new object[,]
                 {
-                    { 1, "Học kỳ I" },
-                    { 2, "Học kỳ II" },
-                    { 3, "Học kỳ hè" }
+                    { 1, "Học kỳ I", 0 },
+                    { 2, "Học kỳ II", 0 },
+                    { 3, "Học kỳ hè", 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -442,11 +462,12 @@ namespace SupportRegister.Data.Migrations
                 columns: new[] { "IdYear", "Year" },
                 values: new object[,]
                 {
-                    { 1, "2019-2020" },
-                    { 2, "2020-2021" },
-                    { 3, "2021-2022" },
-                    { 4, "2022-2023" },
-                    { 5, "2023-2024" }
+                    { 1, 2018 },
+                    { 2, 2019 },
+                    { 3, 2020 },
+                    { 4, 2021 },
+                    { 5, 2022 },
+                    { 6, 2023 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -484,14 +505,24 @@ namespace SupportRegister.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DetailRegisterApplication_IdRegisterApplication",
+                name: "IX_DetailRegisterApplication_RegisId",
                 table: "DetailRegisterApplication",
-                column: "IdRegisterApplication");
+                column: "RegisId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DetailRegisterScoreboard_IdScore",
+                name: "IX_DetailRegisterScoreboard_SemesterId",
                 table: "DetailRegisterScoreboard",
-                column: "IdScore");
+                column: "SemesterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetailRegisterScoreboard_StudentId",
+                table: "DetailRegisterScoreboard",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetailRegisterScoreboard_YearId",
+                table: "DetailRegisterScoreboard",
+                column: "YearId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Feedbacks_StudentId",
@@ -499,14 +530,14 @@ namespace SupportRegister.Data.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RegisterApplication_ApplicationId",
+                table: "RegisterApplication",
+                column: "ApplicationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RegisterApplication_IdStatus",
                 table: "RegisterApplication",
                 column: "IdStatus");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RegisterApplication_StudentId",
-                table: "RegisterApplication",
-                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RegisterScoreboard_IdStatus",
@@ -514,24 +545,19 @@ namespace SupportRegister.Data.Migrations
                 column: "IdStatus");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RegisterScoreboard_SemesterId",
-                table: "RegisterScoreboard",
-                column: "SemesterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RegisterScoreboard_StudentId",
-                table: "RegisterScoreboard",
-                column: "StudentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RegisterScoreboard_YearId",
-                table: "RegisterScoreboard",
-                column: "YearId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Staffs_UserId",
                 table: "Staffs",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_ClassId",
+                table: "Students",
+                column: "ClassId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_IdCourse",
+                table: "Students",
+                column: "IdCourse");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_UserId",
@@ -572,28 +598,31 @@ namespace SupportRegister.Data.Migrations
                 name: "AppRoles");
 
             migrationBuilder.DropTable(
-                name: "Application");
-
-            migrationBuilder.DropTable(
                 name: "RegisterApplication");
-
-            migrationBuilder.DropTable(
-                name: "RegisterScoreboard");
-
-            migrationBuilder.DropTable(
-                name: "Scoreboard");
-
-            migrationBuilder.DropTable(
-                name: "Status");
-
-            migrationBuilder.DropTable(
-                name: "Students");
 
             migrationBuilder.DropTable(
                 name: "Semester");
 
             migrationBuilder.DropTable(
                 name: "Year");
+
+            migrationBuilder.DropTable(
+                name: "RegisterScoreboard");
+
+            migrationBuilder.DropTable(
+                name: "Students");
+
+            migrationBuilder.DropTable(
+                name: "Application");
+
+            migrationBuilder.DropTable(
+                name: "Status");
+
+            migrationBuilder.DropTable(
+                name: "Course");
+
+            migrationBuilder.DropTable(
+                name: "Class");
 
             migrationBuilder.DropTable(
                 name: "AppUsers");

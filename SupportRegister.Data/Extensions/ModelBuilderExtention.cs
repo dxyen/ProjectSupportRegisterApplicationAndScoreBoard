@@ -93,27 +93,32 @@ namespace SupportRegister.Data.Extensions
             new Year()
             {
                 IdYear = 1,
-                Year1 = "2019-2020"
+                Year1 = 2018
             },
              new Year()
              {
                  IdYear = 2,
-                 Year1 = "2020-2021"
+                 Year1 = 2019
              },
              new Year()
              {
                  IdYear = 3,
-                 Year1 = "2021-2022"
+                 Year1 = 2020
              },
              new Year()
              {
                  IdYear = 4,
-                 Year1 = "2022-2023"
+                 Year1 = 2021
              },
+              new Year()
+              {
+                  IdYear = 5,
+                  Year1 = 2022
+              },
              new Year()
              {
-                 IdYear = 5,
-                 Year1 = "2023-2024"
+                 IdYear = 6,
+                 Year1 = 2023
              });
         }
     }

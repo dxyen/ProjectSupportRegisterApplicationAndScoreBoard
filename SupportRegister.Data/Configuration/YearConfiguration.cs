@@ -14,17 +14,12 @@ namespace SupportRegister.Data.Configuration
         public void Configure(EntityTypeBuilder<Year> entity)
         {
             entity.HasKey(e => e.IdYear)
-                      .HasName("PK_YEAR");
+                                .HasName("PK_YEAR");
 
             entity.ToTable("Year");
-
             entity.Property(e => e.IdYear).ValueGeneratedOnAdd();
 
-            entity.Property(e => e.Year1)
-                .IsRequired()
-                .HasMaxLength(20)
-                .IsUnicode(false)
-                .HasColumnName("Year");
+            entity.Property(e => e.Year1).HasColumnName("Year");
         }
     }
 }

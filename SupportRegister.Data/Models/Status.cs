@@ -13,10 +13,10 @@ namespace SupportRegister.Data.Models
             RegisterScoreboards = new HashSet<RegisterScoreboard>();
         }
 
-        public int IdStatus { get; set; }
-        public string NameStatus { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
 
-        public virtual ICollection<RegisterApplication> RegisterApplications { get; set; }
-        public virtual ICollection<RegisterScoreboard> RegisterScoreboards { get; set; }
+        public ICollection<RegisterApplication> RegisterApplications { get; set; }
+        public ICollection<RegisterScoreboard> RegisterScoreboards { get; set; }
     }
 }

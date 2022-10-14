@@ -10,6 +10,6 @@ namespace SupportRegister.Data.Models
         public int StaffId { get; set; }
         public Guid UserId { get; set; }
 
-        public virtual AppUser User { get; set; }
+        public AppUser User { get; set; }
     }
 }

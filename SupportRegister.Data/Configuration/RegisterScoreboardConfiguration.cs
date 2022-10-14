@@ -14,11 +14,9 @@ namespace SupportRegister.Data.Configuration
         public void Configure(EntityTypeBuilder<RegisterScoreboard> entity)
         {
             entity.HasKey(e => e.IdRegisterScoreboard)
-                   .HasName("PK_REGISTERSCOREBOARD");
+                    .HasName("PK_REGISTERSCOREBOARD");
 
             entity.ToTable("RegisterScoreboard");
-
-
             entity.Property(e => e.IdRegisterScoreboard).ValueGeneratedOnAdd();
 
             entity.Property(e => e.DateReceived).HasColumnType("date");
@@ -28,24 +26,7 @@ namespace SupportRegister.Data.Configuration
             entity.HasOne(d => d.IdStatusNavigation)
                 .WithMany(p => p.RegisterScoreboards)
                 .HasForeignKey(d => d.IdStatus)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_REGISTERSCOREBOARD_STATUS");
-
-            entity.HasOne(d => d.Semester)
-                .WithMany(p => p.RegisterScoreboards)
-                .HasForeignKey(d => d.SemesterId)
-                .HasConstraintName("Fk_Semeter_RegidterScoreboard");
-
-            entity.HasOne(d => d.Student)
-                .WithMany(p => p.RegisterScoreboards)
-                .HasForeignKey(d => d.StudentId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_REGISTERSCOREBOARD_STUDENTS");
-
-            entity.HasOne(d => d.Year)
-                .WithMany(p => p.RegisterScoreboards)
-                .HasForeignKey(d => d.YearId)
-                .HasConstraintName("Fk_Year_RegisterScoreboard");
+                .HasConstraintName("Fk_status_score");
         }
     }
 }

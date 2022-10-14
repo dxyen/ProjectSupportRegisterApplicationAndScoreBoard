@@ -14,10 +14,9 @@ namespace SupportRegister.Data.Configuration
         public void Configure(EntityTypeBuilder<Application> entity)
         {
             entity.HasKey(e => e.IdApplication)
-                   .HasName("PK_APPLICATION");
+                    .HasName("PK_APPLICATION");
 
             entity.ToTable("Application");
-
             entity.Property(e => e.IdApplication).ValueGeneratedOnAdd();
 
             entity.Property(e => e.Content)
@@ -29,7 +28,6 @@ namespace SupportRegister.Data.Configuration
             entity.Property(e => e.NameApplication)
                 .IsRequired()
                 .HasMaxLength(1000);
-
         }
     }
 }

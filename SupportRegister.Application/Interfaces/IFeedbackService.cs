@@ -13,7 +13,7 @@ namespace SupportRegister.Application.Interfaces
         Task<int> CreateFeedbackAsync(FeedbackCreateRequest request);
         Task<int> UpdateFeedbackAsync(FeedbackUpdateRequest request);
         Task<int> DeleteFeedbackAsync(FeedbackDeleteRequest request);
-        Task<List<FeedbackViewModel>> GetAllScoreboardByIdAsync(Guid id);
-        Task<List<FeedbackViewModel>> GetAllScoreboardAsync();
+        Task<List<FeedbackViewModel>> GetAllFeedbackByIdAsync(Guid id);
+        Task<List<FeedbackViewModel>> GetAllFeedbackAsync();
     }
 }

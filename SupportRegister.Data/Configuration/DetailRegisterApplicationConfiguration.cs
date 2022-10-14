@@ -13,21 +13,20 @@ namespace SupportRegister.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<DetailRegisterApplication> entity)
         {
-            entity.HasKey(e => new { e.IdApplication, e.IdRegisterApplication })
-                     .HasName("PK_DETAILREGISTERAPPLICATION");
+            entity.HasKey(e => new { e.StudentId, e.RegisId })
+                     .HasName("PK__DetailRe__D170D43024840281");
 
             entity.ToTable("DetailRegisterApplication");
-            entity.HasOne(d => d.IdApplicationNavigation)
-                .WithMany(p => p.DetailRegisterApplications)
-                .HasForeignKey(d => d.IdApplication)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DETAILRE_APPLICATION");
 
-            entity.HasOne(d => d.IdRegisterApplicationNavigation)
+            entity.HasOne(d => d.Regis)
                 .WithMany(p => p.DetailRegisterApplications)
-                .HasForeignKey(d => d.IdRegisterApplication)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DETAILRE_REGISTERAPPLICATION");
+                .HasForeignKey(d => d.RegisId)
+                .HasConstraintName("Fk_detailapp_regisapp");
+
+            entity.HasOne(d => d.Student)
+                .WithMany(p => p.DetailRegisterApplications)
+                .HasForeignKey(d => d.StudentId)
+                .HasConstraintName("Fk_detailapp_stu");
         }
     }
 }

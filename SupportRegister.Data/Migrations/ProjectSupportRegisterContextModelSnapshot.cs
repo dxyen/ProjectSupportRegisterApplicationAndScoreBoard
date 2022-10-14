@@ -154,7 +154,7 @@ namespace SupportRegister.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "9aaff60d-c90f-46cd-8922-8af1ec84b022",
+                            ConcurrencyStamp = "5c1f42e4-a3d0-4630-8e8f-f334675b755c",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -162,7 +162,7 @@ namespace SupportRegister.Data.Migrations
                         new
                         {
                             Id = new Guid("bff91064-dc92-421e-a233-d1080f630928"),
-                            ConcurrencyStamp = "57fac229-f3d6-476b-8e9d-378b230b6eea",
+                            ConcurrencyStamp = "5cc64c3b-9efc-42e7-84c3-94559caf8621",
                             Description = "Staff role",
                             Name = "staff",
                             NormalizedName = "staff"
@@ -170,7 +170,7 @@ namespace SupportRegister.Data.Migrations
                         new
                         {
                             Id = new Guid("bff91054-dc92-421e-a233-d1080f630928"),
-                            ConcurrencyStamp = "a9ed1891-beea-4c43-bb5f-f4dc4e1c43da",
+                            ConcurrencyStamp = "a0e2fbf5-9e34-49dc-a268-1444773d81c4",
                             Description = "Student role",
                             Name = "student",
                             NormalizedName = "student"
@@ -268,14 +268,14 @@ namespace SupportRegister.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Hưng Lợi, Cần Thơ",
                             Birthday = new DateTime(2000, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "7c05c63b-62c3-4644-9303-00258536b275",
+                            ConcurrencyStamp = "73b015ee-67d0-4268-8ae2-5771431c5a91",
                             Email = "yenb1809323@student.ctu.edu.vn",
                             EmailConfirmed = false,
                             FullName = "Đỗ Xuân Yên",
                             LockoutEnabled = false,
                             NormalizedEmail = "yenb1809323@student.ctu.edu.vn",
                             NormalizedUserName = "YenDX",
-                            PasswordHash = "AQAAAAEAACcQAAAAELnobsFwxdhmeblq+HsPujvhIfmwNmhQTaZwbW7zheRPfMWWUo1E/Bqjj1YvpnJ32w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEChXIjO+ua6ALnRsS0J7nwZzegmdiCOaeisq/bTGwwCxerPAaZhkPP2+YTMzFhvPGw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -287,14 +287,14 @@ namespace SupportRegister.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Hưng Lợi, Ninh Kiều, Cần Thơ",
                             Birthday = new DateTime(2000, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "4546f16e-1fc5-4081-8153-a1313806acff",
+                            ConcurrencyStamp = "f5776b92-f26f-42c0-b4fb-6c358c2cd166",
                             Email = "trucb1809323@student.ctu.edu.vn",
                             EmailConfirmed = false,
                             FullName = "Võ Thị Thanh Trúc",
                             LockoutEnabled = false,
                             NormalizedEmail = "trucb1809323@student.ctu.edu.vn",
                             NormalizedUserName = "TrucVTT",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDl50yipYvgXv5QLQE223cCBZLts3bRkm98Yv9dSgaLvgz9wDzcWkVO89NZnrJqkfw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGUtEc0WkqhVdeVYpd2yj05ZffgOv89Su/sdv6MdHBdHWRjQ8HDsdnfpVh3wqkbbew==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -306,14 +306,14 @@ namespace SupportRegister.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Hưng Lợi, Ninh Kiều, Cần Thơ",
                             Birthday = new DateTime(2000, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "ac7c8387-12d4-47ec-930d-43532c8f438f",
+                            ConcurrencyStamp = "6870dffd-ba74-4eb7-a7cc-486f11194730",
                             Email = "haob1809323@student.ctu.edu.vn",
                             EmailConfirmed = false,
                             FullName = "Vương Như Hảo",
                             LockoutEnabled = false,
                             NormalizedEmail = "haob1809323@student.ctu.edu.vn",
                             NormalizedUserName = "HaoVN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDmQBRIAMzRkns9nwc9p/7wRln5DSxouD0h/g6pIGnqqZYDklMMG8RO3aN43YlUx0g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENEmIUfOC7eM0WRVW64vPf58QSpuSwLZjGvlc+dHAFhzQr+Ys+6scG+AoCSdMctkRA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -342,7 +342,7 @@ namespace SupportRegister.Data.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<int?>("Price")
+                    b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.HasKey("IdApplication")
@@ -351,47 +351,93 @@ namespace SupportRegister.Data.Migrations
                     b.ToTable("Application");
                 });
 
+            modelBuilder.Entity("SupportRegister.Data.Models.Class", b =>
+                {
+                    b.Property<int>("ClassId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NameClass")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("ClassId");
+
+                    b.ToTable("Class");
+                });
+
+            modelBuilder.Entity("SupportRegister.Data.Models.Course", b =>
+                {
+                    b.Property<string>("IdCourse")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(5)
+                        .IsUnicode(false)
+                        .HasColumnType("char(5)")
+                        .IsFixedLength(true);
+
+                    b.Property<string>("NameCourse")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("IdCourse")
+                        .HasName("PK__Course__E0B50B816A385DF6");
+
+                    b.ToTable("Course");
+                });
+
             modelBuilder.Entity("SupportRegister.Data.Models.DetailRegisterApplication", b =>
                 {
-                    b.Property<int>("IdApplication")
+                    b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdRegisterApplication")
+                    b.Property<int>("RegisId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Amount")
+                    b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Price")
+                    b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.HasKey("IdApplication", "IdRegisterApplication")
-                        .HasName("PK_DETAILREGISTERAPPLICATION");
+                    b.HasKey("StudentId", "RegisId")
+                        .HasName("PK__DetailRe__D170D43024840281");
 
-                    b.HasIndex("IdRegisterApplication");
+                    b.HasIndex("RegisId");
 
                     b.ToTable("DetailRegisterApplication");
                 });
 
             modelBuilder.Entity("SupportRegister.Data.Models.DetailRegisterScoreboard", b =>
                 {
-                    b.Property<int>("IdRegisterScoreboard")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("RegisId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdScore")
+                    b.Property<int>("SemesterId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Amount")
+                    b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Price")
+                    b.Property<int>("YearId")
                         .HasColumnType("int");
 
-                    b.HasKey("IdRegisterScoreboard", "IdScore")
-                        .HasName("PK_DETAILREGISTERSCOREBOARD");
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
 
-                    b.HasIndex("IdScore");
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.HasKey("RegisId", "SemesterId", "StudentId", "YearId")
+                        .HasName("PK__DetailRe__B873A826F6F01A76");
+
+                    b.HasIndex("SemesterId");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("YearId");
 
                     b.ToTable("DetailRegisterScoreboard");
                 });
@@ -426,24 +472,24 @@ namespace SupportRegister.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ApplicationId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("DateReceived")
                         .HasColumnType("date");
 
-                    b.Property<DateTime?>("DateRegister")
+                    b.Property<DateTime>("DateRegister")
                         .HasColumnType("date");
 
                     b.Property<int>("IdStatus")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
                     b.HasKey("IdRegisterApplication")
                         .HasName("PK_REGISTERAPPLICATION");
 
-                    b.HasIndex("IdStatus");
+                    b.HasIndex("ApplicationId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("IdStatus");
 
                     b.ToTable("RegisterApplication");
                 });
@@ -464,48 +510,12 @@ namespace SupportRegister.Data.Migrations
                     b.Property<int>("IdStatus")
                         .HasColumnType("int");
 
-                    b.Property<int>("SemesterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("YearId")
-                        .HasColumnType("int");
-
                     b.HasKey("IdRegisterScoreboard")
                         .HasName("PK_REGISTERSCOREBOARD");
 
                     b.HasIndex("IdStatus");
 
-                    b.HasIndex("SemesterId");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("YearId");
-
                     b.ToTable("RegisterScoreboard");
-                });
-
-            modelBuilder.Entity("SupportRegister.Data.Models.Scoreboard", b =>
-                {
-                    b.Property<int>("IdScore")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("NameScore")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<int?>("Price")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdScore")
-                        .HasName("PK_SCOREBOARD");
-
-                    b.ToTable("Scoreboard");
                 });
 
             modelBuilder.Entity("SupportRegister.Data.Models.Semester", b =>
@@ -520,6 +530,9 @@ namespace SupportRegister.Data.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
                     b.HasKey("IdSemester")
                         .HasName("PK_SEMESTER");
 
@@ -529,17 +542,20 @@ namespace SupportRegister.Data.Migrations
                         new
                         {
                             IdSemester = 1,
-                            NameSemester = "Học kỳ I"
+                            NameSemester = "Học kỳ I",
+                            Price = 0
                         },
                         new
                         {
                             IdSemester = 2,
-                            NameSemester = "Học kỳ II"
+                            NameSemester = "Học kỳ II",
+                            Price = 0
                         },
                         new
                         {
                             IdSemester = 3,
-                            NameSemester = "Học kỳ hè"
+                            NameSemester = "Học kỳ hè",
+                            Price = 0
                         });
                 });
 
@@ -562,18 +578,17 @@ namespace SupportRegister.Data.Migrations
 
             modelBuilder.Entity("SupportRegister.Data.Models.Status", b =>
                 {
-                    b.Property<int>("IdStatus")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("NameStatus")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                    b.Property<string>("Name")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)");
 
-                    b.HasKey("IdStatus")
-                        .HasName("PK_STATUS");
+                    b.HasKey("Id");
 
                     b.ToTable("Status");
                 });
@@ -585,15 +600,30 @@ namespace SupportRegister.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ClassId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdCourse")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .IsUnicode(false)
+                        .HasColumnType("char(5)")
+                        .IsFixedLength(true);
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("YearStart")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
+                    b.Property<int?>("YearEnd")
+                        .HasColumnType("int");
+
+                    b.Property<int>("YearStart")
+                        .HasColumnType("int");
 
                     b.HasKey("StudentId");
+
+                    b.HasIndex("ClassId");
+
+                    b.HasIndex("IdCourse");
 
                     b.HasIndex("UserId");
 
@@ -607,11 +637,8 @@ namespace SupportRegister.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Year1")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(20)")
+                    b.Property<int>("Year1")
+                        .HasColumnType("int")
                         .HasColumnName("Year");
 
                     b.HasKey("IdYear")
@@ -623,27 +650,32 @@ namespace SupportRegister.Data.Migrations
                         new
                         {
                             IdYear = 1,
-                            Year1 = "2019-2020"
+                            Year1 = 2018
                         },
                         new
                         {
                             IdYear = 2,
-                            Year1 = "2020-2021"
+                            Year1 = 2019
                         },
                         new
                         {
                             IdYear = 3,
-                            Year1 = "2021-2022"
+                            Year1 = 2020
                         },
                         new
                         {
                             IdYear = 4,
-                            Year1 = "2022-2023"
+                            Year1 = 2021
                         },
                         new
                         {
                             IdYear = 5,
-                            Year1 = "2023-2024"
+                            Year1 = 2022
+                        },
+                        new
+                        {
+                            IdYear = 6,
+                            Year1 = 2023
                         });
                 });
 
@@ -700,40 +732,61 @@ namespace SupportRegister.Data.Migrations
 
             modelBuilder.Entity("SupportRegister.Data.Models.DetailRegisterApplication", b =>
                 {
-                    b.HasOne("SupportRegister.Data.Models.Application", "IdApplicationNavigation")
+                    b.HasOne("SupportRegister.Data.Models.RegisterApplication", "Regis")
                         .WithMany("DetailRegisterApplications")
-                        .HasForeignKey("IdApplication")
-                        .HasConstraintName("FK_DETAILRE_APPLICATION")
+                        .HasForeignKey("RegisId")
+                        .HasConstraintName("Fk_detailapp_regisapp")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SupportRegister.Data.Models.RegisterApplication", "IdRegisterApplicationNavigation")
+                    b.HasOne("SupportRegister.Data.Models.Student", "Student")
                         .WithMany("DetailRegisterApplications")
-                        .HasForeignKey("IdRegisterApplication")
-                        .HasConstraintName("FK_DETAILRE_REGISTERAPPLICATION")
+                        .HasForeignKey("StudentId")
+                        .HasConstraintName("Fk_detailapp_stu")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("IdApplicationNavigation");
+                    b.Navigation("Regis");
 
-                    b.Navigation("IdRegisterApplicationNavigation");
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("SupportRegister.Data.Models.DetailRegisterScoreboard", b =>
                 {
-                    b.HasOne("SupportRegister.Data.Models.RegisterScoreboard", "IdRegisterScoreboardNavigation")
+                    b.HasOne("SupportRegister.Data.Models.RegisterScoreboard", "Regis")
                         .WithMany("DetailRegisterScoreboards")
-                        .HasForeignKey("IdRegisterScoreboard")
-                        .HasConstraintName("FK_DETAILRE_REGISTERSCOREBOARD")
+                        .HasForeignKey("RegisId")
+                        .HasConstraintName("Fk_regis_score")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SupportRegister.Data.Models.Scoreboard", "IdScoreNavigation")
+                    b.HasOne("SupportRegister.Data.Models.Semester", "Semester")
                         .WithMany("DetailRegisterScoreboards")
-                        .HasForeignKey("IdScore")
-                        .HasConstraintName("FK_DETAILRE_SCORE")
+                        .HasForeignKey("SemesterId")
+                        .HasConstraintName("Fk_detail_semester")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("IdRegisterScoreboardNavigation");
+                    b.HasOne("SupportRegister.Data.Models.Student", "Student")
+                        .WithMany("DetailRegisterScoreboards")
+                        .HasForeignKey("StudentId")
+                        .HasConstraintName("Fk_detail_stu")
+                        .IsRequired();
 
-                    b.Navigation("IdScoreNavigation");
+                    b.HasOne("SupportRegister.Data.Models.Year", "Year")
+                        .WithMany("DetailRegisterScoreboards")
+                        .HasForeignKey("YearId")
+                        .HasConstraintName("Fk_detail_year")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Regis");
+
+                    b.Navigation("Semester");
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Year");
                 });
 
             modelBuilder.Entity("SupportRegister.Data.Models.Feedback", b =>
@@ -749,21 +802,23 @@ namespace SupportRegister.Data.Migrations
 
             modelBuilder.Entity("SupportRegister.Data.Models.RegisterApplication", b =>
                 {
+                    b.HasOne("SupportRegister.Data.Models.Application", "Application")
+                        .WithMany("RegisterApplications")
+                        .HasForeignKey("ApplicationId")
+                        .HasConstraintName("Fk_regis_app")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SupportRegister.Data.Models.Status", "IdStatusNavigation")
                         .WithMany("RegisterApplications")
                         .HasForeignKey("IdStatus")
-                        .HasConstraintName("FK_REGISTER_STATUS")
+                        .HasConstraintName("Fk_regisapp_status")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SupportRegister.Data.Models.Student", "Student")
-                        .WithMany("RegisterApplications")
-                        .HasForeignKey("StudentId")
-                        .HasConstraintName("FK_REGISTERAPPLICATION_STUDENT")
-                        .IsRequired();
+                    b.Navigation("Application");
 
                     b.Navigation("IdStatusNavigation");
-
-                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("SupportRegister.Data.Models.RegisterScoreboard", b =>
@@ -771,36 +826,11 @@ namespace SupportRegister.Data.Migrations
                     b.HasOne("SupportRegister.Data.Models.Status", "IdStatusNavigation")
                         .WithMany("RegisterScoreboards")
                         .HasForeignKey("IdStatus")
-                        .HasConstraintName("FK_REGISTERSCOREBOARD_STATUS")
-                        .IsRequired();
-
-                    b.HasOne("SupportRegister.Data.Models.Semester", "Semester")
-                        .WithMany("RegisterScoreboards")
-                        .HasForeignKey("SemesterId")
-                        .HasConstraintName("Fk_Semeter_RegidterScoreboard")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SupportRegister.Data.Models.Student", "Student")
-                        .WithMany("RegisterScoreboards")
-                        .HasForeignKey("StudentId")
-                        .HasConstraintName("FK_REGISTERSCOREBOARD_STUDENTS")
-                        .IsRequired();
-
-                    b.HasOne("SupportRegister.Data.Models.Year", "Year")
-                        .WithMany("RegisterScoreboards")
-                        .HasForeignKey("YearId")
-                        .HasConstraintName("Fk_Year_RegisterScoreboard")
+                        .HasConstraintName("Fk_status_score")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("IdStatusNavigation");
-
-                    b.Navigation("Semester");
-
-                    b.Navigation("Student");
-
-                    b.Navigation("Year");
                 });
 
             modelBuilder.Entity("SupportRegister.Data.Models.Staff", b =>
@@ -816,11 +846,30 @@ namespace SupportRegister.Data.Migrations
 
             modelBuilder.Entity("SupportRegister.Data.Models.Student", b =>
                 {
+                    b.HasOne("SupportRegister.Data.Models.Class", "Class")
+                        .WithMany("Students")
+                        .HasForeignKey("ClassId")
+                        .HasConstraintName("Fk_student_class")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SupportRegister.Data.Models.Course", "IdCourseNavigation")
+                        .WithMany("Students")
+                        .HasForeignKey("IdCourse")
+                        .HasConstraintName("Fk_stu_course")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SupportRegister.Data.Models.AppUser", "User")
                         .WithMany("Students")
                         .HasForeignKey("UserId")
                         .HasConstraintName("FK_STUDENTS_USERS")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Class");
+
+                    b.Navigation("IdCourseNavigation");
 
                     b.Navigation("User");
                 });
@@ -834,7 +883,17 @@ namespace SupportRegister.Data.Migrations
 
             modelBuilder.Entity("SupportRegister.Data.Models.Application", b =>
                 {
-                    b.Navigation("DetailRegisterApplications");
+                    b.Navigation("RegisterApplications");
+                });
+
+            modelBuilder.Entity("SupportRegister.Data.Models.Class", b =>
+                {
+                    b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("SupportRegister.Data.Models.Course", b =>
+                {
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("SupportRegister.Data.Models.RegisterApplication", b =>
@@ -847,14 +906,9 @@ namespace SupportRegister.Data.Migrations
                     b.Navigation("DetailRegisterScoreboards");
                 });
 
-            modelBuilder.Entity("SupportRegister.Data.Models.Scoreboard", b =>
-                {
-                    b.Navigation("DetailRegisterScoreboards");
-                });
-
             modelBuilder.Entity("SupportRegister.Data.Models.Semester", b =>
                 {
-                    b.Navigation("RegisterScoreboards");
+                    b.Navigation("DetailRegisterScoreboards");
                 });
 
             modelBuilder.Entity("SupportRegister.Data.Models.Status", b =>
@@ -866,16 +920,16 @@ namespace SupportRegister.Data.Migrations
 
             modelBuilder.Entity("SupportRegister.Data.Models.Student", b =>
                 {
+                    b.Navigation("DetailRegisterApplications");
+
+                    b.Navigation("DetailRegisterScoreboards");
+
                     b.Navigation("Feedbacks");
-
-                    b.Navigation("RegisterApplications");
-
-                    b.Navigation("RegisterScoreboards");
                 });
 
             modelBuilder.Entity("SupportRegister.Data.Models.Year", b =>
                 {
-                    b.Navigation("RegisterScoreboards");
+                    b.Navigation("DetailRegisterScoreboards");
                 });
 #pragma warning restore 612, 618
         }
