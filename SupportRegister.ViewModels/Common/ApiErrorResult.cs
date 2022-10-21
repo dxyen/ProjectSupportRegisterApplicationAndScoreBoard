@@ -13,7 +13,6 @@ namespace SupportRegister.ViewModels.Common
         public ApiErrorResult()
         {
         }
-
         public ApiErrorResult(T resultObj)
         {
             IsSuccessed = false;

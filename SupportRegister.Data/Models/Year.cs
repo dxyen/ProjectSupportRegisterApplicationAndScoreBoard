@@ -5,13 +5,16 @@ using System.Collections.Generic;
 
 namespace SupportRegister.Data.Models
 {
-    public partial class Year
+    public class Year
     {
-        public int IdYear { get; set; }
-        public int IdRegisterScoreboard { get; set; }
-        public int Yearr { get; set; }
-        public string Description { get; set; }
+        public Year()
+        {
+            YearSemesters = new HashSet<YearSemester>();
+        }
 
-        public virtual RegisterScoreboard IdRegisterScoreboardNavigation { get; set; }
+        public int IdYear { get; set; }
+        public int Year1 { get; set; }
+
+        public ICollection<YearSemester> YearSemesters { get; set; }
     }
 }

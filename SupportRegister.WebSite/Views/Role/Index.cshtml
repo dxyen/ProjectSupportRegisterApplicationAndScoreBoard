@@ -1,0 +1,75 @@
+﻿@model IEnumerable<SupportRegister.ViewModels.ViewModels.RoleViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+ }
+ <h3 class="ms-4">Danh sách quyền</h3>
+<button type="button" class="btn btn-primary ms-4"><a class="text-black" asp-action="CreateRole" style="font-size: 1rem">Thêm quyền mới</a></button>
+
+@if (ViewBag.SuccessMsg != null) {
+    <div class="alert alert-fill-success position-fixed"  id="msgAlert" role="alert" style="z-index: 9999; top: 80px; left: 800px">
+        @ViewBag.SuccessMsg
+    </div>
+}
+<div class="page-content" style="margin-top:0px">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Data table Role</h6>
+                    <div class="table-responsive">
+                        <table class="table" id="dataTableExample">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Số thứ tự
+                                    </th>
+                                    <th>
+                                        Tên
+                                    </th>
+                                    <th>
+                                        Chi tiết
+                                    </th>
+                                    <th>Tùy chọn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i }))
+                                {
+                                    <tr>
+                                        <td>
+                                            @(item.Index +1)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Data.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Data.Description)
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("Edit", "Role", new { id =item.Data.Id })" style="color: #808080;">
+                                                <i class="feather icon-edit" style="font-size: 2em"></i>
+                                            </a>
+                                            <a href="@Url.Action("Delete", "Role", new { id =item.Data.Id })" style="color: #808080;">
+                                                <i class="feather icon-delete" style="font-size: 2em"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

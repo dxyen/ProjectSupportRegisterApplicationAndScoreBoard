@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SupportRegister.Data.Models
 {
-    public partial class RegisterApplication
+    public class RegisterApplication
     {
         public RegisterApplication()
         {
@@ -13,15 +13,13 @@ namespace SupportRegister.Data.Models
         }
 
         public int IdRegisterApplication { get; set; }
-        public int StudentId { get; set; }
         public int IdStatus { get; set; }
-        public int StaffId { get; set; }
-        public DateTime? DateRegister { get; set; }
+        public DateTime DateRegister { get; set; }
         public DateTime? DateReceived { get; set; }
+        public int ApplicationId { get; set; }
 
-        public virtual Status IdStatusNavigation { get; set; }
-        public virtual Staff Staff { get; set; }
-        public virtual Student Student { get; set; }
-        public virtual ICollection<DetailRegisterApplication> DetailRegisterApplications { get; set; }
+        public Application Application { get; set; }
+        public Status IdStatusNavigation { get; set; }
+        public ICollection<DetailRegisterApplication> DetailRegisterApplications { get; set; }
     }
 }

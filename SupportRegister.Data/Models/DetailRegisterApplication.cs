@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace SupportRegister.Data.Models
 {
-    public partial class DetailRegisterApplication
+    public class DetailRegisterApplication
     {
-        public int IdApplication { get; set; }
-        public int IdRegisterApplication { get; set; }
-        public int? Amount { get; set; }
-        public decimal? Price { get; set; }
+        public int StudentId { get; set; }
+        public int RegisId { get; set; }
+        public int Price { get; set; }
+        public int Amount { get; set; }
 
-        public virtual Application IdApplicationNavigation { get; set; }
-        public virtual RegisterApplication IdRegisterApplicationNavigation { get; set; }
+        public RegisterApplication Regis { get; set; }
+        public Student Student { get; set; }
     }
 }

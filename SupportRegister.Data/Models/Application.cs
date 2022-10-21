@@ -5,21 +5,19 @@ using System.Collections.Generic;
 
 namespace SupportRegister.Data.Models
 {
-    public partial class Application
+    public class Application
     {
         public Application()
         {
-            DetailRegisterApplications = new HashSet<DetailRegisterApplication>();
+            RegisterApplications = new HashSet<RegisterApplication>();
         }
 
         public int IdApplication { get; set; }
-        public int IdTypeApplication { get; set; }
         public string NameApplication { get; set; }
         public string Description { get; set; }
         public string Content { get; set; }
-        public decimal? Price { get; set; }
+        public int Price { get; set; }
 
-        public virtual TypeApplication IdTypeApplicationNavigation { get; set; }
-        public virtual ICollection<DetailRegisterApplication> DetailRegisterApplications { get; set; }
+        public ICollection<RegisterApplication> RegisterApplications { get; set; }
     }
 }

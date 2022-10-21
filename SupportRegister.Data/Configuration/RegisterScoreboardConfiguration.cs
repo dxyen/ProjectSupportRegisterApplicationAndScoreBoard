@@ -17,30 +17,14 @@ namespace SupportRegister.Data.Configuration
                     .HasName("PK_REGISTERSCOREBOARD");
 
             entity.ToTable("RegisterScoreboard");
-
-            entity.Property(e => e.IdRegisterScoreboard).ValueGeneratedNever();
+            entity.Property(e => e.IdRegisterScoreboard).ValueGeneratedOnAdd();
 
             entity.Property(e => e.DateReceived).HasColumnType("date");
-
-            entity.Property(e => e.DateRegister).HasColumnType("date");
 
             entity.HasOne(d => d.IdStatusNavigation)
                 .WithMany(p => p.RegisterScoreboards)
                 .HasForeignKey(d => d.IdStatus)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_REGISTERSCOREBOARD_STATUS");
-
-            entity.HasOne(d => d.Staff)
-                .WithMany(p => p.RegisterScoreboards)
-                .HasForeignKey(d => d.StaffId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_REGISTERSCOREBOARD_STAFF");
-
-            entity.HasOne(d => d.Student)
-                .WithMany(p => p.RegisterScoreboards)
-                .HasForeignKey(d => d.StudentId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_REGISTERSCOREBOARD_STUDENTS");
+                .HasConstraintName("Fk_status_score");
         }
     }
 }

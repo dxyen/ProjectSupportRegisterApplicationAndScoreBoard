@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace SupportRegister.ViewModels.Requests.System.Users
 {
-    internal class UserUpdateRequest
+    public class UserUpdateRequest
     {
+        public Guid Id { get; set; }
+        public string Address { get; set; }
+        public string FullName { get; set; }
+        public DateTime Birthday { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Email { get; set; }
     }
 }

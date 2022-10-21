@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace SupportRegister.ViewModels.ViewModels
 {
-    internal class YearViewModel
+    public class YearViewModel
     {
+        public int IdYear { get; set; }
+        public int Year1 { get; set; }
     }
 }

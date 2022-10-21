@@ -14,26 +14,14 @@ namespace SupportRegister.Data.Configuration
         public void Configure(EntityTypeBuilder<Semester> entity)
         {
             entity.HasKey(e => e.IdSemester)
-                    .HasName("PK_SEMESTER");
+                   .HasName("PK_SEMESTER");
 
             entity.ToTable("Semester");
-
-            entity.Property(e => e.IdSemester).ValueGeneratedNever();
-
-            entity.Property(e => e.Description)
-                .HasMaxLength(1000)
-                .IsUnicode(true);
+            entity.Property(e => e.IdSemester).ValueGeneratedOnAdd();
 
             entity.Property(e => e.NameSemester)
-                .HasMaxLength(1000)
-                .IsUnicode(true)
-                .IsRequired(true);
-
-            entity.HasOne(d => d.IdRegisterScoreboardNavigation)
-                .WithMany(p => p.Semesters)
-                .HasForeignKey(d => d.IdRegisterScoreboard)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_SEMESTER_REGISTER");
+                .IsRequired()
+                .HasMaxLength(1000);
         }
     }
 }

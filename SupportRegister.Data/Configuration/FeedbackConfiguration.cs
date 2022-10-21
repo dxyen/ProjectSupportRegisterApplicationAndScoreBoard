@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SupportRegister.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SupportRegister.Data.Configuration
 {
@@ -16,12 +11,15 @@ namespace SupportRegister.Data.Configuration
             entity.HasKey(e => e.IdFeedback)
                     .HasName("PK_FEEDBACKS");
 
-            entity.Property(e => e.IdFeedback).ValueGeneratedNever();
+            entity.Property(e => e.IdFeedback).ValueGeneratedOnAdd();
 
-            entity.Property(e => e.NameFeedback)
-                .HasMaxLength(1000)
-                .IsUnicode(true)
-                .IsRequired(true);
+            entity.Property(e => e.ContentFeedback)
+                .IsRequired()
+                .HasMaxLength(1000);
+
+            entity.Property(e => e.TitleFeedback)
+              .IsRequired()
+              .HasMaxLength(255);
 
             entity.HasOne(d => d.Student)
                 .WithMany(p => p.Feedbacks)

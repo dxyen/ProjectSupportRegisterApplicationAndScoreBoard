@@ -13,13 +13,12 @@ namespace SupportRegister.Data.Models
             Students = new HashSet<Student>();
             Staff = new HashSet<Staff>();
         }
-
         public string Address { get; set; }
         public string FullName { get; set; }
-        public DateTime? Birthday { get; set; }
+        public DateTime Birthday { get; set; }
         public string Avatar { get; set; }
 
-        public virtual ICollection<Student> Students { get; set; }
-        public virtual ICollection<Staff> Staff { get; set; }
+        public ICollection<Student> Students { get; set; }
+        public ICollection<Staff> Staff { get; set; }
     }
 }

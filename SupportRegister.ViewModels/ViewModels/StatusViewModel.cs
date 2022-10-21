@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace SupportRegister.ViewModels.ViewModels
 {
-    internal class StatusViewModel
+    public class StatusViewModel
     {
+        public int IdStatus { get; set; }
+        public string NameStatus { get; set; }
     }
 }

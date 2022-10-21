@@ -17,30 +17,17 @@ namespace SupportRegister.Data.Configuration
                     .HasName("PK_APPLICATION");
 
             entity.ToTable("Application");
-
-            entity.Property(e => e.IdApplication).ValueGeneratedNever();
+            entity.Property(e => e.IdApplication).ValueGeneratedOnAdd();
 
             entity.Property(e => e.Content)
-                .HasMaxLength(1000)
-                .IsUnicode(true)
-                .IsRequired(true);
+                .IsRequired()
+                .HasMaxLength(1000);
 
-            entity.Property(e => e.Description)
-                .HasMaxLength(1000)
-                .IsUnicode(true);
+            entity.Property(e => e.Description).HasMaxLength(1000);
 
             entity.Property(e => e.NameApplication)
-                .HasMaxLength(1000)
-                .IsUnicode(true)
-                .IsRequired(true);
-
-            entity.Property(e => e.Price).HasColumnType("numeric(8, 2)");
-
-            entity.HasOne(d => d.IdTypeApplicationNavigation)
-                .WithMany(p => p.Applications)
-                .HasForeignKey(d => d.IdTypeApplication)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_APPLICATION_TYPEAPPLICATION");
+                .IsRequired()
+                .HasMaxLength(1000);
         }
     }
 }

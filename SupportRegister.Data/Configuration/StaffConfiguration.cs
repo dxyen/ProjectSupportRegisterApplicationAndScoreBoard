@@ -13,7 +13,7 @@ namespace SupportRegister.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Staff> entity)
         {
-            entity.Property(e => e.StaffId).ValueGeneratedNever();
+            entity.Property(e => e.StaffId).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.User)
                 .WithMany(p => p.Staff)

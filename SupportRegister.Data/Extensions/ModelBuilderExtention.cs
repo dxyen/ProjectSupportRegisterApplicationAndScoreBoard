@@ -39,19 +39,6 @@ namespace SupportRegister.Data.Extensions
              },
              new AppUser()
              {
-                 Id = new Guid("BFF91064-DC92-421E-A233-D1080F630929"),
-                 Address = "Hưng Lợi, Ninh Kiều, Cần Thơ",
-                 FullName = "Vương Như Hảo",
-                 Birthday = new DateTime(2000, 03, 03),
-                 UserName = "HaoVN",
-                 NormalizedUserName = "HaoVN",
-                 Email = "haob1809323@student.ctu.edu.vn",
-                 NormalizedEmail = "haob1809323@student.ctu.edu.vn",
-                 SecurityStamp = string.Empty,
-                 PasswordHash = hasher.HashPassword(null, "Student@12345")
-             },
-             new AppUser()
-             {
                  Id = new Guid("BFF91065-DC92-421E-A233-D1080F630928"),
                  Address = "Hưng Lợi, Ninh Kiều, Cần Thơ",
                  FullName = "Vương Như Hảo",
@@ -85,6 +72,53 @@ namespace SupportRegister.Data.Extensions
                  Name = "student",
                  NormalizedName = "student",
                  Description = "Student role"
+             });
+            modelBuilder.Entity<Semester>().HasData(
+            new Semester()
+            {
+                IdSemester = 1,
+                NameSemester = "Học kỳ I"
+            },
+            new Semester()
+            {
+                IdSemester = 2,
+                NameSemester = "Học kỳ II"
+            },
+            new Semester()
+            {
+                IdSemester = 3,
+                NameSemester = "Học kỳ hè"
+            });
+            modelBuilder.Entity<Year>().HasData(
+            new Year()
+            {
+                IdYear = 1,
+                Year1 = 2018
+            },
+             new Year()
+             {
+                 IdYear = 2,
+                 Year1 = 2019
+             },
+             new Year()
+             {
+                 IdYear = 3,
+                 Year1 = 2020
+             },
+             new Year()
+             {
+                 IdYear = 4,
+                 Year1 = 2021
+             },
+              new Year()
+              {
+                  IdYear = 5,
+                  Year1 = 2022
+              },
+             new Year()
+             {
+                 IdYear = 6,
+                 Year1 = 2023
              });
         }
     }
