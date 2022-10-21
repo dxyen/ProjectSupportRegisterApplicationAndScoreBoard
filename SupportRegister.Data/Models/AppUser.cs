@@ -15,7 +15,7 @@ namespace SupportRegister.Data.Models
         }
         public string Address { get; set; }
         public string FullName { get; set; }
-        public DateTime? Birthday { get; set; }
+        public DateTime Birthday { get; set; }
         public string Avatar { get; set; }
 
         public ICollection<Student> Students { get; set; }

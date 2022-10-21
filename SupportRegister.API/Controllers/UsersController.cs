@@ -44,7 +44,8 @@ namespace SupportRegister.API.Controllers
             return Ok(result);
         }
         [HttpPut]
-        public async Task<IActionResult> Update([FromForm] UserUpdateRequest request)
+        [Route("Update")]
+        public async Task<IActionResult> Update([FromBody] UserUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -58,8 +59,9 @@ namespace SupportRegister.API.Controllers
             }
             return Ok(result);
         }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        [HttpGet]
+        [Route("GetDetails/{id}")]
+        public async Task<IActionResult> GetDetails(Guid id)
         {
             var result = await _userService.GetByIdAsync(id);
             if (result.IsSuccessed)
@@ -72,6 +74,7 @@ namespace SupportRegister.API.Controllers
             }
         }
         [HttpGet]
+        [Route("GetAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
             var result = await _userService.GetAllUsersAsync();

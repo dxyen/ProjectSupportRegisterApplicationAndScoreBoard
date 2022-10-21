@@ -52,6 +52,7 @@ namespace SupportRegister.API
             services.AddTransient<ISemesterService, SemesterService>();
             services.AddTransient<IStatusService, StatusService>();
             services.AddTransient<IYearService, YearService>();
+            services.AddTransient<IMailService, MailService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             // DI for identity
 
@@ -83,6 +84,9 @@ namespace SupportRegister.API
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
+
             app.UseRouting();
 
             app.UseAuthorization();

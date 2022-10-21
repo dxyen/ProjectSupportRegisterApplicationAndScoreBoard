@@ -11,5 +11,6 @@ namespace SupportRegister.Application.Interfaces
     {
         Task<YearViewModel> GetDetailYearAsync(int id);
         Task<List<YearViewModel>> GetAllYearAsync();
+        Task<List<YearSemesterViewModel>> GetYearByNowAsync();
     }
 }

@@ -1,4 +1,5 @@
-﻿using SupportRegister.ViewModels.Requests.Scoreboard;
+﻿using SupportRegister.Data.Models;
+using SupportRegister.ViewModels.Requests.Scoreboard;
 using SupportRegister.ViewModels.ViewModels;
 using System;
 using System.Collections.Generic;

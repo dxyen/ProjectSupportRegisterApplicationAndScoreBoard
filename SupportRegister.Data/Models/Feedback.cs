@@ -10,6 +10,7 @@ namespace SupportRegister.Data.Models
         public int IdFeedback { get; set; }
         public int StudentId { get; set; }
         public string ContentFeedback { get; set; }
+        public string TitleFeedback { get; set; }
 
         public Student Student { get; set; }
     }

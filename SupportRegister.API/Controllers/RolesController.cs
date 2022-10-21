@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SupportRegister.Application.System.Roles;
 using SupportRegister.ViewModels.Requests.System.Roles;
+using SupportRegister.ViewModels.ViewModels;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,39 +19,53 @@ namespace SupportRegister.API.Controllers
             _roleService = roleService;
         }
         [HttpPost]
+        [Route("Create")]
         public async Task<IActionResult> Create(RoleCreateRequest request)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                var check = await _roleService.GetAllRolesAsync();
+                foreach (var item in check.ResultObj)
+                {
+                    if (item.Name == request.Name)
+                    {
+                        return BadRequest();
+                    }
+                }
+                await _roleService.CreateAsync(request);
+                return Ok();
             }
-
-            var result = await _roleService.CreateAsync(request);
-
-            if (!result.Succeeded)
+            catch (Exception e)
             {
-                return BadRequest(result.Errors.ToList()[0].Description);
+
+                return BadRequest(e.Message);
             }
-            return Ok(result);
         }
-
         [HttpPut]
-        public async Task<IActionResult> Update([FromForm] RoleUpdateRequest request)
+        [Route("Update")]
+        public async Task<IActionResult> Update([FromBody] RoleUpdateRequest request)
         {
-            if (!ModelState.IsValid)
+            var check = await _roleService.GetAllRolesAsync();
+            foreach (var item in check.ResultObj)
             {
-                return BadRequest(ModelState);
+                if (item.Id == request.Id && item.Name == request.Name)
+                {
+                    await _roleService.UpdateAsync(request);
+                }
+                else if (item.Name == request.Name)
+                { 
+                    return BadRequest();
+                }
+                else
+                {
+                    await _roleService.UpdateAsync(request);
+                }
             }
-
-            var result = await _roleService.UpdateAsync(request);
-            if (!result.IsSuccessed)
-            {
-                return BadRequest(result);
-            }
-            return Ok(result);
+            return Ok(true);
         }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        [HttpGet]
+        [Route("GetDetails/{id}")]
+        public async Task<IActionResult> GetDetails(Guid id)
         {
             var result = await _roleService.GetByIdAsync(id);
             if (result.IsSuccessed)
@@ -63,7 +78,8 @@ namespace SupportRegister.API.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
+        [Route("GetList")]
+        public async Task<IActionResult> GetList()
         {
             var result = await _roleService.GetAllRolesAsync();
             if (result.IsSuccessed)
@@ -75,7 +91,8 @@ namespace SupportRegister.API.Controllers
                 return BadRequest(result.Message);
             }
         }
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _roleService.DeleteAsync(id);

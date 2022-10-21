@@ -42,5 +42,18 @@ namespace SupportRegister.API.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [HttpGet("GetYearNow")]
+        public async Task<IActionResult> GetYearNow()
+        {
+            try
+            {
+                var data = await _yearService.GetYearByNowAsync();
+                return Ok(JsonConvert.SerializeObject(data));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

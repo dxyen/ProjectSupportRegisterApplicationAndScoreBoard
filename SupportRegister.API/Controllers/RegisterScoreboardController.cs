@@ -1,10 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SupportRegister.Application.Interfaces;
+using SupportRegister.Data.EF;
 using SupportRegister.ViewModels.Requests.Scoreboard;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using SupportRegister.ViewModels.ViewModels;
+using SupportRegister.Data.Models;
+using SupportRegister.Utilities.Exceptions;
 
 namespace SupportRegister.API.Controllers
 {
@@ -13,10 +20,20 @@ namespace SupportRegister.API.Controllers
     public class RegisterScoreboardController : ControllerBase
     {
         private readonly IScoreboardService _scoreboardService;
-        public RegisterScoreboardController(IScoreboardService scoreboardService)
+        private readonly IYearService _yearService;
+        private readonly ProjectSupportRegisterContext _context;
+        private readonly IMapper _mapper;
+        public RegisterScoreboardController(ProjectSupportRegisterContext context, IMapper mapper, IScoreboardService scoreboardService, IYearService yearService)
         {
             _scoreboardService = scoreboardService;
+            _yearService = yearService;
+            _context = context;
+            _mapper = mapper;
         }
+        //[HttpGet("GetYear")]
+        //public async Task<IActionResult> GetYear()
+        //{
+        //}
         [HttpGet("GetDetail")]
         public async Task<IActionResult> GetDetail(Guid id, int regisId)
         {
@@ -30,7 +47,7 @@ namespace SupportRegister.API.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpGet("GetAll")]
+        [HttpGet("GetAll/{id}")]
         public async Task<IActionResult> GetAll(Guid id)
         {
             try
@@ -43,85 +60,84 @@ namespace SupportRegister.API.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpGet("GetAllScore")]
-        public async Task<IActionResult> GetAllScore()
-        {
-            try
-            {
-                var data = await _scoreboardService.GetAllScoreboardAsync();
-                return Ok(JsonConvert.SerializeObject(data));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromBody] RegisterScoreboardCreateRequest request)
+        public async Task<IActionResult> Create(string option, int yearstart_stu, int yearend_stu, int id_start, int id_end, int soluong, Guid userId)
         {
-            try
+            var RegisScore = new RegisterScoreboard();
+            var DetailRegisScore = new DetailRegisterScoreboard();
+            RegisScore.DateRegister = DateTime.Now;
+            RegisScore.DateReceived = DateTime.Now.AddDays(2);
+            RegisScore.IdStatus = 1;
+            var id = (from R in _context.RegisterScoreboards
+                      select R.IdRegisterScoreboard).Max() + 1;
+            RegisScore.IdRegisterScoreboard = id;
+            await _context.RegisterScoreboards.AddAsync(RegisScore);
+            DetailRegisScore.RegisId = id;
+            DetailRegisScore.YearSemesterIdStart = id_start;
+            DetailRegisScore.YearSemesterIdEnd = id_end;
+            var StudentId = await (from S in _context.Students
+                                   where S.UserId == userId
+                                   select new
+                                   {
+                                       StudentId = S.StudentId
+                                   }).FirstOrDefaultAsync();
+            DetailRegisScore.StudentId = StudentId.StudentId;
+            DetailRegisScore.Amount = soluong;
+            if (option == "some")
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-                var register = await _scoreboardService.RegisterScoreboardAsync(request);
-                if (register == 0)
-                {
-                    return BadRequest();
-                }
-                return Ok(true);
+                var YearSemesterStart = await (from YS in _context.YearSemesters
+                                               join Y in _context.Years on YS.IdYear equals Y.IdYear
+                                               join S in _context.Semesters on YS.IdSemester equals S.IdSemester
+                                               where YS.Id == id_start
+                                               select new
+                                               {
+                                                   YearStart = Y.Year1,
+                                                   SemesterStart = S.NameSemester
+                                               }).FirstOrDefaultAsync();
+                var YearSemesterEnd = await (from YS in _context.YearSemesters
+                                             join Y in _context.Years on YS.IdYear equals Y.IdYear
+                                             join S in _context.Semesters on YS.IdSemester equals S.IdSemester
+                                             where YS.Id == id_end
+                                             select new
+                                             {
+                                                 YearEnd = Y.Year1,
+                                                 SemesterEnd = S.NameSemester
+                                             }).FirstOrDefaultAsync();
+                int YearStart = yearstart_stu <= YearSemesterStart.YearStart ? YearSemesterStart.YearStart : yearstart_stu;
+                int YearEnd = yearend_stu >= YearSemesterEnd.YearEnd ? YearSemesterEnd.YearEnd : yearend_stu;
+                int Price = (((YearEnd - YearStart) + 1) * 2000) * soluong;
+                DetailRegisScore.YearStart = YearStart;
+                DetailRegisScore.YearEnd = YearEnd;
+                DetailRegisScore.SemesterStart = YearSemesterStart.SemesterStart;
+                DetailRegisScore.SemesterEnd = YearSemesterEnd.SemesterEnd;
+                DetailRegisScore.Price = Price;
             }
-            catch (Exception e)
+            else
             {
-                return BadRequest(e.Message);
+                int Price = (((yearend_stu - yearstart_stu) + 1) * 2000) * soluong;
+                DetailRegisScore.YearStart = yearstart_stu;
+                DetailRegisScore.YearEnd = yearend_stu;
+                DetailRegisScore.SemesterStart = null;
+                DetailRegisScore.SemesterEnd = null;
+                DetailRegisScore.Price = Price;
             }
+            await _context.DetailRegisterScoreboards.AddAsync(DetailRegisScore);
+            var result = await _context.SaveChangesAsync();
+            return Ok(result);
         }
-        [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromBody] RegisterScoreboardUpdateRequest request)
+        [HttpPost("Cancel")]
+        public async Task<IActionResult> Cancel(int cancelId)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
+            var RegisScore = await _context.RegisterScoreboards.FindAsync(cancelId);
 
-                var result = await _scoreboardService.UpdateScoreboardAsync(request);
-
-                if (result == 0)
-                {
-                    return BadRequest();
-                }
-                return Ok(true);
-            }
-            catch (Exception e)
+            if (RegisScore == null)
             {
-                return BadRequest(e.Message);
+                return Ok(-1);
             }
-        }
-        [HttpPut("Cancel")]
-        public async Task<IActionResult> Cancel([FromBody] RegisterScoreboardCancelRequest request)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                var result = await _scoreboardService.CancelScoreboardAsync(request);
-
-                if (result == 0)
-                {
-                    return BadRequest();
-                }
-                return Ok(true);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            RegisScore.IdStatus = 2;
+            _context.RegisterScoreboards.Update(RegisScore);
+            var result = await _context.SaveChangesAsync();
+            return Ok(result);
         }
     }
 }

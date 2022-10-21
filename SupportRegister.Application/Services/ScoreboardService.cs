@@ -60,15 +60,11 @@ namespace SupportRegister.Application.Services
             var query = await _context.DetailRegisterScoreboards.Include(x => x.Student)
                                                                 .ThenInclude(x => x.User)
                                                             .Include(x => x.Regis)
-                                                            .Include(x => x.Semester)
-                                                            .Include(x => x.Year)
                                                             .Where(x => x.Student.User.Id == id)
                                                             .Where(x => x.Regis.IdRegisterScoreboard == regisId)
                                                             .Select(Score => new RegisterScoreboardViewModel()
                                                             {
                                                                 Status = Score.Regis.IdStatusNavigation.Name,
-                                                                Semester = Score.Semester.NameSemester,
-                                                                Year = Score.Year.Year1,
                                                                 Student = Score.Student.User.FullName,
                                                                 DateRegister = Score.Regis.DateRegister,
                                                                 DateReceived = Score.Regis.DateReceived ?? DateTime.Now,
@@ -81,18 +77,24 @@ namespace SupportRegister.Application.Services
             var query = await _context.DetailRegisterScoreboards.Include(x => x.Student)
                                                      .ThenInclude(x => x.User)
                                                  .Include(x => x.Regis)
-                                                 .Include(x => x.Semester)
-                                                 .Include(x => x.Year)
+                                                 .Include(x => x.YearSemesterIdStartNavigation)
+                                                 .Include(x => x.YearSemesterIdEndNavigation)
                                                  .Where(x => x.Student.User.Id == id)
                                                  .Select(Score => new RegisterScoreboardViewModel()
                                                  {
+                                                     IdRegis = Score.RegisId,
                                                      Status = Score.Regis.IdStatusNavigation.Name,
-                                                     Semester = Score.Semester.NameSemester,
-                                                     Year = Score.Year.Year1,
                                                      Student = Score.Student.User.FullName,
                                                      DateRegister = Score.Regis.DateRegister,
-                                                     DateReceived = Score.Regis.DateReceived ?? DateTime.Now,
-                                                     PriceTotal = Score.Price * Score.Amount
+                                                     DateReceived = Score.Regis.DateReceived,
+                                                     PriceTotal = Score.Price,
+                                                     Amount = Score.Amount,
+                                                     YearEnd = Score.YearEnd,
+                                                     YearStart = Score.YearStart,
+                                                     SemesterEnd = Score.SemesterEnd,
+                                                     SemesterStart = Score.SemesterStart,
+                                                     YearSemesterEnd = Score.YearSemesterIdEndNavigation.YearSemester1,
+                                                     YearSemesterStart = Score.YearSemesterIdStartNavigation.YearSemester1
                                                  }).ToListAsync();
             return query;
         }

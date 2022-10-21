@@ -21,8 +21,6 @@ namespace SupportRegister.Data.Configuration
 
             entity.Property(e => e.DateReceived).HasColumnType("date");
 
-            entity.Property(e => e.DateRegister).HasColumnType("date");
-
             entity.HasOne(d => d.IdStatusNavigation)
                 .WithMany(p => p.RegisterScoreboards)
                 .HasForeignKey(d => d.IdStatus)

@@ -34,6 +34,7 @@ namespace SupportRegister.Data.EF
                 .ApplyConfiguration(new StaffConfiguration())
                 .ApplyConfiguration(new StatusConfiguration())
                 .ApplyConfiguration(new StudentConfiguration())
+                .ApplyConfiguration(new YearSemesterConfiguration())
                 .ApplyConfiguration(new YearConfiguration());
             // Data seeding in ModelBuilderExtenions
             modelBuilder.Seed();
@@ -60,5 +61,6 @@ namespace SupportRegister.Data.EF
         public DbSet<Year> Years { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<YearSemester> YearSemesters { get; set; }
     }
 }

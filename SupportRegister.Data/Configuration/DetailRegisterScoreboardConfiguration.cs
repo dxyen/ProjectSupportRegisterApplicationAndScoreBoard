@@ -13,20 +13,21 @@ namespace SupportRegister.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<DetailRegisterScoreboard> entity)
         {
-            entity.HasKey(e => new { e.RegisId, e.SemesterId, e.StudentId, e.YearId })
+            entity.HasKey(e => new { e.RegisId, e.StudentId, e.YearSemesterIdStart, e.YearSemesterIdEnd })
                      .HasName("PK__DetailRe__B873A826F6F01A76");
 
             entity.ToTable("DetailRegisterScoreboard");
 
+            entity.HasIndex(e => e.StudentId, "IX_DetailRegisterScoreboard_StudentId");
+
+            entity.Property(e => e.SemesterEnd).HasMaxLength(255);
+
+            entity.Property(e => e.SemesterStart).HasMaxLength(255);
+
             entity.HasOne(d => d.Regis)
                 .WithMany(p => p.DetailRegisterScoreboards)
                 .HasForeignKey(d => d.RegisId)
-                .HasConstraintName("Fk_regis_score");
-
-            entity.HasOne(d => d.Semester)
-                .WithMany(p => p.DetailRegisterScoreboards)
-                .HasForeignKey(d => d.SemesterId)
-                .HasConstraintName("Fk_detail_semester");
+                .HasConstraintName("Fk_detail_score");
 
             entity.HasOne(d => d.Student)
                 .WithMany(p => p.DetailRegisterScoreboards)
@@ -34,10 +35,16 @@ namespace SupportRegister.Data.Configuration
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Fk_detail_stu");
 
-            entity.HasOne(d => d.Year)
-                .WithMany(p => p.DetailRegisterScoreboards)
-                .HasForeignKey(d => d.YearId)
-                .HasConstraintName("Fk_detail_year");
+            entity.HasOne(d => d.YearSemesterIdEndNavigation)
+                .WithMany(p => p.DetailRegisterScoreboardYearSemesterIdEndNavigations)
+                .HasForeignKey(d => d.YearSemesterIdEnd)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Fk_detail_end");
+
+            entity.HasOne(d => d.YearSemesterIdStartNavigation)
+                .WithMany(p => p.DetailRegisterScoreboardYearSemesterIdStartNavigations)
+                .HasForeignKey(d => d.YearSemesterIdStart)
+                .HasConstraintName("Fk_yearsemester_detail");
         }
     }
 }

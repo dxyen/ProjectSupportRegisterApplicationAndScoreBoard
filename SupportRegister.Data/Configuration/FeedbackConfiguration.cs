@@ -17,6 +17,10 @@ namespace SupportRegister.Data.Configuration
                 .IsRequired()
                 .HasMaxLength(1000);
 
+            entity.Property(e => e.TitleFeedback)
+              .IsRequired()
+              .HasMaxLength(255);
+
             entity.HasOne(d => d.Student)
                 .WithMany(p => p.Feedbacks)
                 .HasForeignKey(d => d.StudentId)

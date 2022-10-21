@@ -9,33 +9,35 @@ namespace SupportRegister.ViewModels.Requests.System.Users
 {
     public class RegisterRequest
     {
-        [Required(ErrorMessage = "Please enter username")]
-        [Display(Name = "Username:", Prompt = "Username...")]
-        [RegularExpression("^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$",
-            ErrorMessage = "Username must be 8-20 characters long, does not contain special characters")]
-        public string Username { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập Mã số sinh viên!")]
+        [Display(Name = "Username:", Prompt = "MSSV...")]
+        public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Please enter password")]
+        [Required(ErrorMessage = "Vui lòng nhập mật khẩu!")]
         [DataType(DataType.Password)]
         [Display(Name = "Password:", Prompt = "********")]
         [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#$^+=!*()@%&]).{8,}$",
-            ErrorMessage = "Passwords must be at least 6 characters, one digit, one uppercase, one non alphanumeric character")]
+            ErrorMessage = "Mật khẩu phải có ít nhất 6 ký tự, một chữ số, một chữ hoa, một ký tự không phải chữ và số!")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Please enter confirmation password")]
-        [Compare("Password", ErrorMessage = "Password and Confirmation Password must match")]
+        [Required(ErrorMessage = "Vui lòng nhập mật khẩu!")]
+        [Compare("Password", ErrorMessage = "Mật khẩu và Mật khẩu xác nhận phải khớp!")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirmation Password:", Prompt = "********")]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage = "Please enter your full name")]
+        [Required(ErrorMessage = "Vui lòng nhập họ tên!")]
         [Display(Name = "Full Name:", Prompt = "Your full name")]
         public string FullName { get; set; }
 
-        [Required(ErrorMessage = "Please enter email")]
+        [Required(ErrorMessage = "Vui lòng nhập Email")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email:", Prompt = "example@example.com")]
-        [RegularExpression("^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$", ErrorMessage = "Email is invalid")]
         public string Email { get; set; }
+        public string Address { get; set; }
+        [Required(ErrorMessage = "Ngày sinh không được trống!")]
+        public DateTime Birthday { get; set; }
+        public string PhoneNumber { get; set; }
+        public Guid RoleId { get; set; }
     }
 }

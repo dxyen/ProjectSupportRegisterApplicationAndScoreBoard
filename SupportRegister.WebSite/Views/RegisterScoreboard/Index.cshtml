@@ -1,0 +1,240 @@
+﻿@model RegisScoreViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+<script>
+    setTimeout(function () {
+        $('#msgAlert').fadeOut('slow');
+    }, 2000);
+</script>
+ }
+@if (ViewBag.SuccessMsg != null)
+{
+    <div class="alert alert-fill-success position-fixed" id="msgAlert" role="alert" style="z-index: 9999; top: 80px; left: 800px">
+        @ViewBag.SuccessMsg
+    </div>
+}
+<body>
+    <div class="overview" style="border-radius: 3px;">
+        <div class="container">
+            <h2>Đăng ký in bảng điểm trực tuyến</h2>
+            <p>Xin vui lòng đọc kỹ phần hướng dẫn để có thể chọn đúng các tùy chọn</p>
+        </div>
+    </div>
+    <div id="main" class="container" style="margin: 15px auto 50px auto">
+        <div class="row">
+            <div class="col-md-5">
+                <h3>Tùy chọn in</h3>
+                <div class="border" style="border-color: #ddd; box-shadow: 1px 1px rgb(0 0 0 / 5%); background-color: #fff; border-radius: 3px; padding: 4px">
+                    <form id="form" asp-action="Create">
+                        <div class="panel-body form-horizontal">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" id="option1" name="option" value="all">
+                                    <input type="hidden" id="yearstart_stu" name="yearstart_stu" value="@Model.students.YearStart">
+                                    <input type="hidden" id="yearend_stu" name="yearend_stu" value="@Model.students.YearEnd">
+                                    In tất cả các học kỳ
+                                </label>
+                            </div>
+                            <hr>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="option" id="option2" value="some" checked>
+                                    In tùy chọn từ học kỳ đến học kỳ
+                                </label>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="year_start" class="form-label">Học kỳ bắt đầu: </label>
+                                <div class="col-sm-8">
+                                    <select id="hocky_batdau" name="id_start" class="form-control form-select hocky">
+                                        @foreach (var year in Model.years.Select((x, i) => new { Data = x, Index = i }))
+                                        {
+                                            <option value="@(year.Data.Id)">@(year.Data.YearSemester)</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group mt-2">
+                                <label for="year_end" class="form-label">Học kỳ kết thúc: </label>
+                                <div class="col-sm-8">
+                                    <select id="hocky_ketthuc" name="id_end" class="form-control form-select hocky">
+                                        @foreach (var year in Model.years.Select((x, i) => new { Data = x, Index = i }))
+                                        {
+                                            <option value="@(year.Data.Id)">@(year.Data.YearSemester)</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <div class="col-sm-8">
+                                    <label>
+                                        Số lượng in:
+                                        <input name="soluong" id="price" type="number" value="1" min="1" max="10">
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <div class="m-2">
+                                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#submitModal">Đăng ký in bảng điểm</a>
+                            </div>
+                            <div class="m-2">
+                                <label id="giatien" style="font-size: 26px;text-align: right; margin-right: 15px;color: #ac2925">2,000 VNĐ</label>
+                            </div>
+                        </div>
+                        <div class="modal" tabindex="-1" id="submitModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Đăng ký in bảng điểm</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                                    </div>
+                                    <div class="p-3">
+                                        <p>Bạn xác nhận sẽ đăng ký in bảng điểm với các thông tin in này?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                        <button id="btn-submit" class="btn btn-primary">Đăng ký</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <h3><span class="label label-info">Hướng dẫn in điểm</span></h3>
+                <div class="bs-callout bs-callout-info">
+                    Chọn c&aacute;c học kỳ m&agrave; bạn muốn in. Mỗi học kỳ/năm học được t&iacute;nh 2.000 đồng.<br />
+                    Sau khi chọn c&aacute;c học kỳ, chọn <strong>&quot;Đăng k&yacute; in bảng điểm&quot;</strong> ở b&ecirc;n dưới.<br />
+                    Lưu &yacute;:
+                    <ul>
+                        <li>Bạn sẽ nhận được bảng điểm sau 1.5 ng&agrave;y đăng k&yacute;.</li>
+                        <li>Kh&ocirc;ng l&agrave;m việc v&agrave;o c&aacute;c ng&agrave;y lễ, thứ 7 v&agrave; chủ nhật.</li>
+                        <li><span style="color:#FF0000"><strong>Nếu sinh viện chọn in quá học kỳ bất đầu, hoặc kết thúc thì sẽ được tính là chọn in tất cả học kỳ</strong></span></li>
+                        <li><span style="color:#FF0000"><strong>Nơi nhận bảng điểm: Văn ph&ograve;ng Khoa CNTT&amp;TT </strong></span></li>
+                        <li><span style="color:#FF0000"><strong>Sinh vi&ecirc;n li&ecirc;n hệ P.KHTH để đ&oacute;ng mộc</strong></span></li>
+                    </ul>
+                    <ul>
+                        <li style="text-align:justify"><span style="color:#000080"><strong>Sinh vi&ecirc;n đăng k&yacute; in bảng điểm m&agrave; kh&ocirc;ng nhận, Khoa sẽ gởi danh s&aacute;ch về lớp v&agrave;o cuối học kỳ để thu tiền đăng k&yacute; v&agrave; trừ 5 điểm r&egrave;n luyện v&agrave;o mục 2. Đối với sinh vi&ecirc;n chậm tiến độ Khoa sẽ ghi nhận sinh vi&ecirc;n c&ograve;n nợ khi l&agrave;m thủ tục thanh to&aacute;n ra trường.</strong></span></li>
+                    </ul>
+                </div>
+                <h3>Yêu cầu in bảng điểm</h3>
+                <table class="table table-bordered">
+                    <tbody>
+                        @if (@Model.regisStu == null)
+                        {
+                            <tr><td style="text-align: center">Bạn chưa gởi yêu cầu in điểm nào!</td></tr>
+                        }
+                        else
+                        {
+                            @foreach (var score in Model.regisStu.Select((x, i) => new { Data = x, Index = i }))
+                            {
+                                if (@score.Data.Status != "Hủy đăng ký")
+                                {
+                                    <tr>
+                                        <td style="padding-top: 40px;width:45px;">
+                                            <i class="link-icon" data-feather="clock"></i>
+                                        </td>
+                                        <td style="border-right-color: transparent">
+                                            <b>
+                                                Đăng ký in @(score.Data.SemesterStart == null ? "tất cả học kỳ" : $"{score.Data.YearSemesterStart} đến {score.Data.YearSemesterStart}")<br><span style="color: #ac2925;font-size: 13px;">(@(score.Data.Amount) bảng - @(score.Data.PriceTotal) VNĐ)</span>
+                                            </b>
+                                            <p style="font-size: 11px; color: #777; margin-bottom: 0">
+                                                <i>
+                                                    Được đăng ký vào lúc
+                                                    @(score.Data.DateRegister)
+                                                </i>
+                                                <i>
+                                                    Nhận bảng điểm vào ngày
+                                                    @(score.Data.DateReceived)
+                                                </i>
+                                            </p>
+                                            <p class="mt-1" style="font-size: 11px; color: #777; margin-bottom: 0">
+                                                <i>
+                                                    Trạng thái yêu cầu:
+                                                    @(score.Data.Status)
+                                                </i>
+                                            </p>
+                                        </td>
+                                        <td style="padding-top: 30px;width:40px;">
+                                            <form asp-action="Cancel">
+                                                <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="link-icon" data-feather="delete"></i></a>
+                                                <div class="modal" tabindex="-1" id="deleteModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Hủy yêu cầu</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                                                            </div>
+                                                            <div class="p-3">
+                                                                <p>Bạn có chắc muốn hủy yêu cầu</p>
+                                                                <input type="hidden" name="cancelId" value="@(score.Data.IdRegis)">
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                                <button type="submit" class="btn btn-danger">Hủy</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                } 
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+     $("#price").on("keydown", function (e) {
+        e.preventDefault();
+    });
+    function tinhtien(){
+        let now = new Date();
+        let today = now.getFullYear();
+        if ($('input[name=option]:radio:checked').val()=='some') {
+            var tong = $("#price").val() * Math.ceil(($('#hocky_ketthuc').val() - $('#hocky_batdau').val()+1)/3)*2000;
+            if (Math.ceil(($('#hocky_ketthuc').val() - $('#hocky_batdau').val()+1)) <= 0) $('#giatien').text('Học kỳ không hợp lệ');
+            else $('#giatien').text(tong.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' VNĐ');
+        }else if($('input[name=option]:radio:checked').val()=='all'){
+            if(today - $('#yearend_stu').val() >= 0){
+                var tong = $("#price").val() * Math.ceil(($('#yearend_stu').val() - $('#yearstart_stu').val()+1))*2000;
+            } else{
+                var tong = $("#price").val() * Math.ceil((today - $('#yearstart_stu').val()+1))*2000;
+            }
+            $('#giatien').text(tong.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' VNĐ');
+        }
+        else $('#giatien').text('Không thể tính tổng');
+    }
+    $('.hocky').change(function (e){
+         tinhtien();
+    });
+     $('#price').change(function (e){
+         tinhtien();
+    });
+     $('#option1').change(function (e){
+         tinhtien();
+    });
+    $('#option2').change(function (e){
+         tinhtien();
+    });
+    $('#btn-submit').click(function (e) {
+        let check = $("#giatien").text();
+        console.log(check)
+        if(check == 'Không thể tính tổng' || check == 'Học kỳ không hợp lệ'){
+            e.preventDefault();
+        } else{
+            $('#form').submit();
+        }
+    });
+
+</script>

@@ -52,12 +52,14 @@ namespace SupportRegister.Data.Repository.System
 
         public async Task<ApiResult<bool>> UpdateAsync(AppRole entity)
         {
-            var user = await _roleManager.FindByIdAsync(entity.Id.ToString());
-            if (user == null)
+            var role = await _roleManager.FindByIdAsync(entity.Id.ToString());
+            role.Name = entity.Name;
+            role.Description = entity.Description;
+            if (role == null)
             {
                 return new ApiErrorResult<bool>("Account does not exist!!!");
             }
-            await _roleManager.UpdateAsync(entity);
+            var result = await _roleManager.UpdateAsync(role);
             return new ApiSuccessResult<bool>();
         }
     }

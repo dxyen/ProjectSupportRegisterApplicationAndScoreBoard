@@ -7,7 +7,6 @@ using SupportRegister.Data.Interfaces;
 using SupportRegister.Data.Models;
 using SupportRegister.ViewModels.Common;
 using SupportRegister.ViewModels.Requests.System.Users;
-using SupportRegister.ViewModels.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -53,9 +52,7 @@ namespace SupportRegister.Data.Repository.System
             {
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Name, user.UserName.ToString()),
-                new Claim("AvatarUrl", $"{SupportRegister.Utilities.SystemConstants.SystemConstants.AppSettings.ImageUrl}/{user.Avatar}"),
                 new Claim("Id", user.Id.ToString()),
-                new Claim("Role", string.Join(";", roles)),
                 new Claim("FullName", user.FullName != null ? user.FullName.ToString() : ""),
                 new Claim("Address", user.Address != null ? user.Address.ToString(): ""),
                 new Claim("DoB", user.Birthday.ToString()),
@@ -86,7 +83,8 @@ namespace SupportRegister.Data.Repository.System
 
         public async Task<IdentityResult> CreateAsync(AppUser entity)
         {
-           return await _userManager.CreateAsync(entity, entity.PasswordHash);
+            var result = await _userManager.CreateAsync(entity, entity.PasswordHash);
+            return result;
         }
 
         public async Task<ApiResult<bool>> DeleteAsync(Guid id)
@@ -105,27 +103,25 @@ namespace SupportRegister.Data.Repository.System
             var result = await _userManager.FindByIdAsync(id.ToString());
             return result;
         }
-
-        public async Task<List<AppUser>> GetListAsync()
+        public Task<List<AppUser>> GetListAsync()
         {
-            var result = await _userManager.Users.Select(x => new AppUser()
-            {
-                Id = x.Id,
-                Address = x.Address,
-                FullName = x.FullName,
-                Birthday = x.Birthday,
-            }).ToListAsync();
-            return new List<AppUser>(result);
+            throw new NotImplementedException();
         }
 
         public async Task<ApiResult<bool>> UpdateAsync(AppUser entity)
         {
             var user = await _userManager.FindByIdAsync(entity.Id.ToString());
+            user.Address = entity.Address;
+            user.UserName = entity.UserName;
+            user.Email = entity.Email;
+            user.FullName = entity.FullName;
+            user.PhoneNumber = entity.PhoneNumber;
+            user.Birthday = entity.Birthday;
             if (user == null)
             {
                 return new ApiErrorResult<bool>("Account does not exist!!!");
             }
-            await _userManager.UpdateAsync(entity);
+            await _userManager.UpdateAsync(user);
             return new ApiSuccessResult<bool>();
         }
     }

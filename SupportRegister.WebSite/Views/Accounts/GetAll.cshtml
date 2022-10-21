@@ -1,0 +1,90 @@
+﻿@model IEnumerable<SupportRegister.ViewModels.ViewModels.UserViewModel>
+
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+ }
+<h3>Danh sách thông tin người dùng</h3>
+@if (ViewBag.SuccessMsg != null) {
+    <div class="alert alert-fill-success position-fixed"  id="msgAlert" role="alert" style="z-index: 9999; top: 80px; left: 800px">
+        @ViewBag.SuccessMsg
+    </div>
+}
+<button type="button" class="btn btn-primary"><a class="text-black" asp-action="Create" style="font-size: 1rem">Thêm người dùng</a></button>
+<table class="table" id="dataTableExample">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Họ và Tên
+            </th>
+            <th>
+                Địa chỉ
+            </th>
+            <th>
+                Ngày sinh
+            </th>
+            <th>
+                Số điện thoại
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                MSSV
+            </th>
+             <th>
+                Quyền
+            </th>
+            <th>Tùy chọn</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i }))
+        {
+            <tr>
+                <td>
+                    @(item.Index +1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.Birthday)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.UserName)
+                </td>
+                <td>    
+                    @Html.DisplayFor(modelItem => item.Data.Role)
+                </td>
+                <td>
+                    <a href="@Url.Action("Update", "Accounts", new { id =item.Data.Id })" style="color: #808080;">
+                        <i class="feather icon-edit" style="font-size: 2em"></i>
+                    </a>
+                    <a href="@Url.Action("Delete", "Accounts", new { id =item.Data.Id })" style="color: #808080">
+                        <i class="feather icon-delete" style="font-size: 2em"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SupportRegister.ViewModels.ViewModels
 {
-    internal class StaffViewModel
+    public class StaffViewModel
     {
     }
 }

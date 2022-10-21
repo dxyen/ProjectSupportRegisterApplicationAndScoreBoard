@@ -19,7 +19,7 @@ namespace SupportRegister.Data.Models
         public int YearStart { get; set; }
         public int ClassId { get; set; }
         public string IdCourse { get; set; }
-        public int? YearEnd { get; set; }
+        public int YearEnd { get; set; }
 
         public Class Class { get; set; }
         public Course IdCourseNavigation { get; set; }

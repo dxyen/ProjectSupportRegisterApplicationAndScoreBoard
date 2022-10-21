@@ -30,7 +30,6 @@ namespace SupportRegister.Application.Services
                 }).ToListAsync();
             return query;
         }
-
         public async Task<YearViewModel> GetDetailYearAsync(int id)
         {
             var query = await _context.Years
@@ -40,6 +39,23 @@ namespace SupportRegister.Application.Services
                    IdYear = year.IdYear,
                    Year1 = year.Year1
                }).FirstOrDefaultAsync();
+            return query;
+        }
+        public async Task<List<YearSemesterViewModel>> GetYearByNowAsync()
+        {
+            int now = Convert.ToInt32(DateTime.Now.Year);
+            var query = await _context.YearSemesters
+                        .Include(x => x.IdYearNavigation)
+                        .Include(x => x.IdSemesterNavigation)
+                        .Where(x => x.IdYearNavigation.Year1 <= (now))
+                        .Where(x => x.IdYearNavigation.Year1 >= (now - 9))
+                        .OrderByDescending(x => x.Id)
+               .Select(data => new YearSemesterViewModel()
+               {
+                    Id = data.Id,
+                    Year = data.IdYearNavigation.Year1,
+                    YearSemester = data.YearSemester1
+               }).ToListAsync();
             return query;
         }
     }

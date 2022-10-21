@@ -1,3 +1,63 @@
-﻿@{
+﻿@model SupportRegister.ViewModels.ViewModels.UserViewModel
+
+@{
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="row">
+    <div class="col-sm-6">
+        <h3>Thông tin tài khoản</h3>
+        <hr />
+        <dl class="row">
+            <dt class = "col-sm-2">
+                Họ và tên:
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.FullName)
+            </dd>
+            <dt class="col-sm-2">
+                MSSV:
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+            <dt class = "col-sm-2">
+                Địa chỉ:
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+            <dt class = "col-sm-2">
+                Ngày sinh:
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Birthday)
+            </dd>
+            <dt class = "col-sm-2">
+                Số đt:
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
+            <dt class = "col-sm-2">
+                Email:
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+        </dl>
+    </div>
+     <div class="col-sm-4">
+        <h3>Thông báo</h3>
+        <hr />
+        <div class="bs-callout bs-callout-info">
+            <p style="text-align:justify">
+                Hệ thống bắt đầu sử dụng từ 08/10/2022<br />
+                <br />
+                Sử dụng hệ thống n&agrave;y, sinh vi&ecirc;n c&oacute; thể nộp đơn, đăng k&yacute; in bảng điểm m&agrave; kh&ocirc;ng cần phải đến Văn ph&ograve;ng Khoa.<br />
+                <br />
+                <span style="color:#0000CD"><strong><span style="font-size:16px"><span style="background-color:#FFFF00">Lưu &yacute;: C&aacute;c đơn, bảng điểm đ&atilde; đăng k&yacute; m&agrave; kh&ocirc;ng nhận sẽ bị trừ Điểm r&egrave;n luyện cuối mỗi học kỳ.</span></span></strong></span>
+            </p>
+        </div>
+    </div>
+</div>

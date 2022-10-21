@@ -1,0 +1,82 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<body>
+    <div class="overview">
+        <div class="container">
+            <h2>Lập đơn</h2>
+            <p>Xin vui lòng đọc kỹ phần hướng dẫn để lập đúng các yêu cầu của mẫu đơn</p>
+        </div>
+    </div>
+    <div id="main" class="container" style="margin: 15px auto 50px auto">
+        <div class="row">
+            <div class="col">
+                <h3>Đơn có xác nhận</h3>
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td>Đơn xin xác nhận (sử dụng trong trường)-(SV chỉ chọn "Nộp đơn" không cần phải in đơn này)</td>
+                        <td><a asp-action="Application"><i data-feather="file"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>Đơn xin xác nhận (sử dụng ngoài trường - mẫu đơn này không dùng để vay vốn theo diện chính sách được)</td>
+                        <td><a><i data-feather="file"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>Đơn xin tạm nghỉ học: SV in đơn cho PH ký, GVCV xác nhận, SV nộp tại VPK, Khoa ký xong SV nộp PCTSV</td>
+                        <td><a><i data-feather="file"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>Đơn xin tạm nghỉ học (Để điều trị bệnh: PH ký; GVCV ký; SV nộp tại VPK, Khoa ký xong SV nộp PCTSV) </td>
+                        <td><a><i data-feather="file"></i></a></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col">
+                <h3><span class="label label-info">Hướng dẫn viết đơn</span></h3>
+                <div class="bs-callout bs-callout-info">
+                    Chọn đ&uacute;ng loại đơn cần nộp. Trong giao diện viết đơn, xem kỹ th&ocirc;ng tin hướng dẫn của từng loại đơn.
+                    <div>
+                        <span style="font-size:16px">
+                            <span style="font-family:times new roman,times,serif">
+                                <span style="color:#000000"><strong>-</strong> Đối với</span>&nbsp;<span style="color:#FF0000"><em><strong>Giấy x&aacute;c nhận tạm ho&atilde;n Nghĩa vụ qu&acirc;n sự (do Ph&ograve;ng C&ocirc;ng t&aacute;c Sinh vi&ecirc;n k&yacute; thừa lệnh Hiệu trưởng)</strong></em>&nbsp;sinh vi&ecirc;n&nbsp;</span>đăng k&yacute; tr&ecirc;n trang Web của PCTSV<strong>:</strong><br />
+                                <em><strong><span style="color:#0000FF">https://dsa.ctu.edu.vn/ho-tro-online/62-dang-ky-giay-tam-hoan-nghia-vu-quan-su.html</span></strong></em>
+                            </span>
+                        </span>
+                    </div>
+                    &nbsp;
+
+                    <div>
+                        <strong><span style="font-size:14px"><span style="font-family:arial,helvetica,sans-serif"><a href="https://dsa.ctu.edu.vn/ho-tro-online/61-dang-ky-giay-xac-nhan-vay-von-tai-dia-phuong-theo-ca-nhan.html" style="margin: 0px; padding: 0px; line-height: 16.8px; text-decoration-line: none; color: rgb(18, 105, 181);"><span style="color:#000000"><span style="font-size:16px"><span style="font-family:times new roman,times,serif">- </span></span></span></a></span></span></strong><span style="font-size:14px"><span style="font-family:arial,helvetica,sans-serif"><a href="https://dsa.ctu.edu.vn/ho-tro-online/61-dang-ky-giay-xac-nhan-vay-von-tai-dia-phuong-theo-ca-nhan.html" style="margin: 0px; padding: 0px; line-height: 16.8px; text-decoration-line: none; color: rgb(18, 105, 181);"><span style="color:#000000"><span style="font-size:16px"><span style="font-family:times new roman,times,serif">Giấy x&aacute;c nhận vay vốn tại địa phương (Theo C&aacute; nh&acirc;n): sinh vi&ecirc;n đăng k&yacute; tr&ecirc;n web P.CTSV:</span></span></span></a></span></span><strong>
+                            <span style="font-size:14px">
+                                <span style="font-family:arial,helvetica,sans-serif"><span style="color:#000000"><span style="font-size:16px"><span style="font-family:times new roman,times,serif">&nbsp;</span></span></span></span><br />
+                                <span style="font-size:16px"><span style="font-family:times new roman,times,serif"><span style="color:#0000FF"><em>https://dsa.ctu.edu.vn/ho-tro-online/61-dang-ky-giay-xac-nhan-vay-von-tai-dia-phuong-theo-ca-nhan.html</em></span></span></span>
+                            </span>
+                        </strong><br />
+                        <br />
+                        <u><em><strong>Lưu &yacute;:</strong></em></u>
+                    </div>
+
+                    <ul>
+                        <li>Sinh vi&ecirc;n sẽ nhận được đơn sau 1.5 ng&agrave;y đăng k&yacute;</li>
+                        <li>Kh&ocirc;ng l&agrave;m việc v&agrave;o c&aacute;c ng&agrave;y lễ, thứ 7 v&agrave; chủ nhật</li>
+                        <li><strong>Nơi nhận: <span style="color:#006400">Văn ph&ograve;ng Khoa CNTT&amp;TT </span></strong></li>
+                        <li><span style="color:#FF0000"><strong>Sinh vi&ecirc;n nhớ k&yacute; t&ecirc;n (nếu c&oacute;) v&agrave;o đơn trước khi sử dụng</strong></span></li>
+                        <li><strong>Đối với c&aacute;c đơn sử dụng ngo&agrave;i Trường SV li&ecirc;n hệ P. KHTH để được đ&oacute;ng mộc</strong></li>
+                    </ul>
+                    <strong> &nbsp;</strong>
+
+                    <ul>
+                        <li><span style="color:#0000CD"><strong>Chỉ nộp đơn khi bạn thực sự c&oacute; nhu cầu. </strong></span></li>
+                        <li><span style="color:#0000CD"><strong>Sau 30 ng&agrave;y kể từ ng&agrave;y nộp đơn, nếu SV kh&ocirc;ng nhận đơn th&igrave; VPK sẽ giữ lại đơn v&agrave;&nbsp; thống k&ecirc; trừ 2 điểm r&egrave;n luyện/1 đơn v&agrave;o mục 2</strong></span></li>
+                    </ul>
+                </div>
+                <h3>Tình trạng nộp đơn</h3>
+                <table class="table table-bordered table-striped">
+                    <tbody>
+                        <tr><td style="text-align: center">Bạn chưa nộp đơn nào trong học </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>

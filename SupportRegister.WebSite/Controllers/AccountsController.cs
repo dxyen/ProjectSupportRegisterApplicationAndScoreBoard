@@ -3,16 +3,17 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using SupportRegister.Application.System.Users;
-using SupportRegister.Utilities.SystemConstants;
 using SupportRegister.ViewModels.Requests.System.Users;
 using SupportRegister.ViewModels.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
@@ -24,37 +25,14 @@ namespace SupportRegister.WebSite.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly string _ApiUri = "/api/Users";
+        private readonly HttpClient _httpClient = new HttpClient();
 
         public AccountsController(IConfiguration configuration, IHttpClientFactory httpClientFactory)
         {
             _configuration = configuration;
             _httpClientFactory = httpClientFactory;
-        }
-        [Authorize]
-        public async Task<IActionResult> Index()
-        {
-            UserViewModel user = new UserViewModel();
-            using (var client = _httpClientFactory.CreateClient("apiBaseAddress"))
-            {
-                var result = await client.GetAsync($"Users/GetByIdAsync/{User.Identity.Name}");
-
-                if (result.IsSuccessStatusCode)
-                {
-                    //user = await result.Content.ReadAsAsync<UserViewModel>();
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty,
-                        "Không tìm thấy User, vui lòng kiểm tra lại thông tin");
-                }
-            }
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
+            _httpClient.BaseAddress = new Uri(_configuration["BaseAddress"]);
         }
         public IActionResult Login()
         {
@@ -188,6 +166,114 @@ namespace SupportRegister.WebSite.Controllers
             }
 
             return View(accountChange);
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetAll()
+        {
+            var url = _ApiUri + "/GetAllUsers";
+            List<UserViewModel> users = new List<UserViewModel>();
+            using (_httpClient)
+            {
+                using (var response = await _httpClient.GetAsync(url))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    users = JsonConvert.DeserializeObject<List<UserViewModel>>(apiResponse);
+                }
+            }
+            if (TempData["Result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["Result"];
+            }
+            return View(users);
+        }
+        //update
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var url = _ApiUri + $"/GetDetails/{id}";
+            UserViewModel user = new UserViewModel();
+            using (_httpClient)
+            {
+                using (var response = await _httpClient.GetAsync(url))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    user = JsonConvert.DeserializeObject<UserViewModel>(apiResponse);
+                }
+            }
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(UserUpdateRequest model)
+        {
+            var url = _ApiUri + "/Update";
+            using (_httpClient)
+            {
+                StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+                using (var response = await _httpClient.PutAsync(url, content))
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        TempData["Result"] = "Chỉnh sửa thành công!";
+                        ViewBag.StatusCode = response.StatusCode;
+                    }
+                    else
+                    {
+                        TempData["Result"] = "Chỉnh sửa thất bại!";
+                        ViewBag.StatusCode = response.StatusCode;
+                    }
+                }
+            }
+            return RedirectToAction("GetAll");
+        }
+        //add
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            var url = $"/api/Roles/GetList";
+            IEnumerable<RoleViewModel> role = Enumerable.Empty<RoleViewModel>();
+            using (_httpClient)
+            {
+                using (var response = await _httpClient.GetAsync(url))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    role = JsonConvert.DeserializeObject< IList<RoleViewModel>>(apiResponse);
+                }
+            }
+            ViewData["RoleId"] = new SelectList(role, "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(RegisterRequest request)
+        {
+            if (ModelState.IsValid)
+            {
+                var url = _ApiUri + "/register";
+                using (_httpClient)
+                {
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+                    using (var response = await _httpClient.PostAsync(url, content))
+                    {
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            TempData["Result"] = "Tạo mới thành công!";
+                            ViewBag.StatusCode = response.StatusCode;
+                        }
+                        else
+                        {
+                            TempData["Result"] = "Tạo mới thất bại!";
+                            ViewBag.StatusCode = response.StatusCode;
+                        }
+                    }
+                }
+                return RedirectToAction("GetAll");
+            }
+            else
+            {
+                return View();
+            }
         }
     }
 }

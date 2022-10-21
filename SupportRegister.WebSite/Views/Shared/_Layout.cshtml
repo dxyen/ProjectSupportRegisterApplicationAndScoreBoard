@@ -1,10 +1,10 @@
 ﻿@using System.Security.Claims;
 @using SupportRegister.Utilities.SystemConstants
 
-@{      
+@{
 
     var fullname = User.Claims.Where(c => c.Type == "FullName")
-    .Select(c => c.Value).SingleOrDefault();
+            .Select(c => c.Value).SingleOrDefault();
 
     var email = User.Claims.Where(c => c.Type == ClaimTypes.Email)
     .Select(c => c.Value).SingleOrDefault();
@@ -12,7 +12,6 @@
     var imageUrl = User.Claims.Where(c => c.Type == ClaimTypes.Uri)
     .Select(c => c.Value).SingleOrDefault();
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,43 +37,94 @@
     <link rel="stylesheet" href="~/template/assets/css/demo1/style.css">
     <link rel="stylesheet" href="~/template/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
     <!-- End CSS styles -->
+    <!-- CSS in diem -->
+    <link media="all" type="text/css" rel="stylesheet" href="~/css/style.css">
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/bootstrap.notify.min.js"></script>
+    <!-- End CSS styles -->
 
     <link rel="shortcut icon" href="~/img/logo.png" />
-
+     
 </head>
 <body>
     <div class="main-wrapper">
         <nav class="sidebar">
             <div class="sidebar-header">
-                <a href="#" style="font-size:20px;" class="sidebar-brand">HỆ THỐNG QUẢN LÝ</a>
+                <a asp-controller="Home" asp-action="Index" style="font-size:20px;" class="sidebar-brand">HỆ THỐNG QUẢN LÝ</a>
             </div>
             <div class="sidebar-body">
                 <ul class="nav">
-                    <li class="nav-item">
-                        <a asp-controller="AttendanceTrainer" asp-action="TrainerListView" class="nav-link">
-                            <i class="link-icon" data-feather="layers"></i>
-                            <span class="link-title">Lập đơn</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-controller="Course" asp-action="Index" class="nav-link">
-                            <i class="link-icon" data-feather="table"></i>
-                            <span class="link-title">In bảng điểm</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-controller="Module" asp-action="Index" class="nav-link">
-                            <i class="link-icon" data-feather="user"></i>
-                            <span class="link-title">Góp ý</span>
-                        </a>
-                    </li>
+                    @if (this.User.IsInRole("student"))
+                    {
+                        <li class="nav-item">
+                            <a asp-controller="RegisterApplication" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="layers"></i>
+                                <span class="link-title">Lập đơn</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="RegisterScoreboard" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="table"></i>
+                                <span class="link-title">In bảng điểm</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Feedback" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="user"></i>
+                                <span class="link-title">Góp ý</span>
+                            </a>
+                        </li>
+                    }
+                    @if (this.User.IsInRole("admin"))
+                    {
+                        <li class="nav-item">
+                            <a asp-controller="Accounts" asp-action="GetAll" class="nav-link">
+                                <i class="link-icon" data-feather="users"></i>
+                                <span class="link-title">Quản lý người dùng</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Role" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="flag"></i>
+                                <span class="link-title">Quản lý quyền</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="RegisterScoreboard" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="table"></i>
+                                <span class="link-title">Quản lý in bảng điểm</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Feedback" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="file"></i>
+                                <span class="link-title">Quản lý đăng ký đơn</span>
+                            </a>
+                        </li>
+                    }
+                    @if (this.User.IsInRole("staff"))
+                    {
+                        <li class="nav-item">
+                            <a asp-controller="RegisterScoreboard" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="table"></i>
+                                <span class="link-title">Quản lý đăng ký in bảng điểm</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Feedback" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="user"></i>
+                                <span class="link-title">Quản lý đăng ký đơn</span>
+                            </a>
+                        </li>
+                    }
                 </ul>
             </div>
         </nav>
         <!-- partial -->
 
         <div class="page-wrapper">
-             <!-- partial:partials/_navbar.html -->
+            <!-- partial:partials/_navbar.html -->
             <nav class="navbar">
                 <a href="#" class="sidebar-toggler">
                     <i data-feather="menu"></i>
@@ -90,46 +140,48 @@
                     </form>
                     <ul class="navbar-nav">
                         @{
-                        if (User.Identity.IsAuthenticated)
-                        {
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="wd-30 ht-30 rounded-circle" src="@(Url.Content(imageUrl) != null ? Url.Content(imageUrl) : SystemConstants.DEFAULT_AVATAR_URL)" alt="profile">
-                            </a>
-                            <div class="dropdown-menu p-0" aria-labelledby="profileDropdown">
-                                <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
-                                    <div class="mb-3">
-                                        <img class="wd-80 ht-80 rounded-circle" src="@(Url.Content(imageUrl) != null ? Url.Content(imageUrl) : SystemConstants.DEFAULT_AVATAR_URL)" alt="">
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img class="wd-30 ht-30 rounded-circle" src="@(Url.Content(imageUrl) != null ? Url.Content(imageUrl) : SystemConstants.DEFAULT_AVATAR_URL)" alt="profile">
+                                    </a>
+                                    <div class="dropdown-menu p-0" aria-labelledby="profileDropdown">
+                                        <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
+                                            <div class="mb-3">
+                                                <img class="wd-80 ht-80 rounded-circle" src="@(Url.Content(imageUrl) != null ? Url.Content(imageUrl) : SystemConstants.DEFAULT_AVATAR_URL)" alt="">
+                                            </div>
+                                            <div class="text-center">
+                                                <p class="tx-16 fw-bolder">
+                                                    @fullname
+                                                </p>
+                                                <p class="tx-12 text-muted">@email</p>
+                                            </div>
+                                        </div>
+                                        <ul class="list-unstyled p-1">
+                                            <li class="dropdown-item py-2">
+                                                <a href="/Accounts/ChangePassword" class="text-body ms-0">
+                                                    <i class="me-2 icon-md" data-feather="edit"></i>
+                                                    <span>Thay đổi mật khẩu</span>
+                                                </a>
+                                            <li class="dropdown-item py-2">
+                                                <a asp-controller="Accounts" asp-action="LogOut" class="text-body ms-0">
+                                                    <i class="me-2 icon-md" data-feather="log-out"></i>
+                                                    <span>Đăng xuất</span>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <div class="text-center">
-                                        <p class="tx-16 fw-bolder">
-                                            @fullname
-                                        </p>
-                                        <p class="tx-12 text-muted">@email</p>
-                                    </div>
-                                </div>
-                                <ul class="list-unstyled p-1">
-                                    <li class="dropdown-item py-2">
-                                        <a href="/Accounts/ChangePassword" class="text-body ms-0">
-                                            <i class="me-2 icon-md" data-feather="edit"></i>
-                                            <span>Thay đổi mật khẩu</span>
-                                        </a>
-                                    <li class="dropdown-item py-2">
-                                        <a asp-controller="Accounts" asp-action="LogOut" class="text-body ms-0">
-                                            <i class="me-2 icon-md" data-feather="log-out"></i>
-                                            <span>Đăng xuất</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        }else{
-                        <li class="nav-item">
-                            <a class="btn btn-primary" asp-action="Login"  asp-controller="Accounts" >
-                                Login
-                            </a>
-                        </li>
-                        }
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="btn btn-primary" asp-action="Login" asp-controller="Accounts">
+                                        Login
+                                    </a>
+                                </li>
+                            }
                         }
 
                     </ul>

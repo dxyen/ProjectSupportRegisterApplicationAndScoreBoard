@@ -9,13 +9,13 @@ namespace SupportRegister.Data.Models
     {
         public Semester()
         {
-            DetailRegisterScoreboards = new HashSet<DetailRegisterScoreboard>();
+            YearSemesters = new HashSet<YearSemester>();
         }
 
         public int IdSemester { get; set; }
         public string NameSemester { get; set; }
         public int Price { get; set; }
 
-        public ICollection<DetailRegisterScoreboard> DetailRegisterScoreboards { get; set; }
+        public ICollection<YearSemester> YearSemesters { get; set; }
     }
 }
