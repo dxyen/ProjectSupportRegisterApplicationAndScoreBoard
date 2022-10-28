@@ -15,7 +15,7 @@ namespace SupportRegister.Data.Models
 
         public int ClassId { get; set; }
         public string NameClass { get; set; }
-
+        public string Teacher { get; set; }
         public ICollection<Student> Students { get; set; }
     }
 }

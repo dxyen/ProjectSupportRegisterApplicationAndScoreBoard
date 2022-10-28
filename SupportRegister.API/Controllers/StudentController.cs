@@ -36,5 +36,28 @@ namespace SupportRegister.API.Controllers
                 }).FirstOrDefaultAsync();
             return Ok(query);
         }
+        [HttpGet("GetStudentApp/{userId}")]
+        public async Task<IActionResult> GetStudentApp(Guid userId)
+        {
+            var query = await _context.Students
+                .Include(x => x.Class)
+                .Include(x => x.IdCourseNavigation)
+                .Include(x => x.User)
+                .Where(x => x.UserId == userId)
+                .Select(student => new StudentAppViewModel()
+                {
+                    ClassName = student.Class.NameClass,
+                    Course = student.IdCourseNavigation.NameCourse,
+                    FullName = student.User.FullName,
+                    Address = student.User.Address,
+                    Birthday = student.User.Birthday,
+                    PhoneNumber = student.User.PhoneNumber,
+                    Email = student.User.Email,
+                    UserName = student.User.UserName,
+                    YearStart = student.YearStart,
+                    YearEnd= student.YearEnd
+                }).FirstOrDefaultAsync();
+            return Ok(query);
+        }
     }
 }

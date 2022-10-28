@@ -24,7 +24,6 @@ namespace SupportRegister.Data.EF
                 .ApplyConfiguration(new AppRoleConfiguration())
                 .ApplyConfiguration(new ApplicationConfiguration())
                 .ApplyConfiguration(new RegisterApplicationConfiguration())
-                .ApplyConfiguration(new DetailRegisterApplicationConfiguration())
                 .ApplyConfiguration(new RegisterScoreboardConfiguration())
                 .ApplyConfiguration(new DetailRegisterScoreboardConfiguration())
                 .ApplyConfiguration(new FeedbackConfiguration())
@@ -47,7 +46,6 @@ namespace SupportRegister.Data.EF
         }
 
         public DbSet<Application> Applications { get; set; }
-        public DbSet<DetailRegisterApplication> DetailRegisterApplications { get; set; }
         public DbSet<DetailRegisterScoreboard> DetailRegisterScoreboards { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<RegisterApplication> RegisterApplications { get; set; }

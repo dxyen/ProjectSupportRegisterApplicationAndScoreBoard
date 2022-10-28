@@ -275,5 +275,27 @@ namespace SupportRegister.WebSite.Controllers
                 return View();
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var url = _ApiUri + $"/Delete/{id}";
+            using (_httpClient)
+            {
+                using (var response = await _httpClient.DeleteAsync(url))
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        ViewBag.StatusCode = response.StatusCode;
+                        TempData["Result"] = "Xóa thành công";
+                    }
+                    else
+                    {
+                        ViewBag.StatusCode = response.StatusCode;
+                        TempData["Result"] = "Xóa thất bại";
+                    }
+                }
+            }
+            return RedirectToAction("GetAll");
+        }
     }
 }

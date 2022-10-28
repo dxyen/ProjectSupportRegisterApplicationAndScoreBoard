@@ -5,17 +5,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Scripts{
-    <script>
-        setTimeout(function () {
-            $('#msgAlert').fadeOut('slow');
-        }, 2000);
-    </script>
+<script>
+    setTimeout(function () {
+        $('#msgAlert').fadeOut('slow');
+    }, 2000);
+</script>
  }
- <h3 class="ms-4">Danh sách quyền</h3>
-<button type="button" class="btn btn-primary ms-4"><a class="text-black" asp-action="CreateRole" style="font-size: 1rem">Thêm quyền mới</a></button>
+<h3 class="ms-4">Danh sách quyền</h3>
+<button type="button" class="btn btn-primary ms-4"><a class="text-white" asp-action="CreateRole" style="font-size: 1rem">Thêm quyền mới</a></button>
 
-@if (ViewBag.SuccessMsg != null) {
-    <div class="alert alert-fill-success position-fixed"  id="msgAlert" role="alert" style="z-index: 9999; top: 80px; left: 800px">
+@if (ViewBag.SuccessMsg != null)
+{
+    <div class="alert alert-fill-success position-fixed" id="msgAlert" role="alert" style="z-index: 9999; top: 80px; left: 800px">
         @ViewBag.SuccessMsg
     </div>
 }
@@ -24,7 +25,7 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Data table Role</h6>
+                    <h6 class="card-title">Thông tin quyền</h6>
                     <div class="table-responsive">
                         <table class="table" id="dataTableExample">
                             <thead>
@@ -59,9 +60,27 @@
                                             <a href="@Url.Action("Edit", "Role", new { id =item.Data.Id })" style="color: #808080;">
                                                 <i class="feather icon-edit" style="font-size: 2em"></i>
                                             </a>
-                                            <a href="@Url.Action("Delete", "Role", new { id =item.Data.Id })" style="color: #808080;">
+                                            <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: #808080">
                                                 <i class="feather icon-delete" style="font-size: 2em"></i>
                                             </a>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Xóa quyền</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="p-2">
+                                                            Bạn có chắc muốn xóa quyền "@item.Data.Name"
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                            <a href="@Url.Action("Delete", "Role", new { id =item.Data.Id })" class="btn btn-danger">Xóa</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 }

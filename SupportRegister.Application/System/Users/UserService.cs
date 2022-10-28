@@ -59,7 +59,7 @@ namespace SupportRegister.Application.System.Users
                 Id = s.UserId,
                 Address = (from u in _context.Users
                            where s.UserId == u.Id
-                           select u.UserName).FirstOrDefault(),
+                           select u.Address).FirstOrDefault(),
                 FullName = (from u in _context.Users
                             where s.UserId == u.Id
                             select u.FullName).FirstOrDefault(),

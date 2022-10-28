@@ -1,17 +1,13 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SupportRegister.Application.Interfaces;
 using SupportRegister.Data.EF;
-using SupportRegister.ViewModels.Requests.Scoreboard;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SupportRegister.ViewModels.ViewModels;
 using SupportRegister.Data.Models;
-using SupportRegister.Utilities.Exceptions;
 
 namespace SupportRegister.API.Controllers
 {

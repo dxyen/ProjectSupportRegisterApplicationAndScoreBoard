@@ -20,6 +20,9 @@ namespace SupportRegister.Data.Configuration
             entity.Property(e => e.NameClass)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+            entity.Property(e => e.Teacher)
+                .HasMaxLength(255)
+                .HasColumnName("teacher");
         }
     }
 }
