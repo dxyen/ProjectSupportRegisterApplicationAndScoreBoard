@@ -27,7 +27,7 @@ namespace SupportRegister.ViewModels.Requests.System.Users
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập họ tên!")]
-        [Display(Name = "Full Name:", Prompt = "Your full name")]
+        [Display(Name = "Full Name:", Prompt = "Họ và tên")]
         public string FullName { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập Email")]

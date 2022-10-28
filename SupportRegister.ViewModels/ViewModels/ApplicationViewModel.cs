@@ -11,7 +11,5 @@ namespace SupportRegister.ViewModels.ViewModels
         public int IdApplication { get; set; }
         public string NameApplication { get; set; }
         public string Description { get; set; }
-        public string Content { get; set; }
-        public int? Price { get; set; }
     }
 }

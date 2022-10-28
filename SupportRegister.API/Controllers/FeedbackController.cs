@@ -10,6 +10,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SupportRegister.ViewModels.Requests.Mail;
+using SupportRegister.Data.Models;
 
 namespace SupportRegister.API.Controllers
 {
@@ -70,21 +71,30 @@ namespace SupportRegister.API.Controllers
         [HttpPost("Create")]
         public async Task<IActionResult> Create(string title_mail, string content_mail, Guid userId)
         {
-            var StudentId = await (from S in _context.Students
-                                   where S.UserId == userId
+            var Student = await (from U in _context.AppUsers
+                                   join S in _context.Students on U.Id equals S.UserId
+                                   join C in _context.Classes on S.ClassId equals C.ClassId
+                                   where U.Id == userId
                                    select new
                                    {
+                                       FullName = U.FullName,
+                                       MSSV = U.UserName,
+                                       Class = C.NameClass,
                                        StudentId = S.StudentId
                                    }).FirstOrDefaultAsync();
             MailRequest request = new MailRequest();
             request.ToEmail = "doxuanyen2000@gmail.com";
-            request.Subject = "Tài khoản HYPE shop";
-            request.Body = "<h1>Chào <span style=\"color: red\">" + "Đỗ Xuân Yên" + "</span></h1>";
-            request.Body += "<h5>Tài khoản của bạn là:</h5>";
-            request.Body += " <div><span> Tài khoản: </span><span>" + "doxuanyen2000@gmail.com" + "</span>" + "<br />"
-                        + "<span> Mật khẩu: </span><span>" + "doxuanyen2000@gmail.com" + "</span></div>";
+            request.Subject = title_mail;
+            request.Body = $"<h3>Được gửi từ: {Student.FullName}, MSSV: {Student.MSSV}, Lớp: {Student.Class} </h3>";
+            request.Body += $"<p>{content_mail}</p>";
             await _mailService.SendEmailAsync(request);
-            return Ok(true);
+            Feedback feedback = new Feedback();
+            feedback.ContentFeedback = content_mail;
+            feedback.TitleFeedback = title_mail;
+            feedback.StudentId = Student.StudentId;
+            await _context.Feedbacks.AddAsync(feedback);
+            var result = await _context.SaveChangesAsync();
+            return Ok(result);
         }
         [HttpDelete("Delete")]
         public async Task<IActionResult> Delete(FeedbackDeleteRequest request)

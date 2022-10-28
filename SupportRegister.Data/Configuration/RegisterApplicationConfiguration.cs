@@ -13,15 +13,20 @@ namespace SupportRegister.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<RegisterApplication> entity)
         {
-            entity.HasKey(e => e.IdRegisterApplication)
+            entity.HasKey(e => new { e.ApplicationId, e.StudentId})
                     .HasName("PK_REGISTERAPPLICATION");
 
             entity.ToTable("RegisterApplication");
-            entity.Property(e => e.IdRegisterApplication).ValueGeneratedOnAdd();
+
+            entity.HasIndex(e => e.ApplicationId, "IX_RegisterApplication_ApplicationId");
+
+            entity.HasIndex(e => e.IdStatus, "IX_RegisterApplication_IdStatus");
+
+            entity.Property(e => e.Content).IsRequired();
 
             entity.Property(e => e.DateReceived).HasColumnType("date");
 
-            entity.Property(e => e.DateRegister).HasColumnType("date");
+            entity.Property(e => e.DateRegister).HasColumnType("datetime");
 
             entity.HasOne(d => d.Application)
                 .WithMany(p => p.RegisterApplications)
@@ -32,6 +37,11 @@ namespace SupportRegister.Data.Configuration
                 .WithMany(p => p.RegisterApplications)
                 .HasForeignKey(d => d.IdStatus)
                 .HasConstraintName("Fk_regisapp_status");
+
+            entity.HasOne(d => d.Student)
+                .WithMany(p => p.RegisterApplications)
+                .HasForeignKey(d => d.StudentId)
+                .HasConstraintName("Fk_stu_detailapp");
         }
     }
 }

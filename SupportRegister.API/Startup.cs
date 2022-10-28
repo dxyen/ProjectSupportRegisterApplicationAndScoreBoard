@@ -48,6 +48,7 @@ namespace SupportRegister.API
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IStorageService, StorageService>();
             services.AddTransient<IScoreboardService, ScoreboardService>();
+            services.AddTransient<IApplicationService, ApplicationService>();
             services.AddTransient<IFeedbackService, FeedbackService>();
             services.AddTransient<ISemesterService, SemesterService>();
             services.AddTransient<IStatusService, StatusService>();

@@ -111,18 +111,22 @@ namespace SupportRegister.Data.Repository.System
         public async Task<ApiResult<bool>> UpdateAsync(AppUser entity)
         {
             var user = await _userManager.FindByIdAsync(entity.Id.ToString());
+            if (user == null)
+            {
+                return new ApiErrorResult<bool>("Tài khoản không tồn tại!!!");
+            }
             user.Address = entity.Address;
             user.UserName = entity.UserName;
             user.Email = entity.Email;
             user.FullName = entity.FullName;
             user.PhoneNumber = entity.PhoneNumber;
             user.Birthday = entity.Birthday;
-            if (user == null)
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
             {
-                return new ApiErrorResult<bool>("Account does not exist!!!");
+                return new ApiSuccessResult<bool>();
             }
-            await _userManager.UpdateAsync(user);
-            return new ApiSuccessResult<bool>();
+            return new ApiErrorResult<bool>("Cập nhật không thành công");
         }
     }
 }

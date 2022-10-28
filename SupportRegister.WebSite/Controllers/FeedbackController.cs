@@ -14,6 +14,10 @@ namespace SupportRegister.WebSite.Controllers
         }
         public IActionResult Index()
         {
+            if (TempData["Result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["Result"];
+            }
             return View();
         }
         [HttpPost]

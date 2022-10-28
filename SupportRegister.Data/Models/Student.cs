@@ -9,8 +9,8 @@ namespace SupportRegister.Data.Models
     {
         public Student()
         {
-            DetailRegisterApplications = new HashSet<DetailRegisterApplication>();
             DetailRegisterScoreboards = new HashSet<DetailRegisterScoreboard>();
+            RegisterApplications = new HashSet<RegisterApplication>();
             Feedbacks = new HashSet<Feedback>();
         }
 
@@ -24,7 +24,7 @@ namespace SupportRegister.Data.Models
         public Class Class { get; set; }
         public Course IdCourseNavigation { get; set; }
         public AppUser User { get; set; }
-        public ICollection<DetailRegisterApplication> DetailRegisterApplications { get; set; }
+        public ICollection<RegisterApplication> RegisterApplications { get; set; }
         public ICollection<DetailRegisterScoreboard> DetailRegisterScoreboards { get; set; }
         public ICollection<Feedback> Feedbacks { get; set; }
     }

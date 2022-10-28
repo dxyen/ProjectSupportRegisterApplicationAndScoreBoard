@@ -56,16 +56,16 @@ namespace SupportRegister.WebSite.Controllers
                     {
                         if (response.StatusCode == System.Net.HttpStatusCode.OK)
                         {
-                            TempData["Result"] = "Create Successfully!";
+                            TempData["Result"] = "Thêm thành công!";
                         }
                         else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                         {
-                            ViewBag.Error = "Duplicate name!";
+                            ViewBag.Error = "Trùng tên!";
                             return View();
                         }
                         else
                         {
-                            ViewBag.Error = "Create failed!!!";
+                            ViewBag.Error = "Thêm thất bại!!!";
                             return View();
                         }
                     }
@@ -115,17 +115,17 @@ namespace SupportRegister.WebSite.Controllers
                     {
                         if (response.StatusCode == System.Net.HttpStatusCode.OK)
                         {
-                            TempData["Result"] = "Update Successfully!";
+                            TempData["Result"] = "Cập nhật thành công!";
                             ViewBag.StatusCode = response.StatusCode;
                         }
                         else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                         {
-                            ViewBag.Error = "Duplicate name!";
+                            ViewBag.Error = "Trùng tên!";
                             return View();
                         }
                         else
                         {
-                            ViewBag.Error = "Update failed!!!";
+                            ViewBag.Error = "Cập nhật thất bại!!!";
                             return View();
                         }
                     }
@@ -141,27 +141,7 @@ namespace SupportRegister.WebSite.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             RoleViewModel role = new RoleViewModel();
-            var url = _ApiRoleUri + $"/GetDetails/{id}";
-            using (_httpClient)
-            {
-                using (var response = await _httpClient.GetAsync(url))
-                {
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-                        role = JsonConvert.DeserializeObject<RoleViewModel>(apiResponse);
-                    }
-                    else
-                        ViewBag.StatusCode = response.StatusCode;
-                }
-
-            }
-            return View(role);
-        }
-        [HttpPost, ActionName("DeleteRole")]
-        public async Task<IActionResult> DeleteRole(Guid Id)
-        {
-            var url = _ApiRoleUri + $"/Delete/{Id}";
+            var url = _ApiRoleUri + $"/Delete/{id}";
             using (_httpClient)
             {
                 using (var response = await _httpClient.DeleteAsync(url))
@@ -169,12 +149,12 @@ namespace SupportRegister.WebSite.Controllers
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         ViewBag.StatusCode = response.StatusCode;
-                        TempData["Result"] = "Deleted Successfully";
+                        TempData["Result"] = "Xóa thành công";
                     }
                     else
                     {
                         ViewBag.StatusCode = response.StatusCode;
-                        TempData["Result"] = "Delete Failed";
+                        TempData["Result"] = "Xóa thất bại";
                     }
                 }
             }

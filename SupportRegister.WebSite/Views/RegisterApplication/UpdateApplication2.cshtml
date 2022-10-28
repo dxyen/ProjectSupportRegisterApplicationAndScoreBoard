@@ -1,0 +1,306 @@
+﻿@using System.Globalization
+@model RegisAppViewModel
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link media="all" type="text/css" rel="stylesheet" href="~/css/application.css">
+    <link media="all" type="text/css" rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.2.1/classic/ckeditor.js"></script>
+    <link rel="stylesheet" href="/css/stix.css" />
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <style>
+        body {
+            margin-top: 50px;
+            background-color: #606468;
+        }
+
+        .A4-paper {
+            background-color: #fff;
+            font-family: Times New Roman;
+            padding: 1cm 1.1cm;
+            font-size: 16px;
+            line-height: 1.5em;
+            margin: 30px auto;
+            margin-top: 80px;
+            width: 21cm;
+            height: 29.7cm;
+            display: block;
+            -webkit-box-shadow: 0px 0px 30px rgba(50, 50, 50, 1);
+            -moz-box-shadow: 0px 0px 30px rgba(50, 50, 50, 1);
+            box-shadow: 0px 0px 30px rgba(50, 50, 50, 1);
+        }
+
+            .A4-paper > * {
+                font-family: Times New Roman;
+                line-height: 1.5em;
+            }
+
+        #toolbar {
+            margin-top: 10px;
+            margin-left: 15px;
+        }
+
+        #warnNoti {
+            -webkit-box-shadow: 0 2px 9px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 0 2px 9px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 2px 9px rgba(0, 0, 0, 0.5);
+        }
+
+            #warnNoti .media {
+                margin-top: 0;
+            }
+
+        .navbar {
+            -webkit-box-shadow: 0px 0px 10px rgba(50, 50, 50, 1);
+            -moz-box-shadow: 0px 0px 10px rgba(50, 50, 50, 1);
+            box-shadow: 0px 0px 10px rgba(50, 50, 50, 1);
+        }
+
+        #toolbar {
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            padding: 5px;
+            background-color: #333;
+            -webkit-box-shadow: 0px 0px 10px rgba(50, 50, 50, 1);
+            -moz-box-shadow: 0px 0px 10px rgba(50, 50, 50, 1);
+            box-shadow: 0px 0px 10px rgba(50, 50, 50, 1);
+            position: fixed;
+            right: 15px;
+            bottom: 50px;
+        }
+
+            #toolbar button {
+                padding-top: 10px;
+            }
+
+        #helper {
+            -webkit-box-shadow: 0px 0px 10px rgba(50, 50, 50, 1);
+            -moz-box-shadow: 0px 0px 10px rgba(50, 50, 50, 1);
+            box-shadow: 0px 0px 10px rgba(50, 50, 50, 1);
+        }
+
+        .sttBar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 5px 10px;
+            margin: 0;
+            color: #fff;
+            font-size: 12px;
+            -webkit-box-shadow: 0px 0px 10px rgba(50, 50, 50, 1);
+            -moz-box-shadow: 0px 0px 10px rgba(50, 50, 50, 1);
+            box-shadow: 0px 0px 10px rgba(50, 50, 50, 1);
+        }
+
+        .sttBar-info {
+            background-color: #2b669a;
+        }
+
+        .sttBar-warn {
+            background-color: #ff8200;
+        }
+    </style>
+    <title>[Hệ thống quản lý đơn và in bảng điểm] Khoa CNTT&TT</title>
+</head>
+
+<body>
+    <input id="dear" type="hidden" value="@Model.appRegis.Dear">
+    <input id="content" type="hidden" value="@Model.appRegis.Content">
+    <input type="hidden" id="idApp" value="@Model.appRegis.ApplicationId">
+    <div id="pdfContainer" class="A4-paper">
+        <div style="text-align:center"><strong>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</strong></div>
+        <input type="hidden" id="idApp" value="@Model.appDetails.IdApplication">
+        <div style="text-align:center">
+            <strong><u>Độc lập - Tự do - Hạnh phúc</u></strong><br />
+            <br />
+            &nbsp;
+        </div>
+
+        <div>&nbsp;</div>
+
+        <div style="text-align:center">
+            <span style="font-size:28px"><strong>ĐƠN XIN XÁC NHẬN</strong></span>
+        </div>
+
+        <div>&nbsp;</div>
+
+        <div id="test" class="editable" style="margin-left:80px">
+            <div id="valuedear">
+            </div>
+        </div>
+
+        <div>&nbsp;</div>
+
+        <div>
+            Tôi tên: <strong>@Model.students.FullName</strong>. Mã số sinh viên:
+            <strong>@Model.students.UserName</strong>
+        </div>
+
+        <div>Ngày sinh: <strong>@Model.students.Birthday.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</strong></div>
+
+        <div>Hiện đang học lớp: <strong>Công nghệ thông tin - A5 - </strong>Mã lớp: @Model.students.ClassName</div>
+
+        <div>Hệ đ&agrave;o tạo: D&agrave;i hạn tập trung (ch&iacute;nh qui) tại trường Đại học Cần Thơ.</div>
+
+        <div id="test2" class="editable">
+            <div id="valuecontent">
+            </div>
+        </div>
+
+        <div>Tr&acirc;n trọng k&iacute;nh ch&agrave;o.</div>
+
+        <div>&nbsp;</div>
+
+        <div style="margin-left:320px; text-align:center"><em>Cần Thơ, ngày @DateTime.Today.Day tháng @DateTime.Today.Month năm @DateTime.Today.Year</em></div>
+
+        <div style="margin-left:320px; text-align:center"><strong>NGƯỜI LẬP ĐƠN</strong></div>
+
+        <div style="margin-left:320px; text-align:center">(<em>K&yacute; t&ecirc;n</em>)</div>
+
+        <div style="margin-left:320px">
+            <br />
+            <br />
+            &nbsp;
+        </div>
+
+        <div style="margin-left:320px; text-align:center"><strong>@Model.students.FullName</strong></div>
+
+        <div>&nbsp;</div>
+
+        <div><strong>XÁC NHẬN CỦA TRƯỜNG CNTT&TT</strong></div>
+
+        <div><em>Cần Thơ, ngày @DateTime.Today.Day tháng @DateTime.Today.Month năm @DateTime.Today.Year</em></div>
+
+        <div>&nbsp;</div>
+    </div>
+    <div id="fdata">
+        <input type="hidden" name="chitietnhap_ctdt" value="" />
+    </div>
+    <div id="toolbar" class="btn-group" style="">
+        <button data-toggle="tooltip" title="Quay lại danh sách đơn" class="btn btn-default"
+                onclick="window.location='/RegisterApplication/Index'">
+            <span class="glyphicon glyphicon-arrow-left"
+                  style="font-size: 16px"></span>
+        </button>
+        <button class="btn btn-default" data-toggle="modal" data-target="#myModal" title="Nộp đơn này">
+            <span class="glyphicon glyphicon-open" style="font-size: 16px"></span>
+        </button>
+        <button id="saveBtn" class="btn btn-default" title="Lưu đơn này">
+            <span class="glyphicon glyphicon-floppy-disk" style="font-size: 16px"></span>
+        </button>
+        <button type="button" data-toggle="tooltip" title="In đơn này" class="btn btn-default" id="btnPrint">
+            <span class="glyphicon glyphicon-print" style="font-size: 16px"></span>
+        </button>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Nộp đơn</h4>
+                </div>
+                <div style="padding: 20px">
+                    <p>Bạn có chắc muốn nộp đơn này</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button id="submitBtn" type="button" class="btn btn-primary">Nộp đơn</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="sttBar sttBar-warn">
+        <span class="glyphicon glyphicon-info-sign"></span> Đơn này chỉ mới được lưu, chưa được nộp. Đơn này sẽ tự động
+        xóa sau 7 ngày.
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/js/stix.js"></script>
+    <script src="/js/test.js"></script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36251023-1']);
+        _gaq.push(['_setDomainName', 'jqueryscript.net']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <script type="text/javascript">
+
+        $(function(){
+            let htmldear = $("#dear").val();
+            $("#valuedear").html(htmldear);
+            let htmlcontent = $("#content").val();
+            $("#valuecontent").html(htmlcontent);
+        });
+
+        $("#saveBtn").click(function () {
+            var content = $("#test2").html();
+            var title = $("#test").html();
+            var id = $("#idApp").val();
+            var fdata = {content: content, title: title,id: id};
+            $.ajax({
+                url: '/RegisterApplication/Store',
+                type: 'post', 
+                data: fdata,
+                success: function(data) {
+                    window.location="/RegisterApplication/Index";
+                }, 
+                error: function(jqXHR, exception) {
+                    if(jqXHR.status === 500)
+                        console.log(jqXHR.responseText);
+                }
+            });
+        });
+        $("#submitBtn").click(function () {
+        var content = $("#test2").html();
+        var title = $("#test").html();
+        var id = $("#idApp").val();
+        var fdata = {content: content, title: title,id: id};
+         $.ajax({
+                url: '/RegisterApplication/Submit',
+                type: 'post', 
+                data: fdata,
+                success: function(data) {
+                    window.location="/RegisterApplication/Index";
+                }, 
+                error: function(jqXHR, exception) {
+                    if(jqXHR.status === 500)
+                        console.log(jqXHR.responseText);
+                }
+            });
+        });
+    </script>
+    <script>
+        $('#btnPrint').click(function(){
+
+            var win = window.open('','_blank','width=794,height=1123,resizable=no,location=no');
+            win.document.write("<style>body {font-family: Times New Roman;padding: 1cm 1.1cm; font-size: 16px;margin:0;line-height: 1.5em;} .menu {display:none}</style>");
+            win.document.write($('.A4-paper').html());
+            win.focus();
+            win.document.close();
+            });
+    </script>
+</body>
+
+</html>

@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="C:\Users\doxua\.nuget\packages\select.htmltopdf.netcore\20.1.0\contentFiles\any\any\Select.Html.dep" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SupportRegister.Application\SupportRegister.Application.csproj" />
   </ItemGroup>
 
@@ -12,6 +16,7 @@
     <PackageReference Include="Microsoft.Graph" Version="4.45.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Refit" Version="5.2.4" />
+    <PackageReference Include="Select.HtmlToPdf.NetCore" Version="22.1.0" />
   </ItemGroup>
 
   <ItemGroup>

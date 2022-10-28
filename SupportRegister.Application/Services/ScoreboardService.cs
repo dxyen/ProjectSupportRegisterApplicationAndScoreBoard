@@ -86,7 +86,7 @@ namespace SupportRegister.Application.Services
                                                      Status = Score.Regis.IdStatusNavigation.Name,
                                                      Student = Score.Student.User.FullName,
                                                      DateRegister = Score.Regis.DateRegister,
-                                                     DateReceived = Score.Regis.DateReceived,
+                                                     DateReceived = Score.Regis.DateReceived ?? DateTime.Now,
                                                      PriceTotal = Score.Price,
                                                      Amount = Score.Amount,
                                                      YearEnd = Score.YearEnd,
