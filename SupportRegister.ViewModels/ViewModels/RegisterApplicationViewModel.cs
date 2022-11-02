@@ -18,5 +18,6 @@ namespace SupportRegister.ViewModels.ViewModels
         public string Student { get; set; }
         public string NameApp { get; set; }
         public string Status { get; set; }
+        public string UserName { get; set; }
     }
 }

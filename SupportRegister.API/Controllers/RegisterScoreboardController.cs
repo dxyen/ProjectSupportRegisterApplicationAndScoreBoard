@@ -26,10 +26,6 @@ namespace SupportRegister.API.Controllers
             _context = context;
             _mapper = mapper;
         }
-        //[HttpGet("GetYear")]
-        //public async Task<IActionResult> GetYear()
-        //{
-        //}
         [HttpGet("GetDetail")]
         public async Task<IActionResult> GetDetail(Guid id, int regisId)
         {

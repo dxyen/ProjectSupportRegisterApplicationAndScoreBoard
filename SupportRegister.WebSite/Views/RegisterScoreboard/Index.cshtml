@@ -18,15 +18,13 @@
 }
 <body>
     <div class="overview" style="border-radius: 3px;">
-        <div class="container">
-            <h2>Đăng ký in bảng điểm trực tuyến</h2>
-            <p>Xin vui lòng đọc kỹ phần hướng dẫn để có thể chọn đúng các tùy chọn</p>
-        </div>
+        <h2>ĐĂNG KÝ IN BẢNG ĐIỂM</h2>
+        <p>Xin vui lòng đọc kỹ phần hướng dẫn để có thể chọn đúng các tùy chọn</p>
     </div>
     <div id="main" class="container" style="margin: 15px auto 50px auto">
         <div class="row">
             <div class="col-md-5">
-                <h3>Tùy chọn in</h3>
+                <h3 class="text-primary">Tùy chọn in</h3>
                 <div class="border" style="border-color: #ddd; box-shadow: 1px 1px rgb(0 0 0 / 5%); background-color: #fff; border-radius: 3px; padding: 4px">
                     <form id="form" asp-action="Create">
                         <div class="panel-body form-horizontal">
@@ -108,13 +106,13 @@
                 </div>
             </div>
             <div class="col-md-7">
-                <h3><span class="label label-info">Hướng dẫn in điểm</span></h3>
+                <h3 class="text-primary"><span class="label label-info">Hướng dẫn in điểm</span></h3>
                 <div class="bs-callout bs-callout-info">
                     Chọn c&aacute;c học kỳ m&agrave; bạn muốn in. Mỗi học kỳ/năm học được t&iacute;nh 2.000 đồng.<br />
                     Sau khi chọn c&aacute;c học kỳ, chọn <strong>&quot;Đăng k&yacute; in bảng điểm&quot;</strong> ở b&ecirc;n dưới.<br />
                     Lưu &yacute;:
                     <ul>
-                        <li>Bạn sẽ nhận được bảng điểm sau 1.5 ng&agrave;y đăng k&yacute;.</li>
+                        <li>Bạn sẽ nhận được bảng điểm sau 2 ng&agrave;y đăng k&yacute;.</li>
                         <li>Kh&ocirc;ng l&agrave;m việc v&agrave;o c&aacute;c ng&agrave;y lễ, thứ 7 v&agrave; chủ nhật.</li>
                         <li><span style="color:#FF0000"><strong>Nếu sinh viện chọn in quá học kỳ bất đầu, hoặc kết thúc thì sẽ được tính là chọn in tất cả học kỳ</strong></span></li>
                         <li><span style="color:#FF0000"><strong>Nơi nhận bảng điểm: Văn ph&ograve;ng Khoa CNTT&amp;TT </strong></span></li>
@@ -124,7 +122,7 @@
                         <li style="text-align:justify"><span style="color:#000080"><strong>Sinh vi&ecirc;n đăng k&yacute; in bảng điểm m&agrave; kh&ocirc;ng nhận, Khoa sẽ gởi danh s&aacute;ch về lớp v&agrave;o cuối học kỳ để thu tiền đăng k&yacute; v&agrave; trừ 5 điểm r&egrave;n luyện v&agrave;o mục 2. Đối với sinh vi&ecirc;n chậm tiến độ Khoa sẽ ghi nhận sinh vi&ecirc;n c&ograve;n nợ khi l&agrave;m thủ tục thanh to&aacute;n ra trường.</strong></span></li>
                     </ul>
                 </div>
-                <h3>Yêu cầu in bảng điểm</h3>
+                <h3 class="text-primary">Yêu cầu in bảng điểm</h3>
                 <table class="table table-bordered">
                     <tbody>
                         @if (Model.regisStu.Count() == 0)
@@ -186,7 +184,7 @@
                                             </form>
                                         </td>
                                     </tr>
-                                } 
+                                }
                             }
                         }
                     </tbody>

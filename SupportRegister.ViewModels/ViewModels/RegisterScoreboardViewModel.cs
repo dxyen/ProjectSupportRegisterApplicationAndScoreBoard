@@ -10,6 +10,7 @@ namespace SupportRegister.ViewModels.ViewModels
     {
         public int IdRegis { get; set; }
         public string Student { get; set; }
+        public string UserName { get; set; }
         public string Status { get; set; }
         public DateTime DateRegister { get; set; }
         public DateTime DateReceived { get; set; }

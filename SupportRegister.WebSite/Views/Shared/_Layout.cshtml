@@ -57,6 +57,12 @@
                 <ul class="nav">
                     @if (this.User.IsInRole("student"))
                     {
+                         <li class="nav-item">
+                            <a asp-controller="Home" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="menu"></i>
+                                <span class="link-title">Trang chủ</span>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a asp-controller="RegisterApplication" asp-action="Index" class="nav-link">
                                 <i class="link-icon" data-feather="layers"></i>
@@ -79,6 +85,18 @@
                     @if (this.User.IsInRole("admin"))
                     {
                         <li class="nav-item">
+                            <a asp-controller="Home" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="menu"></i>
+                                <span class="link-title">Trang chủ</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Statistics" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="book"></i>
+                                <span class="link-title">Số liệu thống kê</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a asp-controller="Accounts" asp-action="GetAll" class="nav-link">
                                 <i class="link-icon" data-feather="users"></i>
                                 <span class="link-title">Quản lý người dùng</span>
@@ -91,13 +109,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-controller="RegisterScoreboard" asp-action="Index" class="nav-link">
+                            <a asp-controller="Scoreboards" asp-action="Index" class="nav-link">
                                 <i class="link-icon" data-feather="table"></i>
                                 <span class="link-title">Quản lý in bảng điểm</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-controller="Feedback" asp-action="Index" class="nav-link">
+                            <a asp-controller="Applications" asp-action="Index" class="nav-link">
                                 <i class="link-icon" data-feather="file"></i>
                                 <span class="link-title">Quản lý đăng ký đơn</span>
                             </a>
@@ -106,14 +124,26 @@
                     @if (this.User.IsInRole("staff"))
                     {
                         <li class="nav-item">
-                            <a asp-controller="RegisterScoreboard" asp-action="Index" class="nav-link">
-                                <i class="link-icon" data-feather="table"></i>
-                                <span class="link-title">Quản lý đăng ký in bảng điểm</span>
+                            <a asp-controller="Home" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="menu"></i>
+                                <span class="link-title">Trang chủ</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-controller="Feedback" asp-action="Index" class="nav-link">
-                                <i class="link-icon" data-feather="user"></i>
+                            <a asp-controller="Statistics" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="book"></i>
+                                <span class="link-title">Số liệu thống kê</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Scoreboards" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="table"></i>
+                                <span class="link-title">Quản lý in bảng điểm</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Applications" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="file"></i>
                                 <span class="link-title">Quản lý đăng ký đơn</span>
                             </a>
                         </li>

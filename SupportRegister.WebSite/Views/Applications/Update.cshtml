@@ -1,0 +1,99 @@
+﻿@model AppsViewModel
+
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 class="card-title">Cập nhật trạng thái</h2>
+
+<div class="row">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Cập nhật trạng thái cho yêu cầu</h6>
+                <form class="forms-sample" asp-action="Update">
+                    <input value="@Model.appDetail.ApplicationId" name="id" type="hidden" autocomplete="off">
+                    <input value="@Model.appDetail.StudentId" name="idStudent" type="hidden" autocomplete="off">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label">Tên sinh viên</label>
+                                <input readonly asp-for="@Model.appDetail.Student" type="text" class="form-control" id="exampleInputUsername1" autocomplete="off">
+                            </div>
+                        </div><!-- Col -->
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label">MSSV</label>
+                                <input readonly asp-for="@Model.appDetail.UserName" type="text" class="form-control" id="exampleInputUsername1" autocomplete="off">
+                            </div>
+                        </div><!-- Col -->
+                    </div><!-- Row -->
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="mb-3">
+                                <label class="form-label">Ngày gửi</label>
+                                <input readonly asp-for="@Model.appDetail.DateRegister" type="text" class="form-control" id="exampleInputUsername1" autocomplete="off">
+                            </div>
+                        </div><!-- Col -->
+                        <div class="col-sm-4">
+                            <div class="mb-3">
+                                <label class="form-label">Ngày nhận</label>
+                                <input readonly asp-for="@Model.appDetail.DateReceived" type="text" class="form-control" id="exampleInputUsername1" autocomplete="off">
+                            </div>
+                        </div><!-- Col -->
+                    </div><!-- Row -->
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="mb-3">
+                                <label class="form-label">Tên đơn</label>
+                                <input readonly asp-for="@Model.appDetail.NameApp" type="text" class="form-control" id="exampleInputUsername1" autocomplete="off">
+                            </div>
+                        </div><!-- Col -->
+                    </div><!-- Row -->
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @if (Model.appDetail.Status == "Ðăng ký" || Model.appDetail.Status == "Xác nhận yêu cầu")
+                            {
+                                <div class="mb-3 d-flex flex-column">
+                                    <label class="form-label">Trạng thái</label>
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" class="form-check-input" value="3" name="idStatus" id="radioInline">
+                                        <label class="form-check-label" for="radioInline">
+                                            Xác nhận yêu cầu
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" class="form-check-input" value="5" name="idStatus" id="radioInline1">
+                                        <label class="form-check-label" for="radioInline1">
+                                            Đã in
+                                        </label>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="mb-3">
+                                    <label class="form-label">Trạng thái</label>
+                                    <input readonly asp-for="@Model.appDetail.Status" type="text" class="form-control" id="exampleInputUsername1" autocomplete="off">
+                                </div>
+                            }
+                        </div><!-- Col -->
+                    </div><!-- Row -->
+                    <div class="form-group">
+                        @if (Model.appDetail.Status == "Ðăng ký" || Model.appDetail.Status == "Xác nhận yêu cầu")
+                        {
+                            <input type="submit" value="Lưu" class="btn btn-primary  me-2" style="margin-left: 1em" />
+                        }
+                        <a href="@Url.Action("Index", "Applications")" class="btn btn-secondary">Hủy</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

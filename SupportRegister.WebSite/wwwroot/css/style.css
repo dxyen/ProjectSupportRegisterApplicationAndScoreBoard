@@ -105,6 +105,8 @@ hr, h1, h2, h3 {
     padding-top: 15px;
     padding-bottom: 15px;
     background-color: #6571ff;
+    border-radius: 5px;
+    text-align: center;
 }
 
 .footer {
@@ -215,9 +217,10 @@ hr, h1, h2, h3 {
     }
 
 .bs-callout-info {
-    background-color: #f4f8fa;
-    border-color: #bce8f1;
+    background-color: #bed5fa;
+    border-color: #6571ff;
     color: #3a8ea6;
+    border-radius: 3px;
 }
 
     .bs-callout-info h4 {

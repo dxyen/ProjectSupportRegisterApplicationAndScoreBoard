@@ -62,7 +62,7 @@ namespace SupportRegister.WebSite.Controllers
 
                     if (string.IsNullOrEmpty(token))
                     {
-                        TempData["Message"] = "Username or Password incorrect";
+                        TempData["Message"] = "Tên đăng nhập hoặc mật khẩu không chính xác!";
                         return View(request);
                     }
 

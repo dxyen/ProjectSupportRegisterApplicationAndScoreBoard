@@ -11,16 +11,23 @@
     }, 2000);
 </script>
  }
-<h3 class="ms-4">Danh sách quyền</h3>
-<button type="button" class="btn btn-primary ms-4"><a class="text-white" asp-action="CreateRole" style="font-size: 1rem">Thêm quyền mới</a></button>
-
 @if (ViewBag.SuccessMsg != null)
 {
     <div class="alert alert-fill-success position-fixed" id="msgAlert" role="alert" style="z-index: 9999; top: 80px; left: 800px">
         @ViewBag.SuccessMsg
     </div>
 }
+<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Quản lý Quyền</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Thông tin các quyền</li>
+    </ol>
+</nav>
 <div class="page-content" style="margin-top:0px">
+    <div class="d-flex justify-content-between mb-1">
+        <h3>Danh sách quyền</h3>
+        <button type="button" class="btn btn-primary"><a class="text-white" asp-action="CreateRole" style="font-size: 1rem">Thêm quyền mới</a></button>
+    </div>
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">

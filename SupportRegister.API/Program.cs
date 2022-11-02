@@ -22,5 +22,6 @@ namespace SupportRegister.API
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }

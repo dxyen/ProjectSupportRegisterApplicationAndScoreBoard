@@ -19,9 +19,8 @@ namespace SupportRegister.Application.Services
         {
 
             var email = new MimeMessage();
-            email.Sender = MailboxAddress.Parse("hype.hotro@gmail.com");
-
-            //email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
+            //email.Sender = MailboxAddress.Parse("buitruongnhatlm@gmail.com");
+            email.Sender = MailboxAddress.Parse("qldkd.hotro@gmail.com");
             email.To.Add(MailboxAddress.Parse(mailRequest.ToEmail));
             email.Subject = mailRequest.Subject;
             var builder = new BodyBuilder();
@@ -29,7 +28,8 @@ namespace SupportRegister.Application.Services
             email.Body = builder.ToMessageBody();
             using var smtp = new SmtpClient();
             smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-            smtp.Authenticate("hype.hotro@gmail.com", "wsnvkoddenhhawvc");
+            smtp.Authenticate("qldkd.hotro@gmail.com", "mhruhxkgdnzlxvcp");
+            //smtp.Authenticate("hype.hotro@gmail.com", "wsnvkoddenhhawvc");
             await smtp.SendAsync(email);
             smtp.Disconnect(true);
         }

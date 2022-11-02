@@ -1,8 +1,8 @@
 ﻿@using System.Globalization
-@model IEnumerable<SupportRegister.ViewModels.ViewModels.UserViewModel>
+@model ScoresViewModel
 
 @{
-    ViewData["Title"] = "GetAll";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Scripts{
@@ -20,81 +20,60 @@
 }
 <nav class="page-breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Quản lý người dùng</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Thông tin người dùng</li>
+        <li class="breadcrumb-item"><a href="#">Quản lý đăng ký in bảng điểm</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Thông tin đăng ký in bảng điểm</li>
     </ol>
 </nav>
 <div class="page-content" style="margin-top:0px">
     <div class="d-flex justify-content-between mb-1">
-        <h3>Danh sách thông tin người dùng</h3>
-        <button type="button" class="btn btn-primary"><a class="text-white" asp-action="Create" style="font-size: 1rem">Thêm người dùng</a></button>
+        <h3>Danh sách đăng ký in bảng điểm</h3>
     </div>
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Thông tin người dùng</h6>
+                    <h6 class="card-title">Thông tin đăng ký in bảng điểm</h6>
                     <div class="table-responsive">
                         <table class="table" id="dataTableExample">
                             <thead>
                                 <tr>
-                                    <th>
-                                        STT
+                                     <th>
+                                        Số thứ tự
                                     </th>
                                     <th>
-                                        Họ và Tên
+                                        Họ và tên
                                     </th>
                                     <th>
                                         MSSV
                                     </th>
                                     <th>
-                                        Ngày sinh
+                                        Ngày gửi
                                     </th>
                                     <th>
-                                        Số điện thoại
+                                        Ngày nhận
                                     </th>
                                     <th>
-                                        Email
+                                        Trạng thái
                                     </th>
                                     <th>
-                                        Địa chỉ
+                                        Tùy chọn
                                     </th>
-                                    <th>
-                                        Quyền
-                                    </th>
-                                    <th>Tùy chọn</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i }))
+                                @foreach (var app in Model.scores.Select((x, i) => new { Data = x, Index = i }))
                                 {
                                     <tr>
                                         <td>
-                                            @(item.Index +1)
+                                            @(app.Index +1)
                                         </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Data.FullName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Data.UserName)
-                                        </td>
-                                        <td>
-                                            @item.Data.Birthday.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Data.PhoneNumber)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Data.Email)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Data.Address)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Data.Role)
-                                        </td>
-                                        <td>
-                                            <a href="@Url.Action("Update", "Accounts", new { id =item.Data.Id })" style="color: #808080;">
+                                        <td>@app.Data.Student</td>
+                                        <td>@app.Data.UserName</td>
+                                        <td>@app.Data.DateRegister</td>
+                                        <td>@app.Data.DateReceived.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
+                                        <td>@app.Data.Status</td>
+                                        <td class="text-center">
+                                            <a href="@Url.Action("Update", "Scoreboards", new { scoreId = app.Data.IdRegis })" style="color: #808080;">
                                                 <i class="feather icon-edit" style="font-size: 2em"></i>
                                             </a>
                                             <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: #808080">
@@ -105,15 +84,15 @@
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Xóa người dùng</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Xóa đơn</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="p-2">
-                                                            Bạn có chắc muốn xóa người dùng "@item.Data.FullName" 
+                                                            Bạn có chắc muốn xóa đơn của "@app.Data.Student"
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                            <a href="@Url.Action("Delete", "Accounts", new { id =item.Data.Id })" class="btn btn-danger">Xóa</a>
+                                                            <a href="@Url.Action("Delete", "Scoreboards", new { id = app.Data.IdRegis })" class="btn btn-danger">Xóa</a>
                                                         </div>
                                                     </div>
                                                 </div>
