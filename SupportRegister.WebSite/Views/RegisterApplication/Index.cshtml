@@ -38,13 +38,9 @@
                             {
                                 @foreach (var regis in Model.allAppRegis.Select((x, i) => new { Data = x, Index = i }))
                                 {
-                                    @if (@app.Data.IdApplication == @regis.Data.ApplicationId && @regis.Data.IdStatus == 4)
+                                    @if (regis.Data.Id != 0 && @regis.Data.ApplicationId == app.Data.IdApplication && @regis.Data.IdStatus == 4)
                                     {
-                                        <td><a class="text-black" href="@Url.Action("UpdateApplication2", "RegisterApplication", new { id =regis.Data.ApplicationId })"><i data-feather="file"></i></a></td>
-                                    }
-                                    else if (@app.Data.IdApplication == @regis.Data.ApplicationId && @regis.Data.IdStatus == 1)
-                                    {
-                                        <td><a class="text-black disabled"><i data-feather="file"></i></a></td>
+                                        <td><a class="text-black" href="@Url.Action("UpdateApplication2", "RegisterApplication", new { id =regis.Data.Id })"><i data-feather="file"></i></a></td>
                                     }
                                     else
                                     {
@@ -80,7 +76,7 @@
                                             </td>
                                             <td style="width: 101px;">
                                                 <form asp-action="Cancel">
-                                                    <a class="btn btn-warning" href="@Url.Action("UpdateApplication2", "RegisterApplication", new { id =regis.Data.ApplicationId })"><i class="link-icon" data-feather="edit"></i></a>
+                                                    <a class="btn btn-warning" href="@Url.Action("UpdateApplication2", "RegisterApplication", new { id =regis.Data.Id })"><i class="link-icon" data-feather="edit"></i></a>
                                                     <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="link-icon" data-feather="delete"></i></a>
                                                     <div class="modal" tabindex="-1" id="deleteModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog">
@@ -91,7 +87,7 @@
                                                                 </div>
                                                                 <div class="p-3">
                                                                     <p>Bạn có chắc muốn xóa đơn đã lưu</p>
-                                                                    <input type="hidden" name="cancelId" value="@(regis.Data.ApplicationId)">
+                                                                    <input type="hidden" name="cancelId" value="@(regis.Data.Id)">
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -126,7 +122,7 @@
                                                                 </div>
                                                                 <div class="p-3">
                                                                     <p>Bạn có chắc muốn xóa đơn đã lưu</p>
-                                                                    <input type="hidden" name="cancelId" value="@(regis.Data.ApplicationId)">
+                                                                    <input type="hidden" name="cancelId" value="@(regis.Data.Id)">
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>

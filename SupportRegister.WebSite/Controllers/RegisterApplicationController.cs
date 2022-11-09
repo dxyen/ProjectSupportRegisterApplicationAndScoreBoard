@@ -47,13 +47,13 @@ namespace SupportRegister.WebSite.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        public IActionResult Store(string content, string title, int id)
+        public IActionResult Store(string content, string title, int id, int idRegis)
         {
             string response = "";
             try
             {
                 var userId = User.Claims.Where(c => c.Type == "Id").Select(c => c.Value).SingleOrDefault();
-                var app = _regisApp.Store(content, title, id, userId).GetAwaiter().GetResult();
+                var app = _regisApp.Store(content, title, id, userId, idRegis).GetAwaiter().GetResult();
                 if (app >= 1)
                 {
                     response = "Lưu đơn thành công!";
@@ -68,15 +68,15 @@ namespace SupportRegister.WebSite.Controllers
             catch (System.Exception e)
             {
                 var exception = e.Message;
-                return StatusCode(500, exception); 
+                return StatusCode(500, exception);
             }
            
         }
         [HttpPost]
-        public IActionResult Submit(string content, string title, int id)
+        public IActionResult Submit(string content, string title, int id, int idRegis)
         {
             var userId = User.Claims.Where(c => c.Type == "Id").Select(c => c.Value).SingleOrDefault();
-            var app = _regisApp.Submit(content, title, id, userId).GetAwaiter().GetResult();
+            var app = _regisApp.Submit(content, title, id, userId, idRegis).GetAwaiter().GetResult();
             if (app >= 1)
             {
                 TempData["Result"] = "Đăng ký đơn thành công!";
@@ -88,17 +88,13 @@ namespace SupportRegister.WebSite.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public IActionResult UpdateApplication2()
+        public IActionResult UpdateApplication2(int id)
         {
             var userId = User.Claims.Where(c => c.Type == "Id").Select(c => c.Value).SingleOrDefault();
-            int idApp = 2;
-            int idStatus = 4;
-            var update = _regisApp.Update(idApp, userId, idStatus).GetAwaiter().GetResult();
-            var app = _regisApp.GetDetail(idApp).GetAwaiter().GetResult();
+            var update = _regisApp.Update(id).GetAwaiter().GetResult();
             var student = _regisApp.GetStudentApp(userId).GetAwaiter().GetResult();
             var viewModel = new RegisAppViewModel()
             {
-                appDetails = app,
                 students = student,
                 appRegis = update
             };
@@ -111,15 +107,14 @@ namespace SupportRegister.WebSite.Controllers
         [HttpPost]
         public IActionResult Cancel(int cancelId)
         {
-            var userId = User.Claims.Where(c => c.Type == "Id").Select(c => c.Value).SingleOrDefault();
-            var result = _regisApp.Cancel(cancelId, userId).GetAwaiter().GetResult();
+            var result = _regisApp.Cancel(cancelId).GetAwaiter().GetResult();
             if (result >= 1)
             {
                 TempData["Result"] = "Đã xóa đơn thành công!";
             }
             else
             {
-                TempData["Result"] = "Đã đơn thất bại!";
+                TempData["Result"] = "Xóa đơn thất bại!";
             }
             return RedirectToAction("Index");
         }

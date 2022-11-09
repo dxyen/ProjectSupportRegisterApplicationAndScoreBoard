@@ -9,8 +9,10 @@ namespace SupportRegister.ViewModels.ViewModels
     public class RegisterScoreboardViewModel
     {
         public int IdRegis { get; set; }
+        public int idStudent { get; set; }
         public string Student { get; set; }
         public string UserName { get; set; }
+        public Guid UserId { get; set; }
         public string Status { get; set; }
         public DateTime DateRegister { get; set; }
         public DateTime DateReceived { get; set; }

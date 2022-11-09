@@ -10,9 +10,11 @@ namespace SupportRegister.WebSite.Controllers
     public class ApplicationsController : Controller
     {
         private readonly IApps _apps;
+        private readonly IRegisApp _regisApp;
         public ApplicationsController()
         {
             _apps = RestService.For<IApps>("https://localhost:44363");
+            _regisApp = RestService.For<IRegisApp>("https://localhost:44363");
         }
         public IActionResult Index()
         {
@@ -20,6 +22,32 @@ namespace SupportRegister.WebSite.Controllers
             var viewModel = new AppsViewModel()
             {
                 apps = app,
+            };
+            if (TempData["Result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["Result"];
+            }
+            return View(viewModel);
+        }
+        public IActionResult GetAllAppUnconfirm()
+        {
+            var apps = _apps.GetAllAppUnconfirm().GetAwaiter().GetResult();
+            var viewModel = new AppsViewModel()
+            {
+                apps = apps,
+            };
+            if (TempData["Result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["Result"];
+            }
+            return View(viewModel);
+        }
+        public IActionResult GetAllAppUnprint()
+        {
+            var apps = _apps.GetAllAppUnprint().GetAwaiter().GetResult();
+            var viewModel = new AppsViewModel()
+            {
+                apps = apps,
             };
             if (TempData["Result"] != null)
             {
@@ -42,9 +70,9 @@ namespace SupportRegister.WebSite.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        public IActionResult Update(int id, int idStatus, int idStudent)
+        public IActionResult UpdateStatus(int id, int idStatus)
         {
-            var result = _apps.Update(id, idStudent, idStatus).GetAwaiter().GetResult();
+            var result = _apps.Update(id, idStatus).GetAwaiter().GetResult();
             if (result >= 1)
             {
                 TempData["Result"] = "Đã cập nhật trạng thái thành công!";
@@ -68,6 +96,22 @@ namespace SupportRegister.WebSite.Controllers
                 TempData["Result"] = "Đã xóa thất bại!";
             }
             return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public IActionResult PrintApp(string userId, int id)
+        {
+            var app = _regisApp.Update(id).GetAwaiter().GetResult();
+            var student = _regisApp.GetStudentApp(userId).GetAwaiter().GetResult();
+            var viewModel = new RegisAppViewModel()
+            {
+                appRegis = app,
+                students = student
+            };
+            if (TempData["Result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["Result"];
+            }
+            return View(viewModel);
         }
     }
 }

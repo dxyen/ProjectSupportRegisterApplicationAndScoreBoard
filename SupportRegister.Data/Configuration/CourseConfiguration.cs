@@ -21,7 +21,7 @@ namespace SupportRegister.Data.Configuration
 
             entity.Property(e => e.NameCourse)
                 .HasMaxLength(255)
-                .IsUnicode(false); ;
+                .IsUnicode(false);
         }
     }
 }

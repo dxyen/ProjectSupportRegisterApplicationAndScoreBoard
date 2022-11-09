@@ -10,5 +10,7 @@ namespace SupportRegister.Application.Interfaces
     public interface IMailService
     {
         Task SendEmailAsync(MailRequest mailRequest);
+
+        Task SendEmailAdminAsync(MailRequest mailRequest);
     }
 }

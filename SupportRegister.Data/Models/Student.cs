@@ -11,6 +11,7 @@ namespace SupportRegister.Data.Models
         {
             DetailRegisterScoreboards = new HashSet<DetailRegisterScoreboard>();
             RegisterApplications = new HashSet<RegisterApplication>();
+            MinusPoints = new HashSet<MinusPoint>();
             Feedbacks = new HashSet<Feedback>();
         }
 
@@ -27,5 +28,6 @@ namespace SupportRegister.Data.Models
         public ICollection<RegisterApplication> RegisterApplications { get; set; }
         public ICollection<DetailRegisterScoreboard> DetailRegisterScoreboards { get; set; }
         public ICollection<Feedback> Feedbacks { get; set; }
+        public ICollection<MinusPoint> MinusPoints { get; set; }
     }
 }

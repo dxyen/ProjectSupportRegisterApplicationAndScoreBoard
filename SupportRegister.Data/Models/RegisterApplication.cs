@@ -15,6 +15,7 @@ namespace SupportRegister.Data.Models
         public int ApplicationId { get; set; }
         public string Content { get; set; }
         public string Dear { get; set; }
+        public int Id { get; set; }
 
         public Application Application { get; set; }
         public Status IdStatusNavigation { get; set; }

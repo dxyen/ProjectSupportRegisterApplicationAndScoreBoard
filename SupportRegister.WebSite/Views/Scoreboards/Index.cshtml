@@ -52,10 +52,10 @@
                                     <th>
                                         Ngày nhận
                                     </th>
-                                    <th>
+                                    <th class="text-center">
                                         Trạng thái
                                     </th>
-                                    <th>
+                                    <th class="text-center">
                                         Tùy chọn
                                     </th>
                                 </tr>
@@ -71,7 +71,23 @@
                                         <td>@app.Data.UserName</td>
                                         <td>@app.Data.DateRegister</td>
                                         <td>@app.Data.DateReceived.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
-                                        <td>@app.Data.Status</td>
+                                        <td class="text-center">
+                                            @if(app.Data.Status == "Đăng ký"){
+                                                <p class="btn btn-danger disabled">@app.Data.Status</p>
+                                            } 
+                                            else if (app.Data.Status == "Xác nhận yêu cầu")
+                                            {
+                                                <p class="btn btn-warning disabled">@app.Data.Status</p>
+                                            } 
+                                            else if (app.Data.Status == "Hủy đăng ký")
+                                            {
+                                                <p class="btn btn-secondary disabled">@app.Data.Status</p>
+                                            }
+                                            else
+                                            {
+                                                <p class="btn btn-success disabled">@app.Data.Status</p>
+                                            }
+                                        </td>
                                         <td class="text-center">
                                             <a href="@Url.Action("Update", "Scoreboards", new { scoreId = app.Data.IdRegis })" style="color: #808080;">
                                                 <i class="feather icon-edit" style="font-size: 2em"></i>

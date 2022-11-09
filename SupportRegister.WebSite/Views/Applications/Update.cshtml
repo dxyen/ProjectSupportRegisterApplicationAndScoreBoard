@@ -11,9 +11,10 @@
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title">Cập nhật trạng thái cho yêu cầu</h6>
-                <form class="forms-sample" asp-action="Update">
-                    <input value="@Model.appDetail.ApplicationId" name="id" type="hidden" autocomplete="off">
+                <form class="forms-sample" asp-action="UpdateStatus">
+                    <input value="@Model.appDetail.Id" name="id" type="hidden" autocomplete="off">
                     <input value="@Model.appDetail.StudentId" name="idStudent" type="hidden" autocomplete="off">
+                    <input value="@Model.appDetail.UserId" name="userId" type="hidden" autocomplete="off">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="mb-3">
@@ -52,12 +53,12 @@
                     </div><!-- Row -->
                     <div class="row">
                         <div class="col-sm-6">
-                            @if (Model.appDetail.Status == "Ðăng ký" || Model.appDetail.Status == "Xác nhận yêu cầu")
+                            @if (Model.appDetail.Status == "Đăng ký" || Model.appDetail.Status == "Xác nhận yêu cầu")
                             {
                                 <div class="mb-3 d-flex flex-column">
                                     <label class="form-label">Trạng thái</label>
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input" value="3" name="idStatus" id="radioInline">
+                                        <input type="radio" class="form-check-input" value="3" name="idStatus" id="radioInline" checked>
                                         <label class="form-check-label" for="radioInline">
                                             Xác nhận yêu cầu
                                         </label>
@@ -79,19 +80,20 @@
                             }
                         </div><!-- Col -->
                     </div><!-- Row -->
+                    <div class="row mb-2 text-warning"><p>Sau khi in đơn, vui lòng cập nhật trạng thái để sinh viên được thông báo qua mail để đến nhận đơn!</p></div>
                     <div class="form-group">
-                        @if (Model.appDetail.Status == "Ðăng ký" || Model.appDetail.Status == "Xác nhận yêu cầu")
+                        @if (Model.appDetail.Status == "Đăng ký" || Model.appDetail.Status == "Xác nhận yêu cầu")
                         {
                             <input type="submit" value="Lưu" class="btn btn-primary  me-2" style="margin-left: 1em" />
                         }
                         <a href="@Url.Action("Index", "Applications")" class="btn btn-secondary">Hủy</a>
+                        <a style="margin-left: 1em" href="@Url.Action("PrintApp", "Applications", new { userId = Model.appDetail.UserId, id = Model.appDetail.Id })" class="btn btn-warning">In đơn này</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
 @section Scripts {
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -14,6 +14,7 @@
                 <h6 class="card-title">Cập nhật trạng thái cho yêu cầu</h6>
                 <form class="forms-sample" asp-action="Update">
                     <input value="@Model.scoreDetail.IdRegis" name="id" type="hidden" autocomplete="off">
+                    <input value="@Model.scoreDetail.idStudent" name="idStudent" type="hidden" autocomplete="off">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="mb-3">
@@ -70,11 +71,12 @@
                     </div><!-- Row -->
                     <div class="row">
                         <div class="col-sm-6">
-                            @if(Model.scoreDetail.Status == "Ðăng ký" || Model.scoreDetail.Status == "Xác nhận yêu cầu"){
+                            @if (Model.scoreDetail.Status == "Ðăng ký" || Model.scoreDetail.Status == "Xác nhận yêu cầu")
+                            {
                                 <div class="mb-3 d-flex flex-column">
                                     <label class="form-label">Trạng thái</label>
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input" value="3" name="idStatus" id="radioInline">
+                                        <input type="radio" class="form-check-input" value="3" name="idStatus" id="radioInline" checked>
                                         <label class="form-check-label" for="radioInline">
                                             Xác nhận yêu cầu
                                         </label>
@@ -86,7 +88,9 @@
                                         </label>
                                     </div>
                                 </div>
-                            }else{
+                            }
+                            else
+                            {
                                 <div class="mb-3">
                                     <label class="form-label">Trạng thái</label>
                                     <input readonly asp-for="@Model.scoreDetail.Status" type="text" class="form-control" id="exampleInputUsername1" autocomplete="off">
@@ -94,9 +98,34 @@
                             }
                         </div><!-- Col -->
                     </div><!-- Row -->
+                    <div class="row mb-2 text-warning"><p>Sau khi in bảng điểm, vui lòng thay đổi trạng thái để sinh viên đến nhận!</p></div>
                     <div class="form-group">
-                        @if(Model.scoreDetail.Status == "Ðăng ký" || Model.scoreDetail.Status == "Xác nhận yêu cầu"){
+                        @if (Model.scoreDetail.Status == "Ðăng ký" || Model.scoreDetail.Status == "Xác nhận yêu cầu")
+                        {
                             <input type="submit" value="Lưu" class="btn btn-primary  me-2" style="margin-left: 1em" />
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                In bảng điểm
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">In bảng điểm</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="mt-2">
+                                            In bảng điểm với các thông tin như trên
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                            <button type="button" class="btn btn-primary">In bảng điểm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         }
                         <a href="@Url.Action("Index", "Scoreboards")" class="btn btn-secondary">Hủy</a>
                     </div>

@@ -51,7 +51,20 @@
     <div class="main-wrapper">
         <nav class="sidebar">
             <div class="sidebar-header">
-                <a asp-controller="Home" asp-action="Index" style="font-size:20px;" class="sidebar-brand">HỆ THỐNG QUẢN LÝ</a>
+                 @if (this.User.IsInRole("student"))
+                {
+                    <a asp-controller="Home" asp-action="Index" style="font-size:18px;" class="sidebar-brand">HỆ THỐNG <span>ĐĂNG KÝ</span></a>
+                }
+                else
+                {
+                    <a asp-controller="Home" asp-action="Index" style="font-size:18px;" class="sidebar-brand">HỆ THỐNG <span>QUẢN LÝ</span></a>
+                }
+
+            <div class="sidebar-toggler not-active">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             </div>
             <div class="sidebar-body">
                 <ul class="nav">
@@ -92,7 +105,7 @@
                         </li>
                         <li class="nav-item">
                             <a asp-controller="Statistics" asp-action="Index" class="nav-link">
-                                <i class="link-icon" data-feather="book"></i>
+                                <i class="link-icon" data-feather="box"></i>
                                 <span class="link-title">Số liệu thống kê</span>
                             </a>
                         </li>
@@ -118,6 +131,12 @@
                             <a asp-controller="Applications" asp-action="Index" class="nav-link">
                                 <i class="link-icon" data-feather="file"></i>
                                 <span class="link-title">Quản lý đăng ký đơn</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Emails" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="mail"></i>
+                                <span class="link-title">Email Admin</span>
                             </a>
                         </li>
                     }
@@ -151,6 +170,29 @@
                 </ul>
             </div>
         </nav>
+
+            <nav class="settings-sidebar">
+      <div class="sidebar-body">
+        <a href="#" class="settings-sidebar-toggler">
+          <i data-feather="settings"></i>
+        </a>
+        <h6 class="text-muted mb-2">Thanh sidebar:</h6>
+        <div class="border-bottom">
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" name="sidebarThemeSettings" id="sidebarLight" value="sidebar-light" checked>
+            <label class="form-check-label" for="sidebarLight">
+              Sáng
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" name="sidebarThemeSettings" id="sidebarDark" value="sidebar-dark">
+            <label class="form-check-label" for="sidebarDark">
+              Tối
+            </label>
+          </div>
+        </div>
+      </div>
+    </nav>
         <!-- partial -->
 
         <div class="page-wrapper">
@@ -245,10 +287,6 @@
     <script src="~/template/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="~/template/assets/vendors/apexcharts/apexcharts.min.js"></script>
     <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="~/template/assets/vendors/feather-icons/feather.min.js"></script>
-    <script src="~/template/assets/js/template.js"></script>
-    <!-- endinject -->
     <!-- Custom js for this page -->
     <script src="~/template/assets/js/dashboard-light.js"></script>
     <script src="~/template/assets/js/datepicker.js"></script>

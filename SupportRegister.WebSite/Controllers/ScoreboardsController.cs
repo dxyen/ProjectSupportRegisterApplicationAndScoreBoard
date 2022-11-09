@@ -26,6 +26,32 @@ namespace SupportRegister.WebSite.Controllers
             }
             return View(viewModel);
         }
+        public IActionResult GetAllScoreUnconfirm()
+        {
+            var score = _score.GetAllScoreUnconfirm().GetAwaiter().GetResult();
+            var viewModel = new ScoresViewModel()
+            {
+                scores = score,
+            };
+            if (TempData["Result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["Result"];
+            }
+            return View(viewModel);
+        }
+        public IActionResult GetAllScoreUnprint()
+        {
+            var score = _score.GetAllScoreUnprint().GetAwaiter().GetResult();
+            var viewModel = new ScoresViewModel()
+            {
+                scores = score,
+            };
+            if (TempData["Result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["Result"];
+            }
+            return View(viewModel);
+        }
         [HttpGet]
         public IActionResult Update(int scoreId)
         {
@@ -41,9 +67,9 @@ namespace SupportRegister.WebSite.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        public IActionResult Update(int id, int idStatus)
+        public IActionResult Update(int id, int idStatus, int idStudent)
         {
-            var result = _score.Update(id, idStatus).GetAwaiter().GetResult();
+            var result = _score.Update(id, idStatus, idStudent).GetAwaiter().GetResult();
             if (result >= 1)
             {
                 TempData["Result"] = "Đã cập nhật trạng thái thành công!";

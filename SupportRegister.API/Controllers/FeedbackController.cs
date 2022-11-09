@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SupportRegister.ViewModels.Requests.Mail;
 using SupportRegister.Data.Models;
+using SupportRegister.ViewModels.ViewModels;
 
 namespace SupportRegister.API.Controllers
 {
@@ -77,13 +78,23 @@ namespace SupportRegister.API.Controllers
                                    where U.Id == userId
                                    select new
                                    {
+                                       Email = U.Email,
                                        FullName = U.FullName,
                                        MSSV = U.UserName,
                                        Class = C.NameClass,
                                        StudentId = S.StudentId
                                    }).FirstOrDefaultAsync();
+            var mailAdmin = await _context.EmailAdmins
+                .Where(x => x.Id == 1)
+                .Select(app => new EmailAdminViewModel()
+                {
+                    Id = app.Id,
+                    Name = app.Name,
+                    EmailAdmin1 = app.EmailAdmin1,
+                    Password = app.Password,
+                }).FirstOrDefaultAsync();
             MailRequest request = new MailRequest();
-            request.ToEmail = "doxuanyen2000@gmail.com";
+            request.ToEmail = mailAdmin.EmailAdmin1;
             request.Subject = title_mail;
             request.Body = $"<h3>Được gửi từ: {Student.FullName}, MSSV: {Student.MSSV}, Lớp: {Student.Class} </h3>";
             request.Body += $"<p>{content_mail}</p>";

@@ -34,6 +34,7 @@ namespace SupportRegister.API.Controllers
                                                                 .Where(x => x.Student.User.Id == idUser)
                                                                 .Select(application => new RegisterApplicationViewModel()
                                                                 {
+                                                                    Id = application.Id,
                                                                     Status = application.IdStatusNavigation.Name,
                                                                     Student = application.Student.User.FullName,
                                                                     NameApp = application.Application.NameApplication,
@@ -90,7 +91,7 @@ namespace SupportRegister.API.Controllers
             }
         }
         [HttpPost("Store")]
-        public async Task<IActionResult> Store(string content, string title, int id, Guid userId)
+        public async Task<IActionResult> Store(string content, string title, int id, Guid userId, int idRegis)
         {
             var RegisApp = new RegisterApplication();
             var StudentId = await (from S in _context.Students
@@ -105,7 +106,7 @@ namespace SupportRegister.API.Controllers
                                    {
                                        IdApplication = A.IdApplication
                                    }).FirstOrDefaultAsync();
-            var check = await _context.RegisterApplications.FindAsync(AppId.IdApplication, StudentId.StudentId);
+            var check = await _context.RegisterApplications.FindAsync(idRegis);
             if (check == null)
             {
                 RegisApp.ApplicationId = AppId.IdApplication;
@@ -129,7 +130,7 @@ namespace SupportRegister.API.Controllers
             return Ok(result);
         }
         [HttpPost("Submit")]
-        public async Task<IActionResult> Submit(string content, string title, int id, Guid userId)
+        public async Task<IActionResult> Submit(string content, string title, int id, Guid userId, int idRegis)
         {
             var StudentId = await (from S in _context.Students
                                    where S.UserId == userId
@@ -144,7 +145,7 @@ namespace SupportRegister.API.Controllers
                                    IdApplication = A.IdApplication
                                }).FirstOrDefaultAsync();
             var RegisApp = new RegisterApplication();
-            var check = await _context.RegisterApplications.FindAsync(AppId.IdApplication, StudentId.StudentId);
+            var check = await _context.RegisterApplications.FindAsync(idRegis);
             if (check == null)
             {
                 RegisApp.ApplicationId = AppId.IdApplication;
@@ -167,19 +168,14 @@ namespace SupportRegister.API.Controllers
             var result = await _context.SaveChangesAsync();
             return Ok(result);
         }
-        [HttpGet("Update")]
-        public async Task<IActionResult> Update(int idApp, Guid userId, int idStatus)
+        [HttpGet("Update/{id}")]
+        public async Task<IActionResult> Update(int id)
         {
-            var StudentId = await (from S in _context.Students
-                                   where S.UserId == userId
-                                   select new
-                                   {
-                                       StudentId = S.StudentId
-                                   }).FirstOrDefaultAsync();
             var appRegis = await (from R in _context.RegisterApplications
-                                   where R.IdStatus == idStatus && R.ApplicationId == idApp && R.StudentId == StudentId.StudentId
+                                   where R.Id == id
                                    select new
                                    {
+                                       Id = R.Id,
                                        IdStatus = R.IdStatus,
                                        IdApplication = R.ApplicationId,
                                        StudentId = R.StudentId,
@@ -189,6 +185,7 @@ namespace SupportRegister.API.Controllers
                                        Title = R.Dear
                                    }).FirstOrDefaultAsync();
             var RegisApp = new RegisterApplicationViewModel();
+            RegisApp.Id = appRegis.Id;
             RegisApp.Content = appRegis.Content;
             RegisApp.IdStatus = appRegis.IdStatus;
             RegisApp.ApplicationId = appRegis.IdApplication;
@@ -199,7 +196,7 @@ namespace SupportRegister.API.Controllers
             return Ok(JsonConvert.SerializeObject(RegisApp));
         }
         [HttpPost("Cancel")]
-        public async Task<IActionResult> Cancel(int cancelId, Guid userId)
+        public async Task<IActionResult> Cancel(int idRegis)
         {
             try
             {
@@ -207,13 +204,7 @@ namespace SupportRegister.API.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                var StudentId = await (from S in _context.Students
-                                       where S.UserId == userId
-                                       select new
-                                       {
-                                           StudentId = S.StudentId
-                                       }).FirstOrDefaultAsync();
-                var RegisApp = await _context.RegisterApplications.FindAsync(cancelId, StudentId.StudentId);
+                var RegisApp = await _context.RegisterApplications.FindAsync(idRegis);
 
                 if (RegisApp == null)
                 {

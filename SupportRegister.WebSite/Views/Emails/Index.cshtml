@@ -1,0 +1,78 @@
+﻿@model MailViewModel;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+<script>
+    setTimeout(function () {
+        $('#msgAlert').fadeOut('slow');
+    }, 2000);
+</script>
+ }
+@if (ViewBag.SuccessMsg != null)
+{
+    <div class="alert alert-fill-success position-fixed" id="msgAlert" role="alert" style="z-index: 9999; top: 80px; left: 800px">
+        @ViewBag.SuccessMsg
+    </div>
+}
+<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Quản lý đăng ký đơn</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Thông tin đăng ký đơn</li>
+    </ol>
+</nav>
+<div class="page-content" style="margin-top:0px">
+    <div class="d-flex justify-content-between mb-1">
+        <h3>Danh sách đăng ký đơn</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Thông tin đăng ký</h6>
+                    <div class="table-responsive">
+                        <table class="table" id="dataTableExample">
+                            <thead>
+                                <tr>
+                                     <th>
+                                        Số thứ tự
+                                    </th>
+                                    <th>
+                                        Tên
+                                    </th>
+                                    <th>
+                                        Địa chỉ Mail
+                                    </th>
+                                    <th>
+                                        Mật khẩu ứng dụng
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var app in Model.mails.Select((x, i) => new { Data = x, Index = i }))
+                                {
+                                    <tr>
+                                        <td>
+                                            @(app.Index +1)
+                                        </td>
+                                        <td>@app.Data.Name</td>
+                                        <td>@app.Data.EmailAdmin1</td>
+                                        <td>@app.Data.Password</td>
+                                        <td>
+                                             <a href="@Url.Action("Update", "Emails", new { id = app.Data.Id})" style="color: #808080;">
+                                                <i class="feather icon-edit" style="font-size: 2em"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -13,14 +13,7 @@ namespace SupportRegister.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<RegisterApplication> entity)
         {
-            entity.HasKey(e => new { e.ApplicationId, e.StudentId})
-                    .HasName("PK_REGISTERAPPLICATION");
-
             entity.ToTable("RegisterApplication");
-
-            entity.HasIndex(e => e.ApplicationId, "IX_RegisterApplication_ApplicationId");
-
-            entity.HasIndex(e => e.IdStatus, "IX_RegisterApplication_IdStatus");
 
             entity.Property(e => e.Content).IsRequired();
 

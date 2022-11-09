@@ -34,6 +34,7 @@ namespace SupportRegister.Data.EF
                 .ApplyConfiguration(new StatusConfiguration())
                 .ApplyConfiguration(new StudentConfiguration())
                 .ApplyConfiguration(new YearSemesterConfiguration())
+                .ApplyConfiguration(new EmailAdminConfiguration())
                 .ApplyConfiguration(new YearConfiguration());
             // Data seeding in ModelBuilderExtenions
             modelBuilder.Seed();
@@ -60,5 +61,7 @@ namespace SupportRegister.Data.EF
         public DbSet<Class> Classes { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<YearSemester> YearSemesters { get; set; }
+        public DbSet<EmailAdmin> EmailAdmins { get; set; }
+        public DbSet<MinusPoint> MinusPoints { get; set; }
     }
 }
