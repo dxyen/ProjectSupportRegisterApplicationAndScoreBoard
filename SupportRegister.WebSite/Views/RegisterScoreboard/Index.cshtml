@@ -82,7 +82,7 @@
                                 <button type="button" id="submit-check" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#submitModal">Đăng ký in bảng điểm</button>
                             </div>
                             <div class="m-2">
-                                <label id="giatien" style="font-size: 26px;text-align: right; margin-right: 15px;color: #ac2925">2,000 VNĐ</label>
+                                <label id="giatien" style="font-size: 26px;text-align: right; margin-right: 15px;color: #ac2925">2.000 VNĐ</label>
                             </div>
                         </div>
                         <div class="modal" tabindex="-1" id="submitModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -135,55 +135,174 @@
                             {
                                 if (@score.Data.Status != "Hủy đăng ký")
                                 {
-                                    <tr>
-                                        <td style="padding-top: 40px;width:45px;">
-                                            <i class="link-icon" data-feather="clock"></i>
-                                        </td>
-                                        <td style="border-right-color: transparent">
-                                            <b>
-                                                Đăng ký in @(score.Data.SemesterStart == null ? "tất cả học kỳ" : $"{score.Data.YearSemesterStart} đến {score.Data.YearSemesterStart}")<br><span style="color: #ac2925;font-size: 13px;">(@(score.Data.Amount) bảng - @(score.Data.PriceTotal) VNĐ)</span>
-                                            </b>
-                                            <p style="font-size: 11px; color: #777; margin-bottom: 0">
-                                                <i>
-                                                    Được đăng ký vào lúc
-                                                    @(score.Data.DateRegister)
-                                                </i>
-                                                <i>
-                                                    Nhận bảng điểm vào ngày
-                                                    @score.Data.DateReceived.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
-                                                </i>
-                                            </p>
-                                            <p class="mt-1" style="font-size: 11px; color: #777; margin-bottom: 0">
-                                                <i>
-                                                    Trạng thái yêu cầu:
-                                                    @(score.Data.Status)
-                                                </i>
-                                            </p>
-                                        </td>
-                                        <td style="padding-top: 30px;width:40px;">
-                                            <form asp-action="Cancel">
-                                                <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="link-icon" data-feather="delete"></i></a>
-                                                <div class="modal" tabindex="-1" id="deleteModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title">Hủy yêu cầu</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
-                                                            </div>
-                                                            <div class="p-3">
-                                                                <p>Bạn có chắc muốn hủy yêu cầu</p>
-                                                                <input type="hidden" name="cancelId" value="@(score.Data.IdRegis)">
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <p class="btn btn-secondary" data-bs-dismiss="modal">Đóng</p>
-                                                                <button type="submit" class="btn btn-danger">Hủy</button>
+                                    if (@score.Data.Status == "Đăng ký")
+                                    {
+                                        <tr>
+                                            <td style="padding-top: 40px;width:45px;">
+                                                <i class="link-icon" data-feather="clock"></i>
+                                            </td>
+                                            <td style="border-right-color: transparent">
+                                                <b>
+                                                    Đăng ký in @(score.Data.SemesterStart == null ? "tất cả học kỳ" : $"{score.Data.YearSemesterStart} đến {score.Data.YearSemesterStart}")<br><span style="color: #ac2925;font-size: 13px;">(@(score.Data.Amount) bảng - @(score.Data.PriceTotal) VNĐ)</span>
+                                                </b>
+                                                <p style="font-size: 11px; color: #777; margin-bottom: 0">
+                                                    <i>
+                                                        Được đăng ký vào lúc
+                                                        @(score.Data.DateRegister)
+                                                    </i>
+                                                    <i>
+                                                        Nhận bảng điểm vào ngày
+                                                        @score.Data.DateReceived.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                                                    </i>
+                                                </p>
+                                                <p class="mt-1" style="font-size: 11px; color: #777; margin-bottom: 0">
+                                                    <i>
+                                                        Trạng thái yêu cầu:
+                                                        @(score.Data.Status)
+                                                    </i>
+                                                </p>
+                                            </td>
+                                            <td style="padding-top: 30px;width:40px;">
+                                                <form asp-action="Cancel">
+                                                    <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="link-icon" data-feather="delete"></i></a>
+                                                    <div class="modal" tabindex="-1" id="deleteModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Hủy yêu cầu</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                                                                </div>
+                                                                <div class="p-3">
+                                                                    <p>Bạn có chắc muốn hủy yêu cầu</p>
+                                                                    <input type="hidden" name="cancelId" value="@(score.Data.IdRegis)">
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <p class="btn btn-secondary" data-bs-dismiss="modal">Đóng</p>
+                                                                    <button type="submit" class="btn btn-danger">Hủy</button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </form>
-                                        </td>
-                                    </tr>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                    else if (@score.Data.Status == "Đã in")
+                                    {
+                                        <tr>
+                                            <td style="padding-top: 40px;width:45px;">
+                                                <i class="link-icon" data-feather="clock"></i>
+                                            </td>
+                                            <td style="border-right-color: transparent">
+                                                <b>
+                                                    Đăng ký in @(score.Data.SemesterStart == null ? "tất cả học kỳ" : $"{score.Data.YearSemesterStart} đến {score.Data.YearSemesterStart}")<br><span style="color: #ac2925;font-size: 13px;">(@(score.Data.Amount) bảng - @(score.Data.PriceTotal) VNĐ)</span>
+                                                </b>
+                                                <p style="font-size: 11px; color: #777; margin-bottom: 0">
+                                                    <i>
+                                                        Được đăng ký vào lúc
+                                                        @(score.Data.DateRegister)
+                                                    </i>
+                                                    <i>
+                                                        Nhận bảng điểm vào ngày
+                                                        @score.Data.DateReceived.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                                                    </i>
+                                                </p>
+                                                <p class="mt-1" style="font-size: 11px; color: #777; margin-bottom: 0">
+                                                    <i>
+                                                        Trạng thái yêu cầu:
+                                                        @(score.Data.Status)
+                                                    </i>
+                                                </p>
+                                            </td>
+                                            <td style="padding-top: 30px;width:40px;">
+                                                <form asp-action="Receive">
+                                                    <a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#receiveModal"><i class="link-icon" data-feather="check-square"></i></a>
+                                                    <div class="modal" tabindex="-1" id="receiveModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Xác nhận yêu cầu</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                                                                </div>
+                                                                <div class="p-3">
+                                                                    <p>Sau khi sinh viên nhận bảng điểm tại khoa vui lòng xác nhận đã nhận đơn!</p>
+                                                                    <input type="hidden" name="idRegis" value="@(score.Data.IdRegis)">
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <p class="btn btn-secondary" data-bs-dismiss="modal">Đóng</p>
+                                                                    <button type="submit" class="btn btn-success">Xác nhận</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                    else if (@score.Data.Status == "Xác nhận yêu cầu")
+                                    {
+                                        <tr>
+                                            <td style="padding-top: 40px;width:45px;">
+                                                <i class="link-icon" data-feather="clock"></i>
+                                            </td>
+                                            <td style="border-right-color: transparent">
+                                                <b>
+                                                    Đăng ký in @(score.Data.SemesterStart == null ? "tất cả học kỳ" : $"{score.Data.YearSemesterStart} đến {score.Data.YearSemesterStart}")<br><span style="color: #ac2925;font-size: 13px;">(@(score.Data.Amount) bảng - @(score.Data.PriceTotal) VNĐ)</span>
+                                                </b>
+                                                <p style="font-size: 11px; color: #777; margin-bottom: 0">
+                                                    <i>
+                                                        Được đăng ký vào lúc
+                                                        @(score.Data.DateRegister)
+                                                    </i>
+                                                    <i>
+                                                        Nhận bảng điểm vào ngày
+                                                        @score.Data.DateReceived.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                                                    </i>
+                                                </p>
+                                                <p class="mt-1" style="font-size: 11px; color: #777; margin-bottom: 0">
+                                                    <i>
+                                                        Trạng thái yêu cầu:
+                                                        @(score.Data.Status)
+                                                    </i>
+                                                </p>
+                                            </td>
+                                            <td style="padding-top: 30px;width:40px;">
+                                                <a class="btn btn-warning disabled" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="link-icon" data-feather="check-square"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                    else if (@score.Data.Status == "Đã nhận")
+                                    {
+                                        <tr>
+                                            <td style="padding-top: 40px;width:45px;">
+                                                <i class="link-icon" data-feather="clock"></i>
+                                            </td>
+                                            <td style="border-right-color: transparent">
+                                                <b>
+                                                    Đăng ký in @(score.Data.SemesterStart == null ? "tất cả học kỳ" : $"{score.Data.YearSemesterStart} đến {score.Data.YearSemesterStart}")<br><span style="color: #ac2925;font-size: 13px;">(@(score.Data.Amount) bảng - @(score.Data.PriceTotal) VNĐ)</span>
+                                                </b>
+                                                <p style="font-size: 11px; color: #777; margin-bottom: 0">
+                                                    <i>
+                                                        Được đăng ký vào lúc
+                                                        @(score.Data.DateRegister)
+                                                    </i>
+                                                    <i>
+                                                        Nhận bảng điểm vào ngày
+                                                        @score.Data.DateReceived.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                                                    </i>
+                                                </p>
+                                                <p class="mt-1" style="font-size: 11px; color: #777; margin-bottom: 0">
+                                                    <i>
+                                                        Trạng thái yêu cầu:
+                                                        @(score.Data.Status)
+                                                    </i>
+                                                </p>
+                                            </td>
+                                            <td style="padding-top: 30px;width:40px;">
+                                                <a class="btn btn-success disabled" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="link-icon" data-feather="check-square"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
                                 }
                             }
                         }
@@ -203,14 +322,14 @@
         if ($('input[name=option]:radio:checked').val()=='some') {
             var tong = $("#price").val() * Math.ceil(($('#hocky_ketthuc').val() - $('#hocky_batdau').val()+1)/3)*2000;
             if (Math.ceil(($('#hocky_ketthuc').val() - $('#hocky_batdau').val()+1)) <= 0)
-                {
-                    $('#giatien').text('Học kỳ không hợp lệ');
-                    console.log("abc")
-                    $('#submit-check').addClass("disabled");
+            {
+                $('#giatien').text('Học kỳ không hợp lệ');
+                console.log("abc")
+                $('#submit-check').addClass("disabled");
             }
             else {
-                    $('#giatien').text(tong.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' VNĐ');
-                    $('#submit-check').removeClass("disabled");
+                $('#giatien').text(tong.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VNĐ');
+                $('#submit-check').removeClass("disabled");
             }
         }else if($('input[name=option]:radio:checked').val()=='all'){
             if(today - $('#yearend_stu').val() >= 0){
@@ -218,7 +337,7 @@
             } else{
                 var tong = $("#price").val() * Math.ceil((today - $('#yearstart_stu').val()+1))*2000;
             }
-            $('#giatien').text(tong.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' VNĐ');
+            $('#giatien').text(tong.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VNĐ');
             $('#submit-check').removeClass("disabled");
         }
         else {

@@ -97,11 +97,11 @@
                                             <a href="@Url.Action("Update", "Accounts", new { id =item.Data.Id })" style="color: #808080;">
                                                 <i class="feather icon-edit" style="font-size: 2em"></i>
                                             </a>
-                                            <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: #808080">
+                                            <a data-bs-toggle="modal" data-bs-target="#exampleModal@{@item.Index}" style="color: #808080">
                                                 <i class="feather icon-delete" style="font-size: 2em"></i>
                                             </a>
                                             <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="exampleModal@{@item.Index}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">

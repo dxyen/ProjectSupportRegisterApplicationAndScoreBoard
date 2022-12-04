@@ -10,6 +10,7 @@ namespace SupportRegister.ViewModels.ViewModels
     {
         public int IdRegis { get; set; }
         public int idStudent { get; set; }
+        public int idStatus { get; set; }
         public string Student { get; set; }
         public string UserName { get; set; }
         public Guid UserId { get; set; }

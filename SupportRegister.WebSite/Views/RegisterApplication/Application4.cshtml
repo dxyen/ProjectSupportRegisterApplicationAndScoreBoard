@@ -1,17 +1,24 @@
-﻿@{
+﻿@using System.Globalization
+@model RegisAppViewModel
+@{
     Layout = null;
 }
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link media="all" type="text/css" rel="stylesheet" href="~/css/application.css">
     <link media="all" type="text/css" rel="stylesheet" href="~/css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="~/js/jquery-1.10.2.min.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.2.1/classic/ckeditor.js"></script>
+    <link rel="stylesheet" href="/css/stix.css" />
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <style>
         body {
             margin-top: 50px;
@@ -34,10 +41,10 @@
             box-shadow: 0px 0px 30px rgba(50, 50, 50, 1);
         }
 
-        .A4-paper>* {
-            font-family: Times New Roman;
-            line-height: 1.5em;
-        }
+            .A4-paper > * {
+                font-family: Times New Roman;
+                line-height: 1.5em;
+            }
 
         #toolbar {
             margin-top: 10px;
@@ -45,14 +52,14 @@
         }
 
         #warnNoti {
-            -webkit-box-shadow: 0 2px 9px rgba(0, 0, 0, 0.5);
-            -moz-box-shadow: 0 2px 9px rgba(0, 0, 0, 0.5);
-            box-shadow: 0 2px 9px rgba(0, 0, 0, 0.5);
+            -webkit-box-shadow: 0 2px 9px rgba(0,0,0,0.5);
+            -moz-box-shadow: 0 2px 9px rgba(0,0,0,0.5);
+            box-shadow: 0 2px 9px rgba(0,0,0,0.5);
         }
 
-        #warnNoti .media {
-            margin-top: 0;
-        }
+            #warnNoti .media {
+                margin-top: 0;
+            }
 
         .navbar {
             -webkit-box-shadow: 0px 0px 10px rgba(50, 50, 50, 1);
@@ -74,9 +81,9 @@
             bottom: 50px;
         }
 
-        #toolbar button {
-            padding-top: 10px;
-        }
+            #toolbar button {
+                padding-top: 10px;
+            }
 
         #helper {
             -webkit-box-shadow: 0px 0px 10px rgba(50, 50, 50, 1);
@@ -104,77 +111,75 @@
         .sttBar-warn {
             background-color: #ff8200;
         }
-
-        .editable {
-            margin: 0 -8px;
-            padding: 8px;
-            padding-top: 25px;
-            border: dashed #800000 1px;
-            background: url(../img/texteditable.png) no-repeat -2px -1px;
-        }
     </style>
     <title>[Hệ thống quản lý đơn và in bảng điểm] Khoa CNTT&TT</title>
 </head>
-
 <body>
-    <script src="~/js/ckeditor.js"></script>
     <div class="A4-paper">
         <div style="text-align:center"><strong>CỘNG H&Ograve;A X&Atilde; HỘI CHỦ NGHĨA VIỆT NAM</strong></div>
+        <input type="hidden" id="idApp" value="@Model.appDetails.IdApplication">
+        <div style="text-align:center"><u><strong>Độc lập - Tự do - Hạnh ph&uacute;c</strong></u></div>
 
-        <div style="text-align:center"><strong><u>Độc lập - Tự do - Hạnh ph&uacute;c</u></strong><br />
+        <div>&nbsp;</div>
+
+        <div style="text-align:center"><span style="font-size:28px"><strong>ĐƠN XIN X&Aacute;C NHẬN</strong></span></div>
+
+        <div>&nbsp;</div>
+
+        <div style="margin-left:80px"><span style="font-size:14px">&nbsp;</span> <span style="font-size:18px">&nbsp; &nbsp;K&iacute;nh gửi:&nbsp; Ban Gi&aacute;m hiệu&nbsp;</span></div>
+
+        <div style="margin-left:160px"><span style="font-size:18px">&nbsp; &nbsp; &nbsp;Trường&nbsp;C&ocirc;ng nghệ&nbsp;Th&ocirc;ng tin&nbsp;v&agrave;&nbsp;Truyền th&ocirc;ng</span></div>
+
+        <div style="margin-left:160px"><span style="font-size:18px">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Trường Đại học Cần Thơ</span></div>
+
+        <div>&nbsp;</div>
+
+        <div>T&ocirc;i t&ecirc;n: <strong>@Model.students.FullName</strong>.&nbsp;M&atilde; số sinh vi&ecirc;n: <strong>@Model.students.UserName</strong></div>
+
+        <div>Ng&agrave;y sinh:&nbsp;<strong>@Model.students.Birthday.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</strong></div>
+
+        <div>Hộ khẩu thường tr&uacute;:&nbsp;<strong>@Model.students.Address</strong></div>
+
+        <div>Mã lớp: @Model.students.ClassName</div>
+
+        <div>Hệ đ&agrave;o tạo: D&agrave;i hạn tập trung (ch&iacute;nh qui) tại Trường Đại học Cần Thơ.</div>
+
+        <div style="text-align:justify">&nbsp; &nbsp; &nbsp; &nbsp;Nay t&ocirc;i l&agrave;m đơn n&agrave;y gởi đến Nh&agrave; trường xin x&aacute;c nhận l&agrave; sinh vi&ecirc;n đang học tại Trường năm học 2022-2023.</div>
+        <div id="test2" class="editable">
+            Lý do xin xác nhận: ...................................................
+        </div>
+        <div>
+            &nbsp; &nbsp; &nbsp; &nbsp;Tr&acirc;n trọng k&iacute;nh ch&agrave;o.
+            <div style="margin-left:40px; text-align:center">
+                <em>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Cần Thơ, ngày @DateTime.Today.Day tháng @DateTime.Today.Month năm @DateTime.Today.Year</em><br />
+                <strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Người l&agrave;m đơn</strong><br />
+                <em>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (K&yacute; t&ecirc;n)</em><br />
+                <br />
+                <br />
+                <br />
+                <strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Đỗ Xuân Yên  </strong>
+            </div>
+
+            <div style="text-align:center">&nbsp;</div>
+        </div>
+        ``
+        <div style="text-align:center"><strong>&nbsp; &nbsp; X&Aacute;C NHẬN CỦA TRƯỜNG</strong></div>
+
+        <div style="text-align:center"><em>Cần Thơ, ngày @DateTime.Today.Day tháng @DateTime.Today.Month năm @DateTime.Today.Year</em></div>
+
+        <div style="text-align:center"><strong>&nbsp; &nbsp; TL. HIỆU TRƯỞNG TRƯỜNG ĐẠI HỌC CẦN THƠ</strong></div>
+
+        <div style="text-align:center">
+            <strong>&nbsp; &nbsp; HIỆU TRƯỞNG&nbsp;TRƯỜNG CNTT V&Agrave;&nbsp;TRUYỀN TH&Ocirc;NG</strong><br />
             <br />
-            &nbsp;
-        </div>
-
-        <div>&nbsp;</div>
-
-        <div style="text-align:center"><span style="font-size:28px"><strong>ĐƠN XIN X&Aacute;C NHẬN</strong></span>
-        </div>
-
-        <div>&nbsp;</div>
-
-        <div class="editable" style="margin-left:80px">K&iacute;nh gửi:
-            <strong>&nbsp;............................................................................</strong><br />
-            <strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp;Tr</strong>ường&nbsp;Đại&nbsp;học Cần Thơ
-        </div>
-
-        <div>&nbsp;</div>
-
-        <div>T&ocirc;i t&ecirc;n: <strong>Đỗ Xuân Yên  </strong>.&nbsp;M&atilde; số sinh vi&ecirc;n:
-            <strong>B1809323</strong></div>
-
-        <div>Ng&agrave;y sinh: <strong>03/03/2000</strong></div>
-
-        <div>Hiện đang học lớp: <strong>Công nghệ thông tin - A5 - </strong>M&atilde; lớp: DI18V7A5</div>
-
-        <div>Hệ đ&agrave;o tạo: D&agrave;i hạn tập trung (ch&iacute;nh qui) tại trường Đại học Cần Thơ.</div>
-
-        <div class="editable">L&yacute; do xin x&aacute;c nhận: ...................................................
-        </div>
-
-        <div>Tr&acirc;n trọng k&iacute;nh ch&agrave;o.</div>
-
-        <div>&nbsp;</div>
-
-        <div style="margin-left:320px; text-align:center"><em>Cần Thơ, ngày 17 tháng 10 năm 2022&nbsp;</em></div>
-
-        <div style="margin-left:320px; text-align:center"><strong>NGƯỜI L&Agrave;M ĐƠN</strong></div>
-
-        <div style="margin-left:320px; text-align:center">(<em>K&yacute; t&ecirc;n</em>)</div>
-
-        <div style="margin-left:320px"><br />
             <br />
-            &nbsp;
+            <br />
+            <br />
+            <br />
+            <span style="font-size:16px"><strong>Nguyễn Hữu Hòa</strong></span>
         </div>
 
-        <div style="margin-left:320px; text-align:center"><strong>Đỗ Xuân Yên  </strong></div>
-
         <div>&nbsp;</div>
-
-        <div><strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;X&Aacute;C NHẬN CỦA TRƯỜNG CNTT&amp;TT</strong></div>
-
-        <div><em>Cần Thơ, ngày 17 tháng 10 năm 2022</em></div>
 
         <div>&nbsp;</div>
 
@@ -183,110 +188,93 @@
     <div id="fdata">
         <input type="hidden" name="chitietnhap_ctdt" value="" />
     </div>
-    <div id="toolbar" class="btn-group" style="">
-        <button data-toggle="tooltip" title="Quay lại danh sách đơn" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"
-                style="font-size: 16px"></span></button>
-        <button class="btn btn-default" data-toggle="tooltip" title="Nộp đơn này"><span class="glyphicon glyphicon-open"
-                style="font-size: 16px"></span></button> <button class="btn btn-default" data-toggle="tooltip" title="Lưu đơn này"><span class="glyphicon glyphicon-floppy-disk"
-                style="font-size: 16px"></span></button>
+ <div id="toolbar" class="btn-group">
+        <button onclick="window.location='/RegisterApplication/Index'" data-toggle="tooltip" title="Quay lại danh sách đơn" class="btn btn-default">
+            <span class="glyphicon glyphicon-arrow-left"
+                  style="font-size: 16px"></span>
+        </button>
+        <button class="btn btn-default" data-toggle="modal" data-target="#myModal" title="Nộp đơn này">
+            <span class="glyphicon glyphicon-open" style="font-size: 16px"></span>
+        </button>
+        <button class="btn btn-default" id="saveBtn" data-toggle="tooltip" title="Lưu đơn này">
+            <span class="glyphicon glyphicon-floppy-disk"
+                  style="font-size: 16px"></span>
+        </button>
         <span class="badge badge-error"
-            style="position: absolute;z-index: 3;margin-left: 23px;margin-top: -2px;-webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 1);-moz-box-shadow: 0px 0px 5px rgba(50, 50, 50, 1);box-shadow: 0px 0px 5px rgba(50, 50, 50, 1);"></span>
-        <button id="btnPhanhoi" type="button" class="btn btn-default" title="Thông tin phản hồi của văn phòng khoa"
-            data-toggle="tooltip" data-content='
-    Chưa có phản hồi nào'><span class="glyphicon glyphicon-envelope" style="font-size: 16px"></span></button>
-        <button id="btnHuongdan" type="button" class="btn btn-default" title="Hướng dẫn" data-toggle="tooltip"
-            data-content='<p> Đơn này không có bất kỳ hướng dẫn nào </p>'><span class="glyphicon glyphicon-info-sign"
-                style="font-size: 16px"></span></button>
+              style="position: absolute;z-index: 3;margin-left: 23px;margin-top: -2px;-webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 1);-moz-box-shadow: 0px 0px 5px rgba(50, 50, 50, 1);box-shadow: 0px 0px 5px rgba(50, 50, 50, 1);"></span>
     </div>
-    <div class="modal" id="nopWin" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" style="width: 400px;">
-            <div class="modal-content modal-info">
-                <div class="modal-body">
-                    <h3>Bạn có thật sự muốn nộp đơn này?</h3><br>
-                    <button class="btn btn-primary" id="nopOK">OK</button>
-                    <button class="btn btn-default" data-dismiss="modal">Không</button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Nộp đơn</h4>
+                </div>
+                <div style="padding: 20px">
+                    <p>Bạn có chắc muốn nộp đơn này</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button id="submitBtn" type="button" class="btn btn-primary">Nộp đơn</button>
                 </div>
             </div>
+
         </div>
     </div>
-    <script>
-        $("#nopOK").click(function () {
-            var content = '&nbsp;';
-            $.each($('.editable'), function (i, l) {
-                content += $(this).html() + '||';
-            });
-            var fdata = { chitietnhap_ctdt: content, trangthaiht_ctdt: 0, don_id: 2 };
-            $("#donWin").css('z-index', 1030);
-            $("#loader").fadeIn();
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/js/stix.js"></script>
+    <script src="/js/test.js"></script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36251023-1']);
+        _gaq.push(['_setDomainName', 'jqueryscript.net']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <script type="text/javascript">
+        $("#saveBtn").click(function () {
+            var content = $("#test2").html();
+            var id = $("#idApp").val();
+            var fdata = {content: content,id: id};
             $.ajax({
-                url: '../nopdon', type: 'post', data: fdata,
-                success: function (data, textStatus, jqXHR) {
-                    window.location = 'http://www.cit.ctu.edu.vn/vpk/don';
-                }, error: function (jqXHR, textStatus, errorThrown) {
-                    $("#log").html(jqXHR.responseText);
-                }
-            });
-        });</script>
-    <div class="modal" id="luuWin" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" style="width: 400px;">
-            <div class="modal-content modal-info">
-                <div class="modal-body">
-                    <h3>Bạn có thật sự muốn lưu lại đơn này?</h3><br>
-                    <button class="btn btn-primary" id="luuOK">OK</button>
-                    <button class="btn btn-default" data-dismiss="modal">Không</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        $("#luuOK").click(function () {
-            var content = '&nbsp;';
-            $.each($('.editable'), function (i, l) {
-                content += $(this).html() + '||';
-            });
-            var fdata = { chitietnhap_ctdt: content, trangthaiht_ctdt: -1, don_id: 2 };
-            $("#luuWin").css('z-index', 1030);
-            $("#loader").fadeIn();
-            $.ajax({
-                url: '../nopdon', type: 'post', data: fdata,
-                success: function (data, textStatus, jqXHR) {
-                    window.location = window.location;
-                }, error: function (jqXHR, textStatus, errorThrown) {
-                    $("#log").html(jqXHR.responseText);
+                url: '/RegisterApplication/Store',
+                type: 'post', 
+                data: fdata,
+                success: function(data) {
+                    window.location="/RegisterApplication/Index";
+                }, 
+                error: function(jqXHR, exception) {
+                    if(jqXHR.status === 500)
+                        console.log(jqXHR.responseText);
                 }
             });
         });
-    </script>
-    <script>
-        $('#btnPrint').click(function () {
-            var win = window.open('', '_blank', 'width=794,height=1123,resizable=no,location=no');
-            win.document.write("<style>body {font-family: Times New Roman;padding: 1cm 1.1cm; font-size: 16px;margin:0;line-height: 1.5em;}}</style>");
-            win.document.write("<a class='hidden' style='position:fixed;top:15px;left:15px; width:24px; height:24px;background-image: url(../img/print.png) }})' href='javascript:window.print()'></a>");
-            win.document.write($('.A4-paper').html());
-            win.focus();
-            win.document.close();
+
+        $("#submitBtn").click(function () {
+        var content = $("#test2").html();
+        var id = $("#idApp").val();
+        var fdata = {content: content, id: id};
+            $.ajax({
+                url: '/RegisterApplication/Submit',
+                type: 'post', 
+                data: fdata,
+                success: function(data) {
+                    window.location="/RegisterApplication/Index";
+                }, 
+                error: function(jqXHR, exception) {
+                    if(jqXHR.status === 500)
+                        console.log(jqXHR.responseText);
+                }
+            });
         });
-        $('.editable').prop('contenteditable', true);
-    </script>
-    <div id="loader" class="panel panel-default">
-        <h4>Đang thực thi...</h4>
-        <div class="progress progress-striped active">
-            <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"
-                style="width: 100%"></div>
-        </div>
-    </div>
-
-    <div id="helper" class="alert alert-danger"></div>
-
-    <script>
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-            $('#btnHuongdan').popover({ html: true, placement: 'top' });
-            $('#btnPhanhoi').popover({ html: true, placement: 'top' });
-        })
     </script>
 </body>
-
 </html>

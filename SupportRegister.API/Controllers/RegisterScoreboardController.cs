@@ -131,5 +131,19 @@ namespace SupportRegister.API.Controllers
             var result = await _context.SaveChangesAsync();
             return Ok(result);
         }
+        [HttpPost("Receive")]
+        public async Task<IActionResult> Receive(int idRegis)
+        {
+            var RegisScore = await _context.RegisterScoreboards.FindAsync(idRegis);
+
+            if (RegisScore == null)
+            {
+                return Ok(-1);
+            }
+            RegisScore.IdStatus = 6;
+            _context.RegisterScoreboards.Update(RegisScore);
+            var result = await _context.SaveChangesAsync();
+            return Ok(result);
+        }
     }
 }

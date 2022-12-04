@@ -72,7 +72,7 @@
                     {
                          <li class="nav-item">
                             <a asp-controller="Home" asp-action="Index" class="nav-link">
-                                <i class="link-icon" data-feather="menu"></i>
+                                <i class="link-icon" data-feather="box"></i>
                                 <span class="link-title">Trang chủ</span>
                             </a>
                         </li>
@@ -99,13 +99,13 @@
                     {
                         <li class="nav-item">
                             <a asp-controller="Home" asp-action="Index" class="nav-link">
-                                <i class="link-icon" data-feather="menu"></i>
+                                <i class="link-icon" data-feather="box"></i>
                                 <span class="link-title">Trang chủ</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-controller="Statistics" asp-action="Index" class="nav-link">
-                                <i class="link-icon" data-feather="box"></i>
+                                <i class="link-icon" data-feather="menu"></i>
                                 <span class="link-title">Số liệu thống kê</span>
                             </a>
                         </li>
@@ -139,12 +139,18 @@
                                 <span class="link-title">Email Admin</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a asp-controller="UnacceptApp" asp-action="Index" class="nav-link">
+                                <i class="link-icon" data-feather="user-minus"></i>
+                                <span class="link-title">Danh sách không nhận đơn</span>
+                            </a>
+                        </li>
                     }
                     @if (this.User.IsInRole("staff"))
                     {
                         <li class="nav-item">
                             <a asp-controller="Home" asp-action="Index" class="nav-link">
-                                <i class="link-icon" data-feather="menu"></i>
+                                <i class="link-icon" data-feather="box"></i>
                                 <span class="link-title">Trang chủ</span>
                             </a>
                         </li>
@@ -304,5 +310,11 @@
     <script src="~/template/assets/vendors/tinymce/tinymce.min.js"></script>
     <script src="~/template/assets/js/tinymce.js"></script>
     <!-- End custom js for this page -->
+    <!-- Plugin js for this page -->
+	<script src="~/template/assets/vendors/apexcharts/apexcharts.min.js"></script>
+	<!-- End plugin js for this page -->
+    <!-- Custom js for this page -->
+    <script src="~/template/assets/js/apexcharts-light.js"></script>
+	<!-- End custom js for this page -->
 </body>
 </html>    

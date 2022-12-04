@@ -1,4 +1,4 @@
-$(function() {
+﻿$(function() {
   'use strict';
 
   var colors = {
@@ -53,22 +53,17 @@ $(function() {
       },
       series: [
         {
-          name: "Data a",
+          name: "Đăng ký in bảng điểm",
           data: [45, 52, 38, 45]
         },
         {
-          name: "Data b",
+          name: "Đăng ký đơn",
           data: [12, 42, 68, 33]
-        },
-        {
-          name:
-            "Data c",
-          data: [8, 32, 48, 53]
         }
       ],
       xaxis: {
         type: "datetime",
-        categories: ["2015", "2016", "2017", "2018"],
+        categories: ["2014", "2016", "2017", "2018"],
         lines: {
           show: true
         },
@@ -88,7 +83,7 @@ $(function() {
         horizontalAlign: 'center',
         fontFamily: fontFamily,
         itemMargin: {
-          horizontal: 8,
+          horizontal: 10,
           vertical: 0
         },
       },

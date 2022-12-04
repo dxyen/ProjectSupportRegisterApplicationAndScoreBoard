@@ -34,5 +34,8 @@ namespace SupportRegister.WebSite.Interface
 
         [Post("/api/RegisterApplication/Cancel")]
         public Task<int> Cancel(int idRegis);
+
+        [Post("/api/RegisterApplication/Receive")]
+        public Task<int> Receive(int idRegis);
     }
 }

@@ -84,9 +84,9 @@ namespace SupportRegister.WebSite.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public IActionResult Delete(int appId, int studentId)
+        public IActionResult Delete(int id)
         {
-            var result = _apps.Delete(appId, studentId).GetAwaiter().GetResult();
+            var result = _apps.Delete(id).GetAwaiter().GetResult();
             if (result >= 1)
             {
                 TempData["Result"] = "Đã xóa thành công!";

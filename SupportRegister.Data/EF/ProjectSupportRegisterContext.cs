@@ -30,7 +30,6 @@ namespace SupportRegister.Data.EF
                 .ApplyConfiguration(new ClassConfiguration())
                 .ApplyConfiguration(new CourseConfiguration())
                 .ApplyConfiguration(new SemesterConfiguration())
-                .ApplyConfiguration(new StaffConfiguration())
                 .ApplyConfiguration(new StatusConfiguration())
                 .ApplyConfiguration(new StudentConfiguration())
                 .ApplyConfiguration(new YearSemesterConfiguration())
@@ -52,7 +51,6 @@ namespace SupportRegister.Data.EF
         public DbSet<RegisterApplication> RegisterApplications { get; set; }
         public DbSet<RegisterScoreboard> RegisterScoreboards { get; set; }
         public DbSet<Semester> Semesters { get; set; }
-        public DbSet<Staff> Staffs { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }

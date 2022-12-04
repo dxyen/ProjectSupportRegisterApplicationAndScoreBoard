@@ -17,6 +17,14 @@
         @ViewBag.SuccessMsg
     </div>
 }
+<div class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="d-flex">
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+</div>
 <nav class="page-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Quản lý Quyền</a></li>
@@ -67,11 +75,11 @@
                                             <a href="@Url.Action("Edit", "Role", new { id =item.Data.Id })" style="color: #808080;">
                                                 <i class="feather icon-edit" style="font-size: 2em"></i>
                                             </a>
-                                            <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: #808080">
+                                            <a data-bs-toggle="modal" data-bs-target="#exampleModal@{@item.Index}" style="color: #808080">
                                                 <i class="feather icon-delete" style="font-size: 2em"></i>
                                             </a>
                                             <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="exampleModal@{@item.Index}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -99,4 +107,5 @@
         </div>
     </div>
 </div>
+
 

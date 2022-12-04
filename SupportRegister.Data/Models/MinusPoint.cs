@@ -9,10 +9,10 @@ namespace SupportRegister.Data.Models
     public class MinusPoint
     {
         public int StudentId { get; set; }
-        public DateTime ExpiryDate { get; set; }
         public int Id { get; set; }
-        public string Description { get; set; }
+        public string NameMinus { get; set; }
+        public DateTime DateRegis { get; set; }
 
-        public Student Student { get; set; }
+        public virtual Student Student { get; set; }
     }
 }

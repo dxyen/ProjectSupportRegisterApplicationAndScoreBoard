@@ -29,19 +29,33 @@ namespace SupportRegister.Application.System.Users
         }
         public async Task<string> AuthenticateAsync(LoginRequest request)
         {
-            return await _unitOfWork.UserRepository.AuthenticateAsync(request);
+            var result = await _unitOfWork.UserRepository.AuthenticateAsync(request);
+            return result;
         }
         public async Task<IdentityResult> CreateAsync(RegisterRequest request)
         {
             var user = _mapper.Map<AppUser>(request);
             user.PasswordHash = request.ConfirmPassword;
             var result = await _unitOfWork.UserRepository.CreateAsync(user);
+            //them UserRole
             var role = new UserRoleCreateRequest();
             var finduser = await _userManager.FindByNameAsync(user.UserName);
             role.RoleId = request.RoleId;
             role.UserId = finduser.Id;
             var userrole = _mapper.Map<IdentityUserRole<Guid>>(role);
             _context.UserRoles.Add(userrole);
+            //Them Student
+            if (request.RoleId == Guid.Parse("BFF91054-DC92-421E-A233-D1080F630928"))
+            {
+                var userStudent = await _userManager.FindByNameAsync(request.UserName);
+                var student = new Student();
+                student.UserId = userStudent.Id;
+                student.ClassId = request.ClassId;
+                student.IdCourse = request.IdCourse;
+                student.YearEnd = request.YearEnd;
+                student.YearStart = request.YearStart;
+                _context.Students.Add(student);
+            }
             await _context.SaveChangesAsync();
             return result;
 

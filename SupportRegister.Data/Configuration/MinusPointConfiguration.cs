@@ -8,12 +8,11 @@ namespace SupportRegister.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<MinusPoint> entity)
         {
-            entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
+            entity.Property(e => e.DateRegis).HasColumnType("date");
 
-            entity.Property(e => e.ExpiryDate).HasColumnType("datetime");
+            entity.Property(e => e.NameMinus)
+                .IsRequired()
+                .HasMaxLength(255);
 
             entity.HasOne(d => d.Student)
                 .WithMany(p => p.MinusPoints)

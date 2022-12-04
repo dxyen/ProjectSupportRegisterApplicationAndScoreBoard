@@ -94,11 +94,11 @@
                                              <a href="@Url.Action("Update", "Applications", new { studentId = app.Data.StudentId, appId = app.Data.ApplicationId })" style="color: #808080;">
                                                 <i class="feather icon-edit" style="font-size: 2em"></i>
                                             </a>
-                                            <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: #808080">
+                                            <a data-bs-toggle="modal" data-bs-target="#exampleModal@{@app.Index}" style="color: #808080">
                                                 <i class="feather icon-delete" style="font-size: 2em"></i>
                                             </a>
                                             <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="exampleModal@{@app.Index}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -110,7 +110,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                            <a href="@Url.Action("Delete", "Applications", new { studentId = app.Data.StudentId, appId = app.Data.ApplicationId })" class="btn btn-danger">Xóa</a>
+                                                            <a href="@Url.Action("Delete", "Applications", new { id = app.Data.Id })" class="btn btn-danger">Xóa</a>
                                                         </div>
                                                     </div>
                                                 </div>

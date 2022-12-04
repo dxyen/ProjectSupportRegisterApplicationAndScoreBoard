@@ -19,9 +19,6 @@ namespace SupportRegister.Data.Configuration
             entity.ToTable("Application");
             entity.Property(e => e.IdApplication).ValueGeneratedOnAdd();
 
-            entity.Property(e => e.Content)
-                .IsRequired()
-                .HasMaxLength(1000);
 
             entity.Property(e => e.Description).HasMaxLength(1000);
 

@@ -71,7 +71,7 @@
                     </div><!-- Row -->
                     <div class="row">
                         <div class="col-sm-6">
-                            @if (Model.scoreDetail.Status == "Ðăng ký" || Model.scoreDetail.Status == "Xác nhận yêu cầu")
+                            @if (Model.scoreDetail.Status == "Đăng ký" || Model.scoreDetail.Status == "Xác nhận yêu cầu")
                             {
                                 <div class="mb-3 d-flex flex-column">
                                     <label class="form-label">Trạng thái</label>
@@ -100,7 +100,7 @@
                     </div><!-- Row -->
                     <div class="row mb-2 text-warning"><p>Sau khi in bảng điểm, vui lòng thay đổi trạng thái để sinh viên đến nhận!</p></div>
                     <div class="form-group">
-                        @if (Model.scoreDetail.Status == "Ðăng ký" || Model.scoreDetail.Status == "Xác nhận yêu cầu")
+                        @if (Model.scoreDetail.Status == "Đăng ký" || Model.scoreDetail.Status == "Xác nhận yêu cầu")
                         {
                             <input type="submit" value="Lưu" class="btn btn-primary  me-2" style="margin-left: 1em" />
                             <!-- Button trigger modal -->

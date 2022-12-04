@@ -11,7 +11,6 @@ namespace SupportRegister.Data.Models
         public AppUser()
         {
             Students = new HashSet<Student>();
-            Staff = new HashSet<Staff>();
         }
         public string Address { get; set; }
         public string FullName { get; set; }
@@ -19,6 +18,5 @@ namespace SupportRegister.Data.Models
         public string Avatar { get; set; }
 
         public ICollection<Student> Students { get; set; }
-        public ICollection<Staff> Staff { get; set; }
     }
 }

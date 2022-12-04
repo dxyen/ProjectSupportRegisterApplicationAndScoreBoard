@@ -62,5 +62,19 @@ namespace SupportRegister.WebSite.Controllers
             }
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public IActionResult Receive(int idRegis)
+        {
+            var result = _regisScore.Receive(idRegis).GetAwaiter().GetResult();
+            if (result >= 1)
+            {
+                TempData["Result"] = "Xác nhận đơn thành công!";
+            }
+            else
+            {
+                TempData["Result"] = "Xác nhận thất bại!";
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

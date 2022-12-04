@@ -116,10 +116,14 @@
     <title>[Hệ thống quản lý đơn và in bảng điểm] Khoa CNTT&TT</title>
 </head>
 <body>
+    <input id="dear" type="hidden" value="@Model.appRegis.Dear">
+    <input id="content" type="hidden" value="@Model.appRegis.Content">
+    <input type="hidden" id="idApp" value="@Model.appRegis.ApplicationId">
+    <input type="hidden" id="idRegis" value="@Model.appRegis.Id">
     <div class="A4-paper">
         <div>
             <div style="text-align:center"><strong>CỘNG H&Ograve;A X&Atilde; HỘI CHỦ NGHĨA VIỆT NAM</strong></div>
-            <input type="hidden" id="idApp" value="@Model.appDetails.IdApplication">
+
             <div style="text-align:center"><u><strong>Độc lập - Tự do - Hạnh ph&uacute;c</strong></u></div>
 
             <div>&nbsp;</div>
@@ -158,11 +162,14 @@
             <div>Hệ đ&agrave;o tạo: D&agrave;i hạn tập trung (ch&iacute;nh qui) tại trường Đại học Cần Thơ.</div>
 
             <div id="test" class="editable">
-                Nay t&ocirc;i l&agrave;m đơn n&agrave;y gởi đến Ban Gi&aacute;m hiệu Trường Đại học Cần Thơ cho ph&eacute;p t&ocirc;i được tạm nghỉ học .... học kỳ tại Trường Đại học Cần Thơ.<br />
-                Kể từ&nbsp;học kỳ&nbsp; &hellip;&nbsp; năm học ...-&hellip;đến hết học kỳ&nbsp; .&nbsp; năm học ...-...
+                <div id="valuedear">
+                </div>
             </div>
 
-            <div id="test2" class="editable">Lý do xin tạm nghỉ:</div>
+            <div id="test2" class="editable">
+                <div id="valuecontent">
+                </div>
+            </div>
 
             <div>&nbsp; &nbsp; &nbsp; &nbsp; Rất mong được sự chấp thuận của Ban Gi&aacute;m hiệu.</div>
 
@@ -216,20 +223,21 @@
     <div id="fdata">
         <input type="hidden" name="chitietnhap_ctdt" value="" />
     </div>
-    <div id="toolbar" class="btn-group">
-        <button onclick="window.location='/RegisterApplication/Index'" data-toggle="tooltip" title="Quay lại danh sách đơn" class="btn btn-default">
+     <div id="toolbar" class="btn-group" style="">
+        <button data-toggle="tooltip" title="Quay lại danh sách đơn" class="btn btn-default"
+                onclick="window.location='/RegisterApplication/Index'">
             <span class="glyphicon glyphicon-arrow-left"
                   style="font-size: 16px"></span>
         </button>
         <button class="btn btn-default" data-toggle="modal" data-target="#myModal" title="Nộp đơn này">
             <span class="glyphicon glyphicon-open" style="font-size: 16px"></span>
         </button>
-        <button class="btn btn-default" id="saveBtn" data-toggle="tooltip" title="Lưu đơn này">
-            <span class="glyphicon glyphicon-floppy-disk"
-                  style="font-size: 16px"></span>
+        <button id="saveBtn" class="btn btn-default" title="Lưu đơn này">
+            <span class="glyphicon glyphicon-floppy-disk" style="font-size: 16px"></span>
         </button>
-        <span class="badge badge-error"
-              style="position: absolute;z-index: 3;margin-left: 23px;margin-top: -2px;-webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 1);-moz-box-shadow: 0px 0px 5px rgba(50, 50, 50, 1);box-shadow: 0px 0px 5px rgba(50, 50, 50, 1);"></span>
+        <button type="button" data-toggle="tooltip" title="In đơn này" class="btn btn-default" id="btnPrint">
+            <span class="glyphicon glyphicon-print" style="font-size: 16px"></span>
+        </button>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
@@ -252,6 +260,10 @@
 
         </div>
     </div>
+    <div class="sttBar sttBar-warn">
+        <span class="glyphicon glyphicon-info-sign"></span> Đơn này chỉ mới được lưu, chưa được nộp. Đơn này sẽ tự động
+        xóa sau 7 ngày.
+    </div>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="/js/stix.js"></script>
     <script src="/js/test.js"></script>
@@ -268,37 +280,46 @@
         })();
     </script>
     <script type="text/javascript">
+
+        $(function(){
+            let htmldear = $("#dear").val();
+            $("#valuedear").html(htmldear);
+            let htmlcontent = $("#content").val();
+            $("#valuecontent").html(htmlcontent);
+        });
+
         $("#saveBtn").click(function () {
             var content = $("#test2").html();
             var title = $("#test").html();
             var id = $("#idApp").val();
-            var fdata = {content: content, title: title,id: id};
+            var idRegis = $("#idRegis").val();
+            var fdata = {content: content, title: title, id: id, idRegis: idRegis};
             $.ajax({
                 url: '/RegisterApplication/Store',
-                type: 'post',
+                type: 'post', 
                 data: fdata,
                 success: function(data) {
                     window.location="/RegisterApplication/Index";
-                },
+                }, 
                 error: function(jqXHR, exception) {
                     if(jqXHR.status === 500)
                         console.log(jqXHR.responseText);
                 }
             });
         });
-
         $("#submitBtn").click(function () {
         var content = $("#test2").html();
         var title = $("#test").html();
         var id = $("#idApp").val();
-        var fdata = {content: content, title: title,id: id};
-            $.ajax({
+        var idRegis = $("#idRegis").val();
+        var fdata = {content: content, title: title,id: id, idRegis: idRegis};
+         $.ajax({
                 url: '/RegisterApplication/Submit',
-                type: 'post',
+                type: 'post', 
                 data: fdata,
                 success: function(data) {
                     window.location="/RegisterApplication/Index";
-                },
+                }, 
                 error: function(jqXHR, exception) {
                     if(jqXHR.status === 500)
                         console.log(jqXHR.responseText);
@@ -306,6 +327,15 @@
             });
         });
     </script>
-</body>
+    <script>
+        $('#btnPrint').click(function(){
 
+            var win = window.open('','_blank','width=794,height=1123,resizable=no,location=no');
+            win.document.write("<style>body {font-family: Times New Roman;padding: 1cm 1.1cm; font-size: 16px;margin:0;line-height: 1.5em;} .menu {display:none}</style>");
+            win.document.write($('.A4-paper').html());
+            win.focus();
+            win.document.close();
+            });
+    </script>
+</body>
 </html>

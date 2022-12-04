@@ -64,19 +64,6 @@ namespace SupportRegister.API.Controllers
                 return BadRequest(e.Message);
             }
         }
-        //[HttpGet("GetAll")]
-        //public async Task<IActionResult> GetAll(Guid id)
-        //{
-        //    try
-        //    {
-        //        var data = await _applicationService.GetAllApplicationByIdAsync(id);
-        //        return Ok(JsonConvert.SerializeObject(data));
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return BadRequest(e.Message);
-        //    }
-        //}
         [HttpGet("GetAllApp")]
         public async Task<IActionResult> GetAllApp()
         {
@@ -173,27 +160,18 @@ namespace SupportRegister.API.Controllers
         {
             var appRegis = await (from R in _context.RegisterApplications
                                    where R.Id == id
-                                   select new
+                                   select new RegisterApplicationViewModel
                                    {
                                        Id = R.Id,
                                        IdStatus = R.IdStatus,
-                                       IdApplication = R.ApplicationId,
+                                       ApplicationId = R.ApplicationId,
                                        StudentId = R.StudentId,
                                        DateRegister = R.DateRegister,
                                        DateReceived = R.DateReceived,
                                        Content = R.Content,
-                                       Title = R.Dear
+                                       Dear = R.Dear
                                    }).FirstOrDefaultAsync();
-            var RegisApp = new RegisterApplicationViewModel();
-            RegisApp.Id = appRegis.Id;
-            RegisApp.Content = appRegis.Content;
-            RegisApp.IdStatus = appRegis.IdStatus;
-            RegisApp.ApplicationId = appRegis.IdApplication;
-            RegisApp.DateRegister = appRegis.DateRegister;
-            RegisApp.DateReceived = appRegis.DateReceived;
-            RegisApp.Dear = appRegis.Title;
-            RegisApp.StudentId = appRegis.StudentId;
-            return Ok(JsonConvert.SerializeObject(RegisApp));
+            return Ok(JsonConvert.SerializeObject(appRegis));
         }
         [HttpPost("Cancel")]
         public async Task<IActionResult> Cancel(int idRegis)
@@ -211,6 +189,35 @@ namespace SupportRegister.API.Controllers
                     return Ok(-1);
                 }
                 _context.RegisterApplications.Remove(RegisApp);
+                var result = await _context.SaveChangesAsync();
+                if (result == 0)
+                {
+                    return BadRequest();
+                }
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpPost("Receive")]
+        public async Task<IActionResult> Receive(int idRegis)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                var RegisApp = await _context.RegisterApplications.FindAsync(idRegis);
+
+                if (RegisApp == null)
+                {
+                    return Ok(-1);
+                }
+                RegisApp.IdStatus = 6;
+                _context.RegisterApplications.Update(RegisApp);
                 var result = await _context.SaveChangesAsync();
                 if (result == 0)
                 {

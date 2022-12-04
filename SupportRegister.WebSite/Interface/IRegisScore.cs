@@ -21,6 +21,9 @@ namespace SupportRegister.WebSite.Interface
         [Post("/api/RegisterScoreboard/Cancel")]
         public Task<int> Cancel(int cancelId);
 
+        [Post("/api/RegisterScoreboard/Receive")]
+        public Task<int> Receive(int idRegis);
+
         [Post("/api/RegisterScoreboard/Create")]
         public Task<int> Create(string option, int yearstart_stu, int yearend_stu, int id_start, int id_end, int soluong, string userId);
     }

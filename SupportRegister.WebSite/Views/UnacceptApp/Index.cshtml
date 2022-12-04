@@ -1,0 +1,97 @@
+﻿@model UnacceptViewModel;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+<script>
+    setTimeout(function () {
+        $('#msgAlert').fadeOut('slow');
+    }, 2000);
+</script>
+ }
+@if (ViewBag.SuccessMsg != null)
+{
+    <div class="alert alert-fill-success position-fixed" id="msgAlert" role="alert" style="z-index: 9999; top: 80px; left: 800px">
+        @ViewBag.SuccessMsg
+    </div>
+}
+<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Quản lý đăng ký đơn</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Thông tin đăng ký đơn</li>
+    </ol>
+</nav>
+<div class="page-content" style="margin-top:0px">
+    <div class="d-flex justify-content-between mb-1">
+        <h3>Danh sách đăng ký đơn</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Thông tin đăng ký</h6>
+@*                    <form action="SearchTime" method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-3 col-ld-3 col-sm-6 text-right">
+                                <button class="btn btn-primary" type="submit">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </form>*@
+                    <div class="table-responsive">
+                        <table class="table" id="dataTableExample">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Số thứ tự
+                                    </th>
+                                    <th>
+                                        Tên sinh viên
+                                    </th>
+                                    <th>
+                                        MSSV
+                                    </th>
+                                    <th>
+                                        Lớp
+                                    </th>
+                                    <th>
+                                        Cố vấn
+                                    </th>
+                                    <th>
+                                        Khóa
+                                    </th>
+                                    <th>
+                                        Đơn vi phạm
+                                    </th>
+                                    <th>
+                                        Hạn nhận
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var app in Model.unaccepts.Select((x, i) => new { Data = x, Index = i }))
+                                {
+                                    <tr>
+                                        <td>
+                                            @(app.Index +1)
+                                        </td>
+                                        <td>@app.Data.Student</td>
+                                        <td>@app.Data.MSSV</td>
+                                        <td>@app.Data.Class</td>
+                                        <td>@app.Data.Teacher</td>
+                                        <td>@app.Data.Course</td>
+                                        <td>@app.Data.NameUnaccept</td>
+                                        <td>@app.Data.DateRegis</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

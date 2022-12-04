@@ -4,64 +4,137 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h3 class="card-title">Thêm người dùng mới</h3>
-<div class="row">
-    <div class="col-md-6 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <form asp-action="Create">
+<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Quản lý người dùng</a></li>
+        <li class="breadcrumb-item"><a href="#">Thông tin người dùng</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Thêm người dùng mới</li>
+    </ol>
+</nav>
+<h2 class="card-title">Thêm người dùng mới</h2>
+<form asp-action="Create">
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Nhập thông tin</h6>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label class="control-label">MSSV: </label>
-                        <input asp-for="UserName" class="form-control" />
-                        <span class="text-danger" asp-validation-for="@Model.UserName">@ViewBag.Error</span>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Mật khẩu</label>
-                        <input asp-for="Password" class="form-control" />
-                        <span class="text-danger" asp-validation-for="@Model.Password">@ViewBag.Error</span>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Nhập lại mât khẩu</label>
-                        <input asp-for="ConfirmPassword" class="form-control" />
-                        <span class="text-danger" asp-validation-for="@Model.ConfirmPassword">@ViewBag.Error</span>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Họ và tên:</label>
+                    <div class="mb-3">
+                        <label class="form-label">Họ và tên:</label>
                         <input asp-for="FullName" class="form-control" />
                         <span class="text-danger" asp-validation-for="@Model.FullName">@ViewBag.Error</span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Email" class="control-label"></label>
+                    <div class="mb-3">
+                        <label class="form-label">MSSV/MSCB </label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span class="text-danger" asp-validation-for="@Model.UserName">@ViewBag.Error</span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mật khẩu</label>
+                        <input asp-for="Password" class="form-control" />
+                        <span class="text-danger" asp-validation-for="@Model.Password">@ViewBag.Error</span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nhập lại mât khẩu</label>
+                        <input asp-for="ConfirmPassword" class="form-control"/>
+                        <span class="text-danger" asp-validation-for="@Model.ConfirmPassword">@ViewBag.Error</span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label"></label>
                         <input asp-for="Email" class="form-control" />
                         <span class="text-danger" asp-validation-for="@Model.Email">@ViewBag.Error</span>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">Địa chỉ</label>
+                    <div class="mb-3">
+                        <label class="form-label">Role</label>
+                        <select id="role_user" asp-for="RoleId" name="RoleId" class="form-select" asp-items="ViewBag.RoleId"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Địa chỉ</label>
                         <input asp-for="Address" class="form-control" />
                         <span asp-validation-for="Address" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">Ngày sinh: </label>
+                    <div class="mb-3">
+                        <label class="form-label">Ngày sinh: </label>
                         <input type="date" asp-for="Birthday" class="form-control" />
                         <span asp-validation-for="Birthday" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">Số điện thoại</label>
+                    <div class="mb-3">
+                        <label class="form-label">Số điện thoại</label>
                         <input asp-for="PhoneNumber" class="form-control" />
                         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">Role</label>
-                        <select asp-for="RoleId" name="RoleId" class="form-control" asp-items="ViewBag.RoleId"></select>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Thêm người dùng" class="btn btn-primary mt-2" />
-                        <a href="@Url.Action("GetAll", "Account")" class="btn btn-secondary mt-2 ">Hủy</a>
-                    </div>
-                </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Thông tin sinh viên(Quyền sinh viên)</h6>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Lớp</label>
+                            <div class="col-sm-9">
+                                <select id="class_user" asp-for="ClassId" name="ClassId" class="form-select" asp-items="ViewBag.ClassId"></select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Khóa</label>
+                            <div class="col-sm-9">
+                                <select id="course_user" asp-for="IdCourse" name="IdCourse" class="form-select" asp-items="ViewBag.IdCourse"></select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Năm bắt đầu</label>
+                            <div class="col-sm-9">
+                                <input id="yearstart_user" type="number" asp-for="YearStart" class="form-control" />
+                                <span asp-validation-for="YearStart" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Năm kết thúc</label>
+                            <div class="col-sm-9">
+                                <input id="yearend_user" type="number" asp-for="YearEnd" class="form-control" />
+                                <span asp-validation-for="YearEnd" class="text-danger"></span>
+                            </div>
+                        </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+    <div class="form-group mb-5">
+        <input type="submit" value="Thêm người dùng" class="btn btn-primary mt-2" />
+        <a href="@Url.Action("GetAll", "Account")" class="btn btn-secondary mt-2 ">Hủy</a>
+    </div>
+</form>
+<script type="text/javascript">
+    $(function() {
+        let role = $("#role_user :selected").text();
+        if (role == 'student') {
+            $("#class_user").prop('disabled', false);
+            $("#course_user").prop('disabled', false);
+            $("#yearstart_user").prop('disabled', false);
+            $("#yearend_user").prop('disabled', false);
+        } else {
+            $("#class_user").prop('disabled', true);
+            $("#course_user").prop('disabled', true);
+            $("#yearstart_user").prop('disabled', true);
+            $("#yearend_user").prop('disabled', true);
+        }
+    });
+    $("#role_user").change(function(e) {
+            let role = $("#role_user :selected").text();
+        if (role == 'student') {
+            $("#class_user").prop('disabled', false);
+            $("#course_user").prop('disabled', false);
+            $("#yearstart_user").prop('disabled', false);
+            $("#yearend_user").prop('disabled', false);
+        } else {
+            $("#class_user").prop('disabled', true);
+            $("#class_user").val('');
+            $("#course_user").prop('disabled', true);
+            $("#course_user").val('');
+            $("#yearstart_user").prop('disabled', true);
+            $("#yearend_user").prop('disabled', true);
+        }
+    });
+   
+</script>

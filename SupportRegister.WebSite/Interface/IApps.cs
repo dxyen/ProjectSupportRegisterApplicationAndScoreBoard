@@ -17,7 +17,7 @@ namespace SupportRegister.WebSite.Interface
         public Task<int> Update(int id, int idStatus);
 
         [Post("/api/Application/Delete")]
-        public Task<int> Delete(int appId, int studentId);
+        public Task<int> Delete(int id);
 
         [Get("/api/Application/GetAllAppUnconfirm")]
         public Task<List<RegisterApplicationViewModel>> GetAllAppUnconfirm();

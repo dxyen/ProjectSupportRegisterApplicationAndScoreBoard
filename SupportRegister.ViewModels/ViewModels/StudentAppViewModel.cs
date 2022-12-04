@@ -14,5 +14,6 @@ namespace SupportRegister.ViewModels.ViewModels
         public int YearEnd { get; set; }
         public string ClassName { get; set; }
         public string Course { get; set; }
+        public string Teacher { get; set; }
     }
 }

@@ -36,6 +36,7 @@ namespace SupportRegister.API.Controllers
                     .Include(x => x.Application)
                     .Select(app => new RegisterApplicationViewModel()
                     {
+                        Id = app.Id,
                         ApplicationId = app.ApplicationId,
                         NameApp = app.Application.NameApplication,
                         Student = app.Student.User.FullName,

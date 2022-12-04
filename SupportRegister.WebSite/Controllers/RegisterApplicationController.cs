@@ -46,6 +46,38 @@ namespace SupportRegister.WebSite.Controllers
             }
             return View(viewModel);
         }
+        public IActionResult Application4(int id)
+        {
+            var userId = User.Claims.Where(c => c.Type == "Id").Select(c => c.Value).SingleOrDefault();
+            var app = _regisApp.GetDetail(id).GetAwaiter().GetResult();
+            var student = _regisApp.GetStudentApp(userId).GetAwaiter().GetResult();
+            var viewModel = new RegisAppViewModel()
+            {
+                appDetails = app,
+                students = student
+            };
+            if (TempData["Result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["Result"];
+            }
+            return View(viewModel);
+        }
+        public IActionResult Application5(int id)
+        {
+            var userId = User.Claims.Where(c => c.Type == "Id").Select(c => c.Value).SingleOrDefault();
+            var app = _regisApp.GetDetail(id).GetAwaiter().GetResult();
+            var student = _regisApp.GetStudentApp(userId).GetAwaiter().GetResult();
+            var viewModel = new RegisAppViewModel()
+            {
+                appDetails = app,
+                students = student
+            };
+            if (TempData["Result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["Result"];
+            }
+            return View(viewModel);
+        }
         [HttpPost]
         public IActionResult Store(string content, string title, int id, int idRegis)
         {
@@ -104,6 +136,40 @@ namespace SupportRegister.WebSite.Controllers
             }
             return View(viewModel);
         }
+        [HttpGet]
+        public IActionResult UpdateApplication5(int id)
+        {
+            var userId = User.Claims.Where(c => c.Type == "Id").Select(c => c.Value).SingleOrDefault();
+            var update = _regisApp.Update(id).GetAwaiter().GetResult();
+            var student = _regisApp.GetStudentApp(userId).GetAwaiter().GetResult();
+            var viewModel = new RegisAppViewModel()
+            {
+                students = student,
+                appRegis = update
+            };
+            if (TempData["Result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["Result"];
+            }
+            return View(viewModel);
+        }
+        [HttpGet]
+        public IActionResult UpdateApplication4(int id)
+        {
+            var userId = User.Claims.Where(c => c.Type == "Id").Select(c => c.Value).SingleOrDefault();
+            var update = _regisApp.Update(id).GetAwaiter().GetResult();
+            var student = _regisApp.GetStudentApp(userId).GetAwaiter().GetResult();
+            var viewModel = new RegisAppViewModel()
+            {
+                students = student,
+                appRegis = update
+            };
+            if (TempData["Result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["Result"];
+            }
+            return View(viewModel);
+        }
         [HttpPost]
         public IActionResult Cancel(int cancelId)
         {
@@ -115,6 +181,20 @@ namespace SupportRegister.WebSite.Controllers
             else
             {
                 TempData["Result"] = "Xóa đơn thất bại!";
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult Receive(int receiveId)
+        {
+            var result = _regisApp.Receive(receiveId).GetAwaiter().GetResult();
+            if (result >= 1)
+            {
+                TempData["Result"] = "Đơn đã được xác nhận!";
+            }
+            else
+            {
+                TempData["Result"] = "Xác nhận thất bại!";
             }
             return RedirectToAction("Index");
         }

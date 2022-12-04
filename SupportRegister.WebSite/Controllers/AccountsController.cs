@@ -232,16 +232,36 @@ namespace SupportRegister.WebSite.Controllers
         public async Task<IActionResult> Create()
         {
             var url = $"/api/Roles/GetList";
+            var urlClass = $"/api/Student/GetListClass";
+            var urlCourse = $"/api/Student/GetListCourse";
             IEnumerable<RoleViewModel> role = Enumerable.Empty<RoleViewModel>();
+            IEnumerable<ClassViewModel> classs = Enumerable.Empty<ClassViewModel>();
+            IEnumerable<CourseViewModel> course = Enumerable.Empty<CourseViewModel>();
             using (_httpClient)
             {
-                using (var response = await _httpClient.GetAsync(url))
+                var resultRole = await _httpClient.GetAsync(url);
+                if (resultRole.IsSuccessStatusCode)
                 {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    string apiResponse = await resultRole.Content.ReadAsStringAsync();
                     role = JsonConvert.DeserializeObject< IList<RoleViewModel>>(apiResponse);
                 }
+                var resultClass = await _httpClient.GetAsync(urlClass);
+                if (resultClass.IsSuccessStatusCode)
+                {
+                    string apiResponse = await resultClass.Content.ReadAsStringAsync();
+                    classs = JsonConvert.DeserializeObject<IList<ClassViewModel>>(apiResponse);
+                }
+                var resultCourse = await _httpClient.GetAsync(urlCourse);
+                if (resultCourse.IsSuccessStatusCode)
+                {
+                    string apiResponse = await resultCourse.Content.ReadAsStringAsync();
+                    course = JsonConvert.DeserializeObject<IList<CourseViewModel>>(apiResponse);
+                }
+
             }
             ViewData["RoleId"] = new SelectList(role, "Id", "Name");
+            ViewData["ClassId"] = new SelectList(classs, "ClassId", "NameClass");
+            ViewData["IdCourse"] = new SelectList(course, "IdCourse", "NameCourse");
             return View();
         }
 
@@ -272,7 +292,7 @@ namespace SupportRegister.WebSite.Controllers
             }
             else
             {
-                return View();
+                return await Create();
             }
         }
         [HttpGet]

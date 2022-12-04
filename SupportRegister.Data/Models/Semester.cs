@@ -14,7 +14,6 @@ namespace SupportRegister.Data.Models
 
         public int IdSemester { get; set; }
         public string NameSemester { get; set; }
-        public int Price { get; set; }
 
         public ICollection<YearSemester> YearSemesters { get; set; }
     }

@@ -30,24 +30,7 @@
                     {
                         <tr>
                             <td>@app.Data.NameApplication</td>
-                            @if (Model.allAppRegis.Count() == 0)
-                            {
-                                <td><a class="text-black" href="@Url.Action($"Application{@app.Data.IdApplication}", "RegisterApplication", new {id = app.Data.IdApplication })"><i data-feather="file"></i></a></td>
-                            }
-                            else
-                            {
-                                @foreach (var regis in Model.allAppRegis.Select((x, i) => new { Data = x, Index = i }))
-                                {
-                                    @if (regis.Data.Id != 0 && @regis.Data.ApplicationId == app.Data.IdApplication && @regis.Data.IdStatus == 4)
-                                    {
-                                        <td><a class="text-black" href="@Url.Action("UpdateApplication2", "RegisterApplication", new { id =regis.Data.Id })"><i data-feather="file"></i></a></td>
-                                    }
-                                    else
-                                    {
-                                        <td><a class="text-black" href="@Url.Action($"Application{@app.Data.IdApplication}", "RegisterApplication", new {id = app.Data.IdApplication })"><i data-feather="file"></i></a></td>
-                                    }
-                                }
-                            }
+                            <td><a class="text-black" href="@Url.Action($"Application{@app.Data.IdApplication}", "RegisterApplication", new {id = app.Data.IdApplication })"><i data-feather="file"></i></a></td>
                         </tr>
                     }
                 </table>
@@ -71,20 +54,20 @@
                                                 <i class="link-icon" data-feather="printer"></i>
                                             </td>
                                             <td style="border-right-color: transparent">
-                                                <b>@regis.Data.NameApp</b>
+                                                <b style="font-size: 13px; margin-bottom: 0">@regis.Data.NameApp</b>
                                                 <p style="font-size: 11px; color: #777; margin-bottom: 0"><i>Được lưu  vào lúc @regis.Data.DateRegister</i></p>
                                             </td>
                                             <td style="width: 101px;">
                                                 <form asp-action="Cancel">
-                                                    <a class="btn btn-warning" href="@Url.Action("UpdateApplication2", "RegisterApplication", new { id =regis.Data.Id })"><i class="link-icon" data-feather="edit"></i></a>
-                                                    <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="link-icon" data-feather="delete"></i></a>
-                                                    <div class="modal" tabindex="-1" id="deleteModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <a class="btn btn-warning" href="@Url.Action($"UpdateApplication{regis.Data.ApplicationId}", "RegisterApplication", new { id =regis.Data.Id })"><i class="link-icon" data-feather="edit"></i></a>
+                                                    <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal@{@regis.Index}"><i class="link-icon" data-feather="delete"></i></a>
+                                                    <div class="modal" tabindex="-1" id="deleteModal@{@regis.Index}" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title">Hủy yêu cầu</h5>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
-                                                                </div>
+                                                                </div> 
                                                                 <div class="p-3">
                                                                     <p>Bạn có chắc muốn xóa đơn đã lưu</p>
                                                                     <input type="hidden" name="cancelId" value="@(regis.Data.Id)">
@@ -100,20 +83,20 @@
                                             </td>
                                         </tr>
                                     }
-                                    else if (@regis.Data.Status == "Ðăng ký")
+                                    else if (@regis.Data.Status == "Đăng ký")
                                     {
                                         <tr>
                                             <td style="padding-top: 20px;width:45px;">
                                                 <i class="link-icon" data-feather="printer"></i>
                                             </td>
                                             <td style="border-right-color: transparent">
-                                                <b>@regis.Data.NameApp</b>
+                                                <b style="font-size: 13px; margin-bottom: 0">@regis.Data.NameApp</b>
                                                 <p style="font-size: 11px; color: #777; margin-bottom: 0"><i>Được đăng ký vào lúc @regis.Data.DateRegister</i></p>
                                             </td>
                                             <td style="width: 80px;">
                                                 <form asp-action="Cancel">
-                                                    <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="link-icon" data-feather="delete"></i></a>
-                                                    <div class="modal" tabindex="-1" id="deleteModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal@{@regis.Index}"><i class="link-icon" data-feather="delete"></i></a>
+                                                    <div class="modal" tabindex="-1" id="exampleModal@{@regis.Index}" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -121,7 +104,7 @@
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                                                                 </div>
                                                                 <div class="p-3">
-                                                                    <p>Bạn có chắc muốn xóa đơn đã lưu</p>
+                                                                    <p>Bạn có chắc muốn xóa đơn đã lưu "@regis.Data.Id"</p>
                                                                     <input type="hidden" name="cancelId" value="@(regis.Data.Id)">
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -135,7 +118,75 @@
                                             </td>
                                         </tr>
                                     }
-                                    else
+                                    else if (@regis.Data.Status == "Đã in")
+                                    {
+                                        <tr>
+                                            <td style="padding-top: 20px;width:45px;">
+                                                <i class="link-icon" data-feather="printer"></i>
+                                            </td>
+                                            <td style="border-right-color: transparent">
+                                                <b style="font-size: 13px; margin-bottom: 0">@regis.Data.NameApp</b>
+                                                <p style="font-size: 11px; color: #777; margin-bottom: 0"><i>Được đăng ký vào lúc @regis.Data.DateRegister - Trạng thái đã được in sinh viên có thể nhận đơn tại khoa</i></p>
+                                            </td>
+                                            <td style="width: 80px;">
+                                                <form asp-action="Receive">
+                                                    <a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#receiveModal"><i class="link-icon" data-feather="check-square"></i></a>
+                                                    <div class="modal" tabindex="-1" id="receiveModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Xác nhận đã nhận bảng điểm</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                                                                </div>
+                                                                <div class="p-3">
+                                                                    <p>Sau khi sinh viên nhận bảng điểm tại khoa vui lòng xác nhận đã nhận đơn!</p>
+                                                                    <input type="hidden" name="receiveId" value="@(regis.Data.Id)">
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                                    <button type="submit" class="btn btn-success">Xác nhận</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }else if (@regis.Data.Status == "Xác nhận yêu cầu")
+                                    {
+                                        <tr>
+                                            <td style="padding-top: 20px;width:45px;">
+                                                <i class="link-icon" data-feather="printer"></i>
+                                            </td>
+                                            <td style="border-right-color: transparent">
+                                                <b style="font-size: 13px; margin-bottom: 0">@regis.Data.NameApp</b>
+                                                <p style="font-size: 11px; color: #777; margin-bottom: 0"><i>Được đăng ký vào lúc @regis.Data.DateRegister - Trạng thái: Xác nhận yêu cầu</i></p>
+                                            </td>
+                                            <td style="width: 80px;">
+                                                <form asp-action="Receive">
+                                                    <a class="btn btn-warning disabled" data-bs-toggle="modal" data-bs-target="#receiveModal"><i class="link-icon" data-feather="check-square"></i></a>
+                                                    <div class="modal" tabindex="-1" id="receiveModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Xác nhận đã nhận bảng điểm</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                                                                </div>
+                                                                <div class="p-3">
+                                                                    <p>Sau khi sinh viên nhận bảng điểm tại khoa vui lòng xác nhận đã nhận đơn!</p>
+                                                                    <input type="hidden" name="receiveId" value="@(regis.Data.Id)">
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                                    <button type="submit" class="btn btn-success">Xác nhận</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }else if (@regis.Data.Status == "Đã nhận")
                                     {
                                         <tr>
                                             <td style="padding-top: 20px;width:45px;">
@@ -144,6 +195,29 @@
                                             <td style="border-right-color: transparent">
                                                 <b>@regis.Data.NameApp</b>
                                                 <p style="font-size: 11px; color: #777; margin-bottom: 0"><i>Được đăng ký vào lúc @regis.Data.DateRegister -  Nhận đơn vào ngày @regis.Data.DateReceived.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</i></p>
+                                            </td>
+                                            <td style="width: 80px;">
+                                                <form asp-action="Receive">
+                                                    <a class="btn btn-success disabled" data-bs-toggle="modal" data-bs-target="#receiveModal1"><i class="link-icon" data-feather="check-square"></i></a>
+                                                    <div class="modal" tabindex="-1" id="receiveModal1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Xác nhận đã nhận bảng điểm</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                                                                </div>
+                                                                <div class="p-3">
+                                                                    <p>Sau khi sinh viên nhận bảng điểm tại khoa vui lòng xác nhận đã nhận đơn!</p>
+                                                                    <input type="hidden" name="receiveId" value="@(regis.Data.Id)">
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                                    <button type="submit" class="btn btn-success">Xác nhận</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </td>
                                         </tr>
                                     }
@@ -171,7 +245,6 @@
                             <li><strong>Đối với c&aacute;c đơn sử dụng ngo&agrave;i Trường SV li&ecirc;n hệ P. KHTH để được đ&oacute;ng mộc</strong></li>
                         </ul>
                         <strong> &nbsp;</strong>
-
                         <ul>
                             <li><span style="color:#0000CD"><strong>Chỉ nộp đơn khi bạn thực sự c&oacute; nhu cầu. </strong></span></li>
                             <li><span style="color:#0000CD"><strong>Sau 30 ng&agrave;y kể từ ng&agrave;y nộp đơn, nếu SV kh&ocirc;ng nhận đơn th&igrave; VPK sẽ giữ lại đơn v&agrave;&nbsp; thống k&ecirc; trừ 2 điểm r&egrave;n luyện/1 đơn v&agrave;o mục 2</strong></span></li>

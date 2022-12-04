@@ -18,8 +18,7 @@ namespace SupportRegister.Data.Configuration
             entity.Property(e => e.ClassId).ValueGeneratedOnAdd();
 
             entity.Property(e => e.NameClass)
-                .HasMaxLength(255)
-                .IsUnicode(false);
+                .HasMaxLength(255);
             entity.Property(e => e.Teacher)
                 .HasMaxLength(255)
                 .HasColumnName("teacher");

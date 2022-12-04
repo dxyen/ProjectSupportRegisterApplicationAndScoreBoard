@@ -55,8 +55,32 @@ namespace SupportRegister.API.Controllers
                     Email = student.User.Email,
                     UserName = student.User.UserName,
                     YearStart = student.YearStart,
-                    YearEnd= student.YearEnd
+                    YearEnd= student.YearEnd,
+                    Teacher = student.Class.Teacher
                 }).FirstOrDefaultAsync();
+            return Ok(query);
+        }
+        [HttpGet("GetListClass")]
+        public async Task<IActionResult> GetListClass()
+        {
+            var query = await _context.Classes
+                .Select(classes => new ClassViewModel()
+                {
+                    ClassId = classes.ClassId,
+                    NameClass = classes.NameClass,
+                    Teacher = classes.Teacher
+                }).ToListAsync();
+            return Ok(query);
+        }
+        [HttpGet("GetListCourse")]
+        public async Task<IActionResult> GetListCourse()
+        {
+            var query = await _context.Courses
+                .Select(Course => new CourseViewModel()
+                {
+                    IdCourse = Course.IdCourse,
+                    NameCourse = Course.NameCourse
+                }).ToListAsync();
             return Ok(query);
         }
     }
