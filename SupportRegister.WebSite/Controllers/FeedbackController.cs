@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace SupportRegister.WebSite.Controllers
 {
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "student")]
     public class FeedbackController : Controller
     {
         private readonly IFeedback _feedback;

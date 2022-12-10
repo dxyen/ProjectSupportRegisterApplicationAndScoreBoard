@@ -62,6 +62,9 @@ namespace SupportRegister.API
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddTransient<IUserService, UserService>();
 
+
+            services.AddCors();
+
             //// Add services SqlServer
             //services.AddDbContext<ProjectSupportRegisterContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -81,6 +84,11 @@ namespace SupportRegister.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SupportRegister.API v1"));
             }
+            app.UseCors(x => x
+                           .AllowAnyMethod()
+                           .AllowAnyHeader()
+                           .SetIsOriginAllowed(origin => true) // allow any origin
+                           .AllowCredentials()); // allow credentials
 
             app.UseHttpsRedirection();
 

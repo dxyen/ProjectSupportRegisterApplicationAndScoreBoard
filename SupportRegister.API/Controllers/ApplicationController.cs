@@ -145,7 +145,7 @@ namespace SupportRegister.API.Controllers
             }
         }
         [HttpGet("GetDetail")]
-        public async Task<IActionResult> GetDetail(int appId, int studentId)
+        public async Task<IActionResult> GetDetail(int appId, int studentId, int regisId)
         {
             try
             {
@@ -156,6 +156,7 @@ namespace SupportRegister.API.Controllers
                     .Include(x => x.Application)
                     .Where(x => x.Student.StudentId == studentId)
                     .Where(x => x.ApplicationId == appId)
+                    .Where(x => x.Id == regisId)
                     .Select(app => new RegisterApplicationViewModel()
                     {
                         Id = app.Id,
@@ -203,13 +204,13 @@ namespace SupportRegister.API.Controllers
                                          Class = C.NameClass,
                                          StudentId = S.StudentId,
                                          DateRegister = R.DateRegister,
-                                         DateReceived = R.DateReceived ?? DateTime.Now
+                                         DateReceived = R.DateReceived
                                      }).FirstOrDefaultAsync();
                 MailRequest request = new MailRequest();
                 if (idStatus == 5)
                 {
                     request.ToEmail = Student.Email;
-                    request.Subject = "Đăng ký đơn";
+                    request.Subject = "Đăng ký đơn đã được in";
                     request.Body = $"<h3>Sinh viên đăng ký: {Student.FullName} </h3>";
                     request.Body += $"<p>Đăng ký vào ngày {Student.DateRegister}</p>";
                     request.Body += $"<p>Trạng thái: Đã được in</p>";
@@ -219,7 +220,7 @@ namespace SupportRegister.API.Controllers
                 else
                 {
                     request.ToEmail = Student.Email;
-                    request.Subject = "Đăng ký đơn";
+                    request.Subject = "Đăng ký đơn đã được xác nhận";
                     request.Body = $"<h3>Sinh viên đăng ký: {Student.FullName} </h3>";
                     request.Body += $"<p>Đăng ký vào ngày {Student.DateRegister}</p>";
                     request.Body += $"<p>Trạng thái: Đã được xác nhận yêu cầu</p>";

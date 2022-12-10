@@ -56,9 +56,9 @@ namespace SupportRegister.WebSite.Controllers
             return View(viewModel);
         }
         [HttpGet]
-        public IActionResult Update(int appId, int studentId)
+        public IActionResult Update(int appId, int studentId, int regisId)
         {
-            var app = _apps.GetDetail(appId, studentId).GetAwaiter().GetResult();
+            var app = _apps.GetDetail(appId, studentId, regisId).GetAwaiter().GetResult();
             var viewModel = new AppsViewModel()
             {
                 appDetail = app,

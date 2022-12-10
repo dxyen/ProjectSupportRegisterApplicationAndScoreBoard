@@ -8,7 +8,7 @@ namespace SupportRegister.WebSite.Interface
     public interface IApps
     {
         [Get("/api/Application/GetDetail")]
-        public Task<RegisterApplicationViewModel> GetDetail(int appId, int studentId);
+        public Task<RegisterApplicationViewModel> GetDetail(int appId, int studentId, int regisId);
 
         [Get("/api/Application/GetAll")]
         public Task<List<RegisterApplicationViewModel>> GetAll();

@@ -37,24 +37,6 @@ namespace SupportRegister.Application.Services
             await _context.SaveChangesAsync();
             return scoreboard.IdRegisterScoreboard;
         }
-        //private int GetPriceTotal(Guid userId, int regisId)
-        //{
-        //    //var query = (from D in _context.DetailRegisterScoreboards
-        //    //                  join R in _context.RegisterScoreboards on D.IdRegisterScoreboard equals R.IdRegisterScoreboard
-        //    //                  join S in _context.Students on R.StudentId equals S.StudentId
-        //    //                  join U in _context.Users on S.UserId equals U.Id
-        //    //                  where U.Id == userId
-        //    //                  where R.IdRegisterScoreboard == regisId
-        //    //                  group D.Price by new { R.IdRegisterScoreboard }
-        //    //                        into DGroup
-        //    //                  select new
-        //    //                  {
-        //    //                      IdRegis = DGroup.Key.IdRegisterScoreboard,
-        //    //                      PriceTotal = DGroup.Sum()
-        //    //                  }).FirstOrDefault();
-        //    //int PriceTotal = Convert.ToInt32(query.PriceTotal);
-        //    return 0;
-        //}
         public async Task<RegisterScoreboardViewModel> GetDetailScoreboardByIdAsync(Guid id, int regisId)
         {
             var query = await _context.DetailRegisterScoreboards.Include(x => x.Student)
@@ -67,7 +49,7 @@ namespace SupportRegister.Application.Services
                                                                 Status = Score.Regis.IdStatusNavigation.Name,
                                                                 Student = Score.Student.User.FullName,
                                                                 DateRegister = Score.Regis.DateRegister,
-                                                                DateReceived = Score.Regis.DateReceived ?? DateTime.Now,
+                                                                DateReceived = Score.Regis.DateReceived,
                                                                 PriceTotal = Score.Price * Score.Amount
                                                             }).FirstOrDefaultAsync();
             return query;
@@ -86,7 +68,7 @@ namespace SupportRegister.Application.Services
                                                      Status = Score.Regis.IdStatusNavigation.Name,
                                                      Student = Score.Student.User.FullName,
                                                      DateRegister = Score.Regis.DateRegister,
-                                                     DateReceived = Score.Regis.DateReceived ?? DateTime.Now,
+                                                     DateReceived = Score.Regis.DateReceived,
                                                      PriceTotal = Score.Price,
                                                      Amount = Score.Amount,
                                                      YearEnd = Score.YearEnd,

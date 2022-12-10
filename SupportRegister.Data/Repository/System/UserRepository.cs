@@ -168,9 +168,10 @@ namespace SupportRegister.Data.Repository.System
                                                 .Select(regis => new RegisterScoreboardViewModel()
                                                 {
                                                     idStatus = regis.Regis.IdStatus,
-                                                    DateReceived = regis.Regis.DateReceived ?? DateTime.Now,
+                                                    DateReceived = regis.Regis.DateReceived,
                                                     DateRegister = regis.Regis.DateRegister,
-                                                    idStudent = regis.StudentId
+                                                    idStudent = regis.StudentId,
+                                                    IdRegis =  regis.RegisId
                                                 }).ToListAsync();
             foreach (var item in checkRegisScore)
             {
@@ -184,10 +185,10 @@ namespace SupportRegister.Data.Repository.System
                     minusPoint.StudentId = item.idStudent;
                     minusPoint.DateRegis = item.DateRegister;
                     await _context.MinusPoints.AddAsync(minusPoint);
-                    //_context.RegisterScoreboards.Remove(findItem);
+                    _context.RegisterScoreboards.Remove(findItem);
                 }
+                await _context.SaveChangesAsync();
             }
-            await _context.SaveChangesAsync();
         }
     }
 }

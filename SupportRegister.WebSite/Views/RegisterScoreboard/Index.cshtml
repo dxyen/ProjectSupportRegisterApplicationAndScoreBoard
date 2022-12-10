@@ -10,7 +10,13 @@
     }, 2000);
 </script>
  }
-@if (ViewBag.SuccessMsg != null)
+ @if (ViewBag.SuccessMsg == "Đăng ký thất bại!")
+{
+    <div class="alert alert-fill-danger position-fixed" id="msgAlert" role="alert" style="z-index: 9999; top: 80px; left: 800px">
+        @ViewBag.SuccessMsg
+    </div>
+}
+@if (ViewBag.SuccessMsg == "Đăng ký thành công!")
 {
     <div class="alert alert-fill-success position-fixed" id="msgAlert" role="alert" style="z-index: 9999; top: 80px; left: 800px">
         @ViewBag.SuccessMsg
@@ -113,7 +119,7 @@
                     Lưu &yacute;:
                     <ul>
                         <li>Bạn sẽ nhận được bảng điểm sau 2 ng&agrave;y đăng k&yacute;.</li>
-                        <li>Kh&ocirc;ng l&agrave;m việc v&agrave;o c&aacute;c ng&agrave;y lễ, thứ 7 v&agrave; chủ nhật.</li>
+                        <li>Không làm việc vào các ngày thứ 7 và chủ nhật.</li>
                         <li><span style="color:#FF0000"><strong>Nếu sinh viện chọn in quá học kỳ bất đầu, hoặc kết thúc thì sẽ được tính là chọn in tất cả học kỳ</strong></span></li>
                         <li><span style="color:#FF0000"><strong>Nơi nhận bảng điểm: Văn ph&ograve;ng Khoa CNTT&amp;TT </strong></span></li>
                         <li><span style="color:#FF0000"><strong>Sinh vi&ecirc;n li&ecirc;n hệ P.KHTH để đ&oacute;ng mộc</strong></span></li>
@@ -142,9 +148,24 @@
                                                 <i class="link-icon" data-feather="clock"></i>
                                             </td>
                                             <td style="border-right-color: transparent">
+                                                @if((score.Data.SemesterStart == null && score.Data.SemesterEnd == null)){
                                                 <b>
-                                                    Đăng ký in @(score.Data.SemesterStart == null ? "tất cả học kỳ" : $"{score.Data.YearSemesterStart} đến {score.Data.YearSemesterStart}")<br><span style="color: #ac2925;font-size: 13px;">(@(score.Data.Amount) bảng - @(score.Data.PriceTotal) VNĐ)</span>
+                                                    Đăng ký in tất cả học kỳ <br><span style="color: #ac2925;font-size: 13px;">(@(score.Data.Amount) bảng - @(score.Data.PriceTotal) VNĐ)</span>
                                                 </b>
+                                                } else if( score.Data.SemesterStart == null){
+                                                <b>
+                                                    Đăng ký từ năm bắt đầu đến "@(score.Data.YearSemesterEnd)"<br><span style="color: #ac2925;font-size: 13px;">(@(score.Data.Amount) bảng - @(score.Data.PriceTotal) VNĐ)</span>
+                                                </b>
+                                                }else if( score.Data.SemesterEnd == null){
+                                                <b>
+                                                    Đăng ký từ năm "@(score.Data.YearSemesterStart)" đến hiện tại<br><span style="color: #ac2925;font-size: 13px;">(@(score.Data.Amount) bảng - @(score.Data.PriceTotal) VNĐ)</span>
+                                                </b>
+                                                }else
+                                                {
+                                                <b>
+                                                    Đăng ký từ năm "@(score.Data.YearSemesterStart)" đến "@(score.Data.YearSemesterEnd)"<br><span style="color: #ac2925;font-size: 13px;">(@(score.Data.Amount) bảng - @(score.Data.PriceTotal) VNĐ)</span>
+                                                </b>
+                                                }
                                                 <p style="font-size: 11px; color: #777; margin-bottom: 0">
                                                     <i>
                                                         Được đăng ký vào lúc

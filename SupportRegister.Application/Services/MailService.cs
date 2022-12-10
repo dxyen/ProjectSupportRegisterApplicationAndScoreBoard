@@ -40,7 +40,7 @@ namespace SupportRegister.Application.Services
             builder.HtmlBody = mailRequest.Body;
             email.Body = builder.ToMessageBody();
             using var smtp = new SmtpClient();
-            smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
+            smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
             smtp.Authenticate(mailfeedback.EmailAdmin1, mailfeedback.Password);
             await smtp.SendAsync(email);
             smtp.Disconnect(true);

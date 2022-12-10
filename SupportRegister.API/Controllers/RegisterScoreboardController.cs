@@ -16,15 +16,11 @@ namespace SupportRegister.API.Controllers
     public class RegisterScoreboardController : ControllerBase
     {
         private readonly IScoreboardService _scoreboardService;
-        private readonly IYearService _yearService;
         private readonly ProjectSupportRegisterContext _context;
-        private readonly IMapper _mapper;
-        public RegisterScoreboardController(ProjectSupportRegisterContext context, IMapper mapper, IScoreboardService scoreboardService, IYearService yearService)
+        public RegisterScoreboardController(ProjectSupportRegisterContext context, IScoreboardService scoreboardService)
         {
             _scoreboardService = scoreboardService;
-            _yearService = yearService;
             _context = context;
-            _mapper = mapper;
         }
         [HttpGet("GetDetail")]
         public async Task<IActionResult> GetDetail(Guid id, int regisId)
@@ -59,6 +55,14 @@ namespace SupportRegister.API.Controllers
             var DetailRegisScore = new DetailRegisterScoreboard();
             RegisScore.DateRegister = DateTime.Now;
             RegisScore.DateReceived = DateTime.Now.AddDays(2);
+            if (RegisScore.DateReceived.DayOfWeek == DayOfWeek.Saturday)
+            {
+                RegisScore.DateReceived = DateTime.Now.AddDays(4);
+            }
+            else if(RegisScore.DateReceived.DayOfWeek == DayOfWeek.Sunday)
+            {
+                RegisScore.DateReceived = DateTime.Now.AddDays(3);
+            }
             RegisScore.IdStatus = 1;
             var id = (from R in _context.RegisterScoreboards
                       select R.IdRegisterScoreboard).Max() + 1;
@@ -71,7 +75,9 @@ namespace SupportRegister.API.Controllers
                                    where S.UserId == userId
                                    select new
                                    {
-                                       StudentId = S.StudentId
+                                       StudentId = S.StudentId,
+                                       YearStart = S.YearStart,
+                                       YearEnd = S.YearEnd
                                    }).FirstOrDefaultAsync();
             DetailRegisScore.StudentId = StudentId.StudentId;
             DetailRegisScore.Amount = soluong;
@@ -95,13 +101,33 @@ namespace SupportRegister.API.Controllers
                                                  YearEnd = Y.Year1,
                                                  SemesterEnd = S.NameSemester
                                              }).FirstOrDefaultAsync();
-                int YearStart = yearstart_stu <= YearSemesterStart.YearStart ? YearSemesterStart.YearStart : yearstart_stu;
-                int YearEnd = yearend_stu >= YearSemesterEnd.YearEnd ? YearSemesterEnd.YearEnd : yearend_stu;
+                var YearStart = 0;
+                var YearEnd = 0;
+                if(yearstart_stu > YearSemesterStart.YearStart && yearend_stu > YearSemesterEnd.YearEnd)
+                {
+                    return Ok(0);
+                } else if (yearstart_stu <= YearSemesterStart.YearStart && yearend_stu < YearSemesterEnd.YearEnd)
+                {
+                    YearStart = YearSemesterStart.YearStart;
+                    YearEnd = yearstart_stu;
+                    DetailRegisScore.SemesterStart = YearSemesterStart.SemesterStart;
+                    DetailRegisScore.SemesterEnd = null;
+                } else if (yearstart_stu <= YearSemesterStart.YearStart && yearend_stu >= YearSemesterEnd.YearEnd)
+                {
+                    YearStart = YearSemesterStart.YearStart;
+                    YearEnd = YearSemesterEnd.YearEnd;
+                    DetailRegisScore.SemesterStart = YearSemesterStart.SemesterStart;
+                    DetailRegisScore.SemesterEnd = YearSemesterEnd.SemesterEnd;
+                } else if (yearstart_stu >= YearSemesterStart.YearStart && yearend_stu <= YearSemesterEnd.YearEnd)
+                {
+                    YearStart = yearstart_stu;
+                    YearEnd = yearend_stu;
+                    DetailRegisScore.SemesterStart = null;
+                    DetailRegisScore.SemesterEnd = null;
+                }
                 int Price = (((YearEnd - YearStart) + 1) * 2000) * soluong;
                 DetailRegisScore.YearStart = YearStart;
                 DetailRegisScore.YearEnd = YearEnd;
-                DetailRegisScore.SemesterStart = YearSemesterStart.SemesterStart;
-                DetailRegisScore.SemesterEnd = YearSemesterEnd.SemesterEnd;
                 DetailRegisScore.Price = Price;
             }
             else

@@ -73,7 +73,23 @@
                                         <td>@app.Data.DateRegister</td>
                                         <td>@app.Data.DateReceived.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
                                         <td>@app.Data.NameApp</td>
-                                        <td>@app.Data.Status</td>
+                                        <td class="text-center">
+                                            @if(app.Data.Status == "Đăng ký"){
+                                                <p class="btn btn-danger disabled">@app.Data.Status</p>
+                                            } 
+                                            else if (app.Data.Status == "Xác nhận yêu cầu")
+                                            {
+                                                <p class="btn btn-warning disabled">@app.Data.Status</p>
+                                            } 
+                                            else if (app.Data.Status == "Lưu đơn")
+                                            {
+                                                <p class="btn btn-secondary disabled">@app.Data.Status</p>
+                                            }
+                                            else
+                                            {
+                                                <p class="btn btn-success disabled">@app.Data.Status</p>
+                                            }
+                                        </td>
                                         <td>
                                              <a href="@Url.Action("Update", "Applications", new { studentId = app.Data.StudentId, appId = app.Data.ApplicationId })" style="color: #808080;">
                                                 <i class="feather icon-edit" style="font-size: 2em"></i>

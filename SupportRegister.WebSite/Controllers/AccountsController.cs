@@ -168,7 +168,7 @@ namespace SupportRegister.WebSite.Controllers
             return View(accountChange);
         }
         [HttpGet]
-        [Authorize]
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin")]
         public async Task<IActionResult> GetAll()
         {
             var url = _ApiUri + "/GetAllUsers";
@@ -189,6 +189,7 @@ namespace SupportRegister.WebSite.Controllers
         }
         //update
         [HttpGet]
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin")]
         public async Task<IActionResult> Update(Guid id)
         {
             var url = _ApiUri + $"/GetDetails/{id}";
@@ -205,6 +206,7 @@ namespace SupportRegister.WebSite.Controllers
         }
 
         [HttpPost]
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin")]
         public async Task<IActionResult> Update(UserUpdateRequest model)
         {
             var url = _ApiUri + "/Update";
@@ -229,6 +231,7 @@ namespace SupportRegister.WebSite.Controllers
         }
         //add
         [HttpGet]
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin")]
         public async Task<IActionResult> Create()
         {
             var url = $"/api/Roles/GetList";
@@ -266,6 +269,7 @@ namespace SupportRegister.WebSite.Controllers
         }
 
         [HttpPost]
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin")]
         public async Task<IActionResult> Create(RegisterRequest request)
         {
             if (ModelState.IsValid)
@@ -296,6 +300,7 @@ namespace SupportRegister.WebSite.Controllers
             }
         }
         [HttpGet]
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var url = _ApiUri + $"/Delete/{id}";

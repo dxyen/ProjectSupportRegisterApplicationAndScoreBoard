@@ -5,6 +5,7 @@ using SupportRegister.WebSite.Models;
 
 namespace SupportRegister.WebSite.Controllers
 {
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin, staff")]
     public class UnacceptAppController : Controller
     {
         private readonly IUnaccept _unaccept;

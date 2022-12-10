@@ -1,4 +1,5 @@
-﻿@model UnacceptViewModel;
+﻿@using System.Globalization
+@model UnacceptViewModel;
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -27,23 +28,32 @@
         <h3>Danh sách đăng ký đơn</h3>
     </div>
     <div class="row">
+        <div class="col-md-3 col-lg-3 col-sm-6">
+            <label class="control-label">Thời gian bắt đầu</label>
+            <input id="start-date" name="start_date" type="date" class="form-control" />
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-6">
+            <label class="control-label">Thời gian kết thúc</label>
+            <input id="end-date" name="end_date" type="date" class="form-control" />
+            <span id="msg-end-date" class="invalid-feedback"></span>
+        </div>
+    </div>
+    <div class="row mt-2 mb-2">
+        <div class="col-md-9 col-lg-9 col-sm-6">
+            <button id="btn-search" type="button" class="btn btn-primary">
+                Tìm kiếm
+            </button>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Thông tin đăng ký</h6>
-@*                    <form action="SearchTime" method="POST" enctype="multipart/form-data">
-                        <div class="row">
-                            <div class="col-md-3 col-ld-3 col-sm-6 text-right">
-                                <button class="btn btn-primary" type="submit">
-                                    Search
-                                </button>
-                            </div>
-                        </div>
-                    </form>*@
                     <div class="table-responsive">
-                        <table class="table" id="dataTableExample">
+                        <table class="tblData table" id="dataTableExample" style="width:100%" cellspacing="0">
                             <thead>
-                                <tr>
+                                <tr class="noExl">
                                     <th>
                                         Số thứ tự
                                     </th>
@@ -70,7 +80,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tbody_table">
                                 @foreach (var app in Model.unaccepts.Select((x, i) => new { Data = x, Index = i }))
                                 {
                                     <tr>
@@ -83,15 +93,142 @@
                                         <td>@app.Data.Teacher</td>
                                         <td>@app.Data.Course</td>
                                         <td>@app.Data.NameUnaccept</td>
-                                        <td>@app.Data.DateRegis</td>
+                                        <td>@app.Data.DateRegis.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
                     </div>
+                    <button class="btn btn-info mt-2" onclick="exportTableToExcel('dataTableExample', 'Danh sách sinh viên không nhận đơn')">In danh sách</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="mt-6"></div>
+
+<script>
+    function exportTableToExcel(tableID, filename = ''){
+        var downloadLink;
+        var dataType = 'application/vnd.ms-excel';
+        var tableSelect = document.getElementById(tableID);
+        var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+        // Specify file name
+        filename = filename?filename+'.xls':'excel_data.xls';
+
+        // Create download link element
+        downloadLink = document.createElement("a");
+
+        document.body.appendChild(downloadLink);
+
+        if(navigator.msSaveOrOpenBlob){
+            var blob = new Blob(['\ufeff', tableHTML], {
+                type: dataType
+            });
+            navigator.msSaveOrOpenBlob( blob, filename);
+        }else{
+            // Create a link to the file
+            downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+            // Setting the file name
+            downloadLink.download = filename;
+
+            //triggering the function
+            downloadLink.click();
+        }
+    }
+</script>
+<script type="text/javascript">
+    $(function() {
+        $("#start-date").on("keydown", function(e) {
+            e.preventDefault();
+        });
+        $("#end-date").on("keydown", function(e) {
+            e.preventDefault();
+        });
+        $("#start-date").change(function(e) {
+            startDate = e.target.value;
+            let endDate = $("#end-date").val();
+            if (endDate == 'undefined') {
+                $("#end-date").val(startDate);
+            } else {
+                let start = new Date(startDate);
+                let end = new Date(endDate);
+                if (end - start < 0) {
+                    $('#msg-end-date').html('Ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu.')
+                    $('#end-date').addClass('is-invalid');
+                }
+            }
+        });
+        $("#end-date").change(function(e) {
+            endDate = e.target.value;
+            startDate = $("#start-date").val();
+            let start = new Date(startDate);
+            let end = new Date(endDate);
+            if (end - start < 0) {
+                $('#msg-end-date').html('Ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu.')
+                $('#end-date').addClass('is-invalid');
+            } else {
+                $('#msg-end-date').html("")
+                $('#end-date').removeClass('is-invalid');
+            }
+        });
+    });
+    $('#btn-search').click(function (e) {
+    let startDate = $("#start-date").val();
+    let endDate = $("#end-date").val();
+    if (endDate != '' && startDate != '') {
+        let start = new Date(startDate);
+        let end = new Date(endDate);
+        let check = end - start;
+        e.preventDefault();
+        if (check >= 0) {
+            const start_day = $('input[name="start_date"]').val();
+            const end_day = $('input[name="end_date"]').val();
+            Search(start_day, end_day);
+        } else {
+        e.preventDefault();
+        }
+    }
+    else {
+        const start_day = $('input[name="start_date"]').val();
+        const end_day = $('input[name="end_date"]').val();
+        Search(start_day, end_day);
+        }
+    });
+    function Search(start_day, end_day) {
+      var url = "https://localhost:44363/api/Unaccept/Search?start_day="+start_day+"&end_day="+end_day;
+
+      $.get(url,function (data) {
+        appendTable(data);
+      });
+    }
+    function appendTable(datatables) {
+      $('#tbody_table').empty();
+      let html = '';
+      datatables.map((data, index) => {
+        let now = new Date(data.dateRegis)
+        let day = ("0" + now.getDate()).slice(-2);
+        let month = ("0" + (now.getMonth() + 1)).slice(-2);
+        let today = (day) + "-" + (month) + "-" + now.getFullYear();
+        index++;
+        html += `<tr>
+                  <td class="text-center"> ${index}</td>
+                  <td> ${data.student}</td>
+                  <td>${data.mssv}</td>
+                  <td>${data.class}</td>
+                  <td class="text-center"> ${data.teacher}</td>;
+                  <td> ${data.course}  </td>;
+                  <td> ${data.nameUnaccept}</td>;
+                  <td> ${today}  </td>;
+              </tr>`
+      })
+      $('#tbody_table').html(html);
+    }
+</script>
+
+
+
 

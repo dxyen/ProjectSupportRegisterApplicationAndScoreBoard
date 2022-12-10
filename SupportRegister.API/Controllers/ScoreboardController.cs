@@ -185,7 +185,7 @@ namespace SupportRegister.API.Controllers
                                      Class = C.NameClass,
                                      StudentId = S.StudentId,
                                      DateRegister = R.DateRegister,
-                                     DateReceived = R.DateReceived ?? DateTime.Now
+                                     DateReceived = R.DateReceived
                                  }).FirstOrDefaultAsync();
             MailRequest request = new MailRequest();
             if (idStatus == 5)

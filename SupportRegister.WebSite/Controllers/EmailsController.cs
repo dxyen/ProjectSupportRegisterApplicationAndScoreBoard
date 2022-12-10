@@ -5,6 +5,7 @@ using SupportRegister.WebSite.Models;
 
 namespace SupportRegister.WebSite.Controllers
 {
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin")]
     public class EmailsController : Controller
     {
         private readonly IMails _mails;

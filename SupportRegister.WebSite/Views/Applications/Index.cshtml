@@ -91,7 +91,7 @@
                                             }
                                         </td>
                                         <td>
-                                             <a href="@Url.Action("Update", "Applications", new { studentId = app.Data.StudentId, appId = app.Data.ApplicationId })" style="color: #808080;">
+                                             <a href="@Url.Action("Update", "Applications", new { studentId = app.Data.StudentId, appId = app.Data.ApplicationId, regisId = app.Data.Id })" style="color: #808080;">
                                                 <i class="feather icon-edit" style="font-size: 2em"></i>
                                             </a>
                                             <a data-bs-toggle="modal" data-bs-target="#exampleModal@{@app.Index}" style="color: #808080">
